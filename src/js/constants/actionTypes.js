@@ -1,0 +1,1 @@
+export const TOOGLE_EXPAND_MENU = 'TOOGLE_EXPAND_MENU';

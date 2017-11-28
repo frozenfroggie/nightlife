@@ -1,0 +1,56 @@
+.hamburger {
+  @include breakpoint(laptop) {
+    display: none;
+  }
+  display: block;
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: 55px;
+  height: 55px;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  & > span {
+    display: block;
+    position: absolute;
+    top: 27px;
+    left: 18px;
+    right: 18px;
+    height: 2px;
+    background-color: #fff;
+    box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+    &::before {
+      top: -6px;
+    }
+    &::after {
+      bottom: -6px;
+    }
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+      transition: 0.3s transform ease-in;
+    }
+  }
+}
+
+.close:focus > span {
+  background-color: transparent;
+  &::before {
+    transform: translate(1px,6px) rotate(45deg) ;
+    width: 18px;
+  }
+  &::after {
+    transform: translate(1px,-6px) rotate(-45deg);
+    width: 18px;
+  }
+}

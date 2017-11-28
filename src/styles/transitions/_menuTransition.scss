@@ -1,0 +1,14 @@
+.menu-enter {
+  transform: translate(-100%);
+}
+.menu-enter.menu-enter-active {
+  transform: translate(0%);
+  transition: transform 500ms ease-in;
+}
+.menu-leave {
+  transform: translate(0%);
+}
+.menu-leave.menu-leave-active {
+  transform: translate(-100%);
+  transition: transform 500ms ease-out;
+}

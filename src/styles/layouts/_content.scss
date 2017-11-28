@@ -1,0 +1,44 @@
+.wrapper {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  z-index: 3;
+  background-color: rgba(0,0,0,0.6);
+  @include flexCenter;
+  .content {
+    position: relative;
+    @include flexCenter;
+    @include flexColumn;
+    width: 30%;
+    height: 60%;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+    .btn {
+      display: block;
+      position: relative;
+      margin-top: 34px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      width: 190px;
+      height: auto;
+      background-color: rgba(138, 61, 206, 0.9);
+      border-color: rgba(107, 44, 163, 0.9);
+      border-radius: 3px;
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      &:hover {
+        cursor: pointer;
+        background-color: darken(rgba(138, 61, 206, 0.9), 10%);
+        border-color: darken(rgba(107, 44, 163, 0.9), 10%);
+      }
+      &:active {
+        background-color: darken(rgba(138, 61, 206, 0.9), 20%);
+        border-color: darken(rgba(107, 44, 163, 0.9), 20%);
+      }
+    }
+  }
+}

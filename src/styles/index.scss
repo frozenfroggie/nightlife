@@ -1,0 +1,49 @@
+@import '/helpers/mixins';
+@import '/helpers/variables';
+@import '/components/hamburger';
+@import '/layouts/navigation';
+@import '/layouts/content';
+@import '/layouts/footer';
+@import '/transitions/menuTransition';
+@import '/objects/anchor';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+* {
+  margin: 0px;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  height: 100vh;
+  background: {
+    image: url('../images/party.png');
+    size: cover;
+    repeat: no-repeat;
+    attachment: fixed;
+  }
+  font-family: 'Roboto', sans-serif;
+  .bgGlass {
+    background: {
+      image: url('../images/glass2.png');
+      size: cover;
+      repeat: no-repeat;
+      attachment: fixed;
+    }
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 2;
+  }
+}
+
+canvas {
+  display: block;
+  z-index: 1;
+}
