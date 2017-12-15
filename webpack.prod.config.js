@@ -19,7 +19,7 @@ module.exports = {
                 {
                   loader: 'babel-loader',
                   options: {
-                    presets: ['env', 'stage-3', "react"]
+                    presets: ['env', 'stage-2', "react"]
                   }
                 }
               ]
@@ -44,7 +44,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('production')}), // This tells the Webpack and Babel for optimization
         new HtmlWebpackPlugin({template: 'src/index.html'}),
-        new ExtractTextPlugin('styles/index.css'), //to extract css file
+        new ExtractTextPlugin('index.css'), //to extract css file
         new CleanWebpackPlugin(['dist']), // to clean dist folder before every building
         new webpack.optimize.UglifyJsPlugin(), //To minify js
         new webpack.NoEmitOnErrorsPlugin(), // Makes sure Webpack will not compile if Errors

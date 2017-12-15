@@ -1,0 +1,84 @@
+@import './objects/hamburger';
+@import './objects/logo';
+
+nav {
+  position: fixed;
+  z-index: 6;
+  width: 100%;
+  height: 56px;
+  font-size: 18px;
+  font-family: 'lato', sans-serif;
+  @include breakpoint(laptop) {
+    //box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.6);
+  }
+  .menu {
+    position: absolute;
+    @include flexColumn;
+    z-index: 4;
+    height: 100vh;
+    width: 100%;
+    padding: 14px;
+    border-radius: 2px;
+    background-color: rgba(0,0,0,0.95);
+    box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.9);
+    text-align: center;
+    & > div {
+      margin: 20px;
+    }
+    .spaceHolderDesktop {
+      display: none;
+    }
+    @include breakpoint(laptop) {
+      position: fixed;
+      @include flexRow;
+      @include flexCenterY;
+      justify-content: space-around;
+      top: 0px;
+      height: 30px;
+      width: 100%;
+      //background-color: transparent;
+      //background: linear-gradient(to bottom left, rgba(0,0,0,0.9), rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+      box-shadow: none;
+      .spaceHolderMobile {
+        display: none;
+      }
+      .spaceHolderDesktop {
+        display: block;
+      }
+    }
+  }
+}
+
+@include breakpoint(laptop) {
+  .menuLabel {
+    &::after {
+      content: '';
+      display: block;
+      width: 0%;
+      height: 3px;
+      background-color: $contrastColor;
+      opacity: 0.9;
+      border-radius: 1px;
+      transition: width .2s cubic-bezier(.25,.46,.45,.94);
+    }
+    &:hover {
+      color: $contrastColor;
+      opacity: 0.9;
+      transition: color .2s cubic-bezier(.25,.46,.45,.94);
+      &:after {
+        width: 100%;
+      }
+    }
+  }
+  .selected {
+    &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: $contrastColor;
+      border-radius: 1px;
+    }
+  }
+}

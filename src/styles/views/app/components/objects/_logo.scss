@@ -1,0 +1,30 @@
+.logo {
+  position: absolute;
+  @include flexCenterY;
+  z-index: 5;
+  right: 2%;
+  height: 100%;
+  width: auto;
+  color: white;
+  font-size: 20px;
+  font-family: 'Dancing Script', "cursive";
+  text-shadow: 0px 0px 15px rgba(255,255,255,0.85);
+  opacity: 0.85;
+  animation: glowing 4s infinite;
+  & > span {
+    margin: 5px;
+    letter-spacing: 2px;
+  }
+  & > .glass {
+    font-size: 1.2em;
+  }
+  & > .nightlife {
+    font-size: 1.4em;
+  }
+}
+
+@keyframes glowing {
+  0% { text-shadow: 0px 0px 15px rgba(255,255,255,0.8); opacity: 0.85; }
+  50% { text-shadow: 0px 0px 40px rgb(255,255,255); opacity: 0.95; }
+  100% { text-shadow: 0px 0px 15px rgba(255,255,255,0.8); opacity: 0.85; }
+}

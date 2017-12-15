@@ -1,0 +1,15 @@
+.scrollBtn {
+  position: relative;
+  left: -3px;
+  width: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 2px 2px 7px 1px rgba(0,0,0,0.75);
+  background-color: $contrastColorDarker;
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
+}

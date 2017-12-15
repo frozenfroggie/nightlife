@@ -1,0 +1,19 @@
+.searchbar-enter {
+  opacity: 0.01;
+  transform: translate(100%);
+}
+
+.searchbar-enter.searchbar-enter-active {
+  transform: translate(0%);
+  opacity: 1;
+  transition: opacity 400ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.searchbar-leave {
+  opacity: 0.01;
+}
+
+.searchbar-leave.searchbar-leave-active {
+  opacity: 0.01;
+  transition: opacity 400ms ease-in-out;
+}

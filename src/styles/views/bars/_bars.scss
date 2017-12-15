@@ -1,0 +1,29 @@
+//transitions
+@import './transitions/searchbarTransition';
+@import './transitions/searchTransition';
+//containers
+@import './containers/searchResults';
+@import './containers/searchInput';
+//componets
+@import './components/searchPanel';
+@import './components/googleMap';
+@import './components/searchTitle';
+
+.citylight {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  z-index: 5;
+  background: {
+    image: url('../images/citylight-small.jpg');
+    size: cover;
+    repeat: no-repeat;
+    attachment: fixed;
+    position: center;
+  }
+  @include breakpoint(laptop) {
+    background-image: url('../images/citylight.jpg');
+  }
+}

@@ -1,14 +1,15 @@
 {
-  "name": "react-redux-workspace",
+  "name": "Nightlife",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "lint": "esw src/react/**/*.js src/redux/**/*.js tests/**/*.js --watch",
-    "test": "mocha --require babel-register \"tests/*@(.spec.js)\" --watch",
-    "build:dev": "webpack-dev-server --config webpack.dev.config.js --progress --colors",
+    "test": "mocha --require babel-register \"tests/**/*@(.spec.js)\" --watch",
     "build:prod": "webpack -p --config webpack.prod.config.js",
-    "server": "node server.js"
+    "build:dev:watch": "webpack --config webpack.dev.config.js --progress --colors --watch",
+    "server:watch": "nodemon ./server.js",
+    "dev": "concurrently --kill-others \"npm run build:dev:watch\" \"npm run server:watch\""
   },
   "author": "frozenfroggie",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "babel-loader": "^7.1.1",
     "babel-preset-env": "latest",
     "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.26.0",
     "browser-sync": "^2.18.13",
@@ -24,6 +26,7 @@
     "chai": "^4.1.2",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.4",
+    "enzyme": "^3.2.0",
     "eslint": "^4.10.0",
     "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-react": "^7.4.0",
@@ -34,16 +37,19 @@
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.29.0",
     "mocha": "^4.0.1",
+    "morgan": "^1.9.0",
     "node-sass": "^4.5.3",
+    "nodemon": "^1.12.1",
     "postcss-loader": "^2.0.8",
+    "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.3.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.2.0",
-    "webpack-dev-server": "^2.5.1",
-    "redux-logger": "^3.0.6"
+    "webpack-dev-server": "^2.5.1"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "isomorphic-fetch": "^2.2.1",

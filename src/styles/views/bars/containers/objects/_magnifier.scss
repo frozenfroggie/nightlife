@@ -1,0 +1,22 @@
+.magnifier {
+  position: relative;
+  right: -40px;
+  top: -10px;
+  & > span {
+    font-size: 30px;
+    color: $contrastColor;
+    padding: 10px;
+    border: 2px solid $contrastColorDarker;
+    border-radius: 5px;
+  }
+  &:hover > span {
+    cursor: pointer;
+    color: darken($contrastColor, 10%);
+    border-color: darken($contrastColorDarker, 15%);
+  }
+  &:active > span {
+    cursor: pointer;
+    color: darken($contrastColor, 20%);
+    border-color: darken($contrastColorDarker, 15%);
+  }
+}

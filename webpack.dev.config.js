@@ -18,7 +18,7 @@ module.exports = {
                 {
                   loader: 'babel-loader',
                   options: {
-                      presets: ['env', 'stage-3', "react"]
+                      presets: ['env', 'stage-2', "react"]
                   }
                 }
               ]
@@ -42,11 +42,12 @@ module.exports = {
         new HtmlWebpackPlugin({template: 'src/index.html'}),
         new BrowserSyncPlugin({
           host: 'localhost',
-          port: 3000,
-          proxy: 'http://localhost:8080/'
-       },
-       {
-         reload: false
-       })
+          port: 8080,
+          proxy: 'http://localhost:3000/',
+          reloadDelay: 1000
+         },
+         {
+           reload: true
+         })
     ]
 };

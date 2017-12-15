@@ -1,0 +1,83 @@
+.searchedDataContainer {
+  position: relative;
+  left: 5px;
+  @include breakpoint(laptop) {
+    @include flexRow;
+    justify-content: space-between;
+    width: 90%;
+  }
+  .barsWrapper {
+    width: 100%;
+    position: relative;
+    border-radius: 5px;
+    padding: 5px 20px 10px 5px;
+    .barsContainer {
+      overflow: hidden;
+      border-radius: 5px;
+      .bars {
+        @include flexColumn;
+        background-color: rgba(0,0,0,0.9);
+        width: 100%;
+        height: auto;
+        position: relative;
+        .bar {
+          @include flexRow;
+          position: relative;
+          width: 100%;
+          .barImage {
+            object-fit: cover;
+            height: 110px;
+            width: 110px;
+            margin: 5px;
+            box-shadow: 1px 3px 17px 1px rgba(0,0,0,0.8);
+            border-radius: 3px;
+          }
+          .barInfo {
+            width: 300px;
+            .stars {
+              color: #ffc404;
+              text-shadow: black 1px 1px 10px;
+              margin-top: 0px;
+              margin-bottom: 6px;
+            }
+            .barRating {
+              width: 100px;
+            }
+            & > div {
+              padding-left:  10px;
+              color: white;
+              text-align: left;
+            }
+          }
+        }
+      }
+      .scroll {
+        position: absolute;
+        right: -10px;
+        top: 20px;
+        width: 7px;
+        box-sizing: border-box;
+        margin: 0px 5px;
+        z-index: 10;
+        border: 1px solid rgba(255,255,255,0.5);
+        border-radius: 4px;
+        background-color: rgba(255,255,255,0.1);
+        @import './objects/scrollButton';
+      }
+    }
+  }
+}
+
+.barActive {
+  border: 1px solid $contrastColor;
+  border-radius: 4px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.barInactive {
+  &:hover {
+    cursor: pointer;
+  }
+}

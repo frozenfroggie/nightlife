@@ -1,0 +1,24 @@
+.search {
+  @include flexRow;
+  margin: auto;
+  width: 86%;
+  padding-top: 30px;
+  @import './objects/magnifier';
+  .searchInput {
+    z-index: 5;
+    height: 30px;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid $contrastColor;
+    color: $contrastColor;
+    font-weight: 400;
+    font-size: 20px;
+    @include breakpoint(tablet) {
+      font-size: 22px;
+    }
+    @include breakpoint(laptop) {
+      font-size: 24px;
+    }
+  }
+}

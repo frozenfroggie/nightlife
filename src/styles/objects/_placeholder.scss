@@ -1,0 +1,16 @@
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+color: $contrastColorDarker;
+opacity: 0.5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+color: $contrastColorDarker;
+opacity: 0.5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+color: $contrastColorDarker;
+opacity: 0.5;
+}
+:-moz-placeholder { /* Firefox 18- */
+color: $contrastColorDarker;
+opacity: 0.5;
+}

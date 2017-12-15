@@ -1,0 +1,28 @@
+.searchContainerSimple {
+  border: 1px solid $contrastColor;
+  position: relative;
+  background-color: rgba(0,0,0,0.9);
+  padding: 15%;
+  border-radius: 5px;
+  @include flexColumn;
+}
+
+.searchContainerComplex {
+  display: flex;
+  @include flexRow;
+  @include flexCenter;
+  justify-content: space-around;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 3;
+  background-color: rgba(0,0,0,0.2);
+  .searchResults {
+      position: relative;
+      top: 20px;
+  }
+}
