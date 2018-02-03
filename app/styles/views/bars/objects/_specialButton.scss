@@ -1,0 +1,22 @@
+  .specialButton {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    @include flexCenter;
+    font-size: 30px;
+    border: 2px solid $contrastColor;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.9);
+    color: $contrastColor;
+    box-shadow: 1px 1px 20px 1px darken($contrastColorDarker, 15%);
+    &:hover {
+      cursor: pointer;
+      color: darken($contrastColor, 5%);
+      box-shadow: 1px 1px 20px 2px darken($contrastColorDarker, 10%);
+    }
+    &:active {
+      cursor: pointer;
+      color: darken($contrastColor, 10%);
+      box-shadow: 1px 1px 20px 3px darken($contrastColorDarker, 5%);
+    }
+  }

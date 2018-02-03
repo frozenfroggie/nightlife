@@ -2,12 +2,18 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const webpack = require('webpack');
+require("babel-polyfill");
 
 module.exports = {
-    entry: './src/js/index.js',
+    entry: ['babel-polyfill', './src/js/index.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
+    },
+    resolve: {
+      alias: {
+        images: path.resolve('./src/images'),
+      }
     },
     module: {
         rules: [
@@ -33,7 +39,7 @@ module.exports = {
             },
             {
               test: /\.(jpe?g|png)$/,
-              use: "file-loader?name=[name].[ext]&outputPath=images/"
+              use: "url-loader?name=[name].[ext]&outputPath=images/"
             }
         ]
     },

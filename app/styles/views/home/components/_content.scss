@@ -1,0 +1,67 @@
+.btn {
+  @include flexCenter;
+  display: block;
+  position: relative;
+  margin-top: 40px;
+  width: 55%;
+  min-height: 55px;
+  box-shadow: 1px 4px 18px 2px rgba(0,0,0,0.9);
+  background-color: $contrastColor;
+  border-color: $contrastColorDarker;
+  border-radius: 3px;
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 1px 4px 18px 3px rgba(0,0,0,0.8);
+    background-color: darken($contrastColor, 10%);
+    border-color: darken($contrastColorDarker, 10%);
+  }
+  &:active {
+    box-shadow: 1px 4px 18px 4px rgba(0,0,0,0.8);
+    background-color: darken($contrastColor, 20%);
+    border-color: darken($contrastColorDarker, 20%);
+  }
+  .link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+.titleContainer {
+  display: flex;
+  min-height: 100px;
+  width: 94%;
+  @include breakpoint(laptop) {
+    width: 400px;
+  }
+  .titleText {
+    width: 100%;
+    align-self: flex-end;
+    text-shadow: black 1px 1px 10px, black 1px 1px 10px;
+    font-size: 30px;
+    @include breakpoint(laptop) {
+      font-size: 32px;
+      &:after {
+        content: '|';
+        position: relative;
+        top: -2px;
+        animation: 1s cursorBlink step-end infinite;
+      }
+    }
+  }
+}
+
+@keyframes cursorBlink {
+  from, to {
+    color: transparent;
+    text-shadow: none;
+  }
+  50% {
+    color: white;
+    text-shadow: black 1px 1px 10px, black 1px 1px 10px;
+  }
+}

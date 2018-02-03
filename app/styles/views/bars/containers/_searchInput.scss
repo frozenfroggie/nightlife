@@ -1,0 +1,22 @@
+.search {
+  margin: auto;
+  width: 100%;
+  @include flexColumn;
+  .magnifierContainer {
+    @import '../objects/specialButton';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    @include breakpoint(tablet) {
+      position: absolute;
+      bottom: 7px;
+      right: 7px;
+    }
+    @include breakpoint(laptop) {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+    }
+  }
+  @import '../objects/searchInput';
+}

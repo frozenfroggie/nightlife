@@ -1,0 +1,17 @@
+.search-enter {
+  opacity: 0.01;
+}
+
+.search-enter.search-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.search-leave {
+  opacity: 1;
+}
+
+.search-leave.search-leave-active {
+  opacity: 0.01;
+  transition: opacity 400ms ease-out;
+}

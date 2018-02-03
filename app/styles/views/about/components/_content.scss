@@ -1,0 +1,32 @@
+.aboutContent {
+  z-index: 4;
+  position: absolute;
+  top: 80px;
+  @include flexCenterX;
+  @include flexColumn;
+  width: 83%;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  overflow: auto;
+  .about {
+    text-shadow: #333 1px 1px 10px, #333 1px 1px 10px;
+    border: 1px solid $contrastColor;
+    background-color: rgba(0,0,0,0.9);
+    border-radius: 5px;
+    padding: 4% 7%;
+    overflow: auto;
+    .icon {
+      width: auto;
+      height: 70px;
+      margin: 10px;
+    }
+    h3 {
+      text-shadow: #333 1px 1px 10px;
+      margin: 10px;
+    }
+  }
+  .social > a {
+    margin: 0px 7px;
+  }
+}

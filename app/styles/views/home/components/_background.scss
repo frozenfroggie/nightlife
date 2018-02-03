@@ -1,0 +1,44 @@
+.bgParty {
+  height: 100vh;
+  width: 100vw;
+  z-index: 0;
+  background: {
+    image: url('../images/party-small.png');
+    size: cover;
+    repeat: no-repeat;
+    attachment: fixed;
+  }
+  @include breakpoint(laptop) {
+    background-image: url('../images/party.png');
+  }
+}
+
+@include breakpoint(laptop) {
+  .bgGlass {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 2;
+    background: {
+      image: url('../images/glass.png');
+      size: cover;
+      repeat: no-repeat;
+      attachment: fixed;
+    }
+  }
+}
+
+canvas {
+  display: none;
+  @include breakpoint(laptop) {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: block;
+    z-index: 1;
+  }
+}

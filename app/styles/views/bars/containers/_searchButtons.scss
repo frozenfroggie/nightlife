@@ -1,0 +1,26 @@
+.searchButtons {
+  @include flexRow;
+  width: 100%;
+  .hiddenSearchbarContainer {
+    @include flexRow;
+    position: relative;
+    left: 0px;
+    transition: width 1s linear;
+    & > .specialButton {
+      align-self: flex-start;
+      transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .hiddenSearchbar {
+      position: relative;
+      left: 10px;
+      width: 0px;
+      transition: width .6s cubic-bezier(.25,.46,.45,.94);
+      @import '../objects/searchInput';
+      .searchInput {
+        position: relative;
+        top: 15px;
+        width: 85%;
+      }
+    }
+  }
+}
