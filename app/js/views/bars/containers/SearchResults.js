@@ -1,23 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-//actions
-import { handleInputChange, search, deleteSearchData } from '../actions/searchActions';
-import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
-         setBarsHeight, setScrollbarPositionY } from '../actions/scrollActions';
-import { setActiveBar } from '../actions/barActions';
-//icons
-import coctailIcon from '../../../../images/coctail.png';
-
 import { withRouter } from "react-router-dom";
+
+import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
+         setScrollbarPositionY, setBarsContainerHeight } from '../../shared/scroll/scrollActions';
+import { handleInputChange, search, deleteSearchData } from '../actions/searchActions';
+import { setActiveBar, wantToGo } from '../actions/barActions';
+
+import Scrollbar from '../../shared/scroll/Scrollbar';
+
+import coctailIcon from '../../../../images/coctail.png';
 
 const horizontalLineHeight = 1;
 const borderWidthOfActiveBar = 1;
 
 class SearchResults extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      barsEl: null
+    }
+  }
   componentDidMount() {
-    this.props.setBarsHeight(this.refs.bars.getBoundingClientRect().height);
-    this.props.setScrollbarPositionY(this.refs.scrollbar.getBoundingClientRect().top);
+    this.props.setBarsContainerHeight(467);
+    this.props.resetScrollSettings();
   }
   componentWillUnmount() {
     this.props.deleteSearchData();
@@ -44,7 +51,12 @@ class SearchResults extends React.Component {
       }
     }
   }
-  activateBar = (barIdx) => {
+  onClick = (barIdx) => {
+    this.props.setActiveBar(barIdx);
+    //const barUrl =  this.props.searchState.searchData[barIdx].url;
+    //window.open(barUrl, '_blank');
+  }
+  onHover = (barIdx) => {
     this.props.setActiveBar(barIdx);
   }
   render() {
@@ -56,7 +68,7 @@ class SearchResults extends React.Component {
       }
       bar.rating % 1 !== 0 && stars.push(<span key={stars.length}><FontAwesome name='star-half'/></span>);
       return (
-        <div ref="bar" key={bar.name} onClick={() => this.activateBar(idx)} onMouseOver={() => this.activateBar(idx)} >
+        <div ref="bar" key={bar.name} onClick={() => this.onClick(idx)} onMouseOver={() => this.onHover(idx)} >
           <div className={this.props.activityState.activeBar === idx ? "bar barActive" : "bar barInactive"} style={this.props.scrollState.barStyle} >
             <img className="barImage" src={bar.image_url || coctailIcon} />
             <div className="barInfo">
@@ -72,6 +84,7 @@ class SearchResults extends React.Component {
               <div> { bar.location.display_address.join(", ") } </div>
               <div> Phone: { bar.phone ? bar.phone : 'not specified' } </div>
             </div>
+            <div className="wantToGo" onClick={() => this.props.wantToGo({name: bar.name, imgUrl: bar.image_url, address: bar.location.display_address.join(", "), phone: bar.phone, url: bar.url })}><FontAwesome name="heart" /></div>
           </div>
           {
             idx !== searchData.length - 1 ?
@@ -86,19 +99,15 @@ class SearchResults extends React.Component {
         <div className="barsWrapper">
           <div className="barsContainer" style={{height: this.props.scrollState.barsContainerHeight}} onWheel={this.scroll}>
             <div className="bars" id="bars"
-                 style={{top: this.props.scrollState.barsPosition, height: this.props.scrollState.height}}
-                 ref="bars" >
+                 style={{top: this.props.scrollState.barsPosition}}
+                 ref={ barsRef => !this.state.barsEl && this.setState({ barsEl: barsRef }) } >
               { bars }
             </div>
-            <div className="scroll"
-                 style={{height: this.props.scrollState.scrollbar.height + this.props.scrollState.scrollButton.height}}
-                 ref="scrollbar" >
-              <div className="scrollBtn"
-                   style={{top: this.props.scrollState.scrollButton.positionY - 2, //coz we dont want to see scrollbar border above btn
-                           height: this.props.scrollState.scrollButton.height}}
-                   onMouseDown={() => this.props.toogleIsGrabbed(true)} >
-              </div>
-            </div>
+            {
+              this.state.barsEl ?
+              <Scrollbar barsRef={this.state.barsEl} scrollbarHeight={385} />
+              : ''
+            }
           </div>
         </div>
       </div>
@@ -112,4 +121,4 @@ class SearchResults extends React.Component {
      activityState: store.activityReducer
  });
 
- export default connect(mapStateToProps, {setScrollbarPositionY, setActiveBar, handleInputChange, search, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition, setBarsHeight, deleteSearchData})(SearchResults);
+ export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, wantToGo, setActiveBar, handleInputChange, search, deleteSearchData})(SearchResults);

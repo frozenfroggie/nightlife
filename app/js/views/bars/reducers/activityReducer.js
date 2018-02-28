@@ -12,6 +12,7 @@ const activityReducer = (state = { activeBar: null }, action) => {
         ...state,
         activeBar: null
       }
+
     default:
       return state;
   }

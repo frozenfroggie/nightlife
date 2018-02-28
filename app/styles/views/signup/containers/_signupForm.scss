@@ -1,0 +1,31 @@
+.errorMessage {
+  color: #cb2431;
+  text-shadow: none;
+}
+
+.inputContainer {
+  @include flexCenter;
+  position: relative;
+  width: 300px;
+  margin: 5px;
+  .font {
+    position: absolute;
+    right: 20px;
+    color: $contrastColorDarker;
+    text-shadow: none;
+  }
+  .input {
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    margin: 0px;
+    border: 2px solid $contrastColor;
+    border-radius: 4px;
+    color: $contrastColorDarker;
+  }
+}
+
+.inputError {
+  border: 2px solid #cb2431 !important;
+}

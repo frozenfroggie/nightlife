@@ -12,10 +12,10 @@ nav {
   background-repeat: no-repeat;
   background-position: 0 -60px;
   box-shadow: none;
-  transition: background-color .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s cubic-bezier(.25,.46,.45,.94);
+  transition: background-color .5s cubic-bezier(.25,.46,.45,.94), box-shadow .4s cubic-bezier(.25,.46,.45,.94);
   &:hover {
     background-color: rgba(0,0,0,0.9);
-    transition: background-color .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s cubic-bezier(.25,.46,.45,.94);
+    transition: background-color .6s cubic-bezier(.25,.46,.45,.94), box-shadow .4s cubic-bezier(.25,.46,.45,.94);
     background-position: 0 0;
     box-shadow: 1px 1px 5px 3px rgba(0,0,0,0.7);
   }

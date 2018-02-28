@@ -26,6 +26,7 @@
       border-radius: 0px;
       @include breakpoint(laptop) {
         border-radius: 5px;
+        border: 1px solid $contrastColor;
       }
       .bars {
         @include flexColumn;
@@ -39,7 +40,7 @@
           position: relative;
           background-color: rgba(0,0,0,0.9);
           @include breakpoint(laptop) {
-            background-color: none;
+            background-color: transparent;
             width: 95%;
           }
           .barImage {
@@ -74,29 +75,15 @@
               text-align: left;
             }
           }
+          .wantToGo {
+            color: $contrastColor;
+          }
         }
         & > div > hr {
           display: none;
           @include breakpoint(laptop) {
             display: block;
           }
-        }
-      }
-      .scroll {
-        display: none;
-        position: absolute;
-        right: -10px;
-        top: 20px;
-        width: 7px;
-        box-sizing: border-box;
-        margin: 0px 5px;
-        z-index: 10;
-        border: 1px solid rgba(255,255,255,0.5);
-        border-radius: 4px;
-        background-color: rgba(255,255,255,0.1);
-        @import '../objects/scrollButton';
-        @include breakpoint(laptop) {
-          display: block;
         }
       }
     }

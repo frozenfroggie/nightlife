@@ -1,5 +1,5 @@
-import { toogleExpandMenu } from '../../src/js/views/app/actions/menuActions';
-import * as types from '../../src/js/constants/actionTypes';
+import { toogleExpandMenu } from '../../js/views/app/actions/menuActions';
+import * as types from '../../js/constants/actionTypes';
 
 import chai from 'chai';
 var expect = chai.expect;

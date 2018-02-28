@@ -5,6 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Switch } from 'react-router-dom'
 
 import { toogleExpandMenu } from './actions/menuActions';
+import { logout } from '../shared/auth/authActions';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -14,6 +15,9 @@ import LoginPage from '../login/LoginPage';
 import SignupPage from '../signup/SignupPage';
 import AboutPage from '../about/AboutPage';
 import BarsPage from '../bars/BarsPage';
+import ProfilePage from '../profile/ProfilePage';
+
+import requireAuth from '../shared/auth/utils/requireAuth';
 
 class App extends React.Component {
   componentDidMount() {
@@ -24,11 +28,18 @@ class App extends React.Component {
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
     window.innerWidth < 1024 && this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
   }
+  toogleMenuOnMobile = () => {
+    window.innerWidth < 1024 && this.props.toogleExpandMenu();
+  }
+  logout = e => {
+    e.preventDefault();
+    this.props.logout();
+  }
   render() {
     return (
       <Router>
         <div className="container">
-          <Navigation expandMenu={this.props.menuState.expandMenu} hamburgerClick={this.props.toogleExpandMenu} />
+          <Navigation toogleMenuOnMobile={this.toogleMenuOnMobile} logout={this.logout} isAuthenticated={this.props.authState.isAuthenticated} expandMenu={this.props.menuState.expandMenu} hamburgerClick={this.props.toogleExpandMenu} />
           <Route render={({ location, history }) => (
             <ReactCSSTransitionGroup transitionName="routes" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
               <Switch key={history.location.pathname.split('/')[1] || '/'} pathname={history.location.pathname} location={history.location}>
@@ -37,6 +48,7 @@ class App extends React.Component {
                 <Route path="/about" component={AboutPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
+                <Route path="/profile" component={requireAuth(ProfilePage)} />
               </Switch >
             </ReactCSSTransitionGroup >
           )}/>
@@ -47,7 +59,8 @@ class App extends React.Component {
 }
 
  const mapStateToProps = store => ({
-     menuState: store.menuReducer
+     menuState: store.menuReducer,
+     authState: store.authReducer
  });
 
- export default connect(mapStateToProps, {toogleExpandMenu: toogleExpandMenu})(App);
+ export default connect(mapStateToProps, {toogleExpandMenu, logout})(App);

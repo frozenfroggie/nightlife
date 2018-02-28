@@ -42,13 +42,13 @@ class Background extends React.Component {
     let SET_PROPS = {
       position(radius) {
         let position;
-        position = radius < 4 ? [randomInt(0,innerWidth), 0]
+        position = radius < 4 ? [randomInt(0,innerWidth), randomInt(0, innerHeight*0.8)]
         : [innerWidth / 2, randomInt(innerHeight * 0.3, innerHeight * 0.5)];
         return position;
       },
       speed(radius) {
         let speed;
-        speed = radius <= 3 ? [randomFloat(-1, 1), randomFloat(0, 2.5)]
+        speed = radius <= 3 ? [randomFloat(-0.5, 0.5), randomFloat(3, 5)]
         : [randomFloat(-10, 11)/(radius*0.08), randomFloat(-0.5, 0.5)/(radius*0.08)];
         return speed;
       },
@@ -59,7 +59,7 @@ class Background extends React.Component {
 
     let CIRCLES_NUM = 100;
     let CIRCLES = [];
-    let DOTS_NUM = 100;
+    let DOTS_NUM = 300;
     let DOTS = [];
 
     // Event Listeners
@@ -86,7 +86,7 @@ class Background extends React.Component {
         this.position = SET_PROPS.position(this.radius);
         this.speed = SET_PROPS.speed(this.radius);
         this.opacity = SET_PROPS.opacity();
-        this.color = this.radius < 10 ? {r: 255, g: 255, b: 255} : SET_PROPS.color(this.position[0]);
+        this.color = this.radius < 10 ? {r: 107, g: 44, b: 163} : SET_PROPS.color(this.position[0]);
       }
     }
 
@@ -142,7 +142,7 @@ class Background extends React.Component {
         if(dot.position[1] >= (innerHeight * randomFloat(0.85, 1.5))) {
           dot.speed[1] = 0;
           dot.speed[0] = 0;
-          dot.opacity -= 0.04;
+          dot.opacity -= 0.08;
         }
         dot.draw();
       });

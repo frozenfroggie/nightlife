@@ -1,0 +1,15 @@
+.bgFoggy {
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  background: {
+    image: url('../images/foggy-small.jpeg');
+    size: cover;
+    repeat: no-repeat;
+    attachment: fixed;
+    position: center;
+  }
+  @include breakpoint(laptop) {
+    background-image: url('../images/foggy.jpeg');
+  }
+}

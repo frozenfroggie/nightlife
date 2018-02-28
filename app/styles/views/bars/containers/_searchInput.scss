@@ -2,8 +2,41 @@
   margin: auto;
   width: 100%;
   @include flexColumn;
+  @import '../objects/specialButton';
+  .hint {
+    text-shadow: #333 1px 1px 10px, #333 1px 1px 10px;
+    font-size: 26px;
+    color: $contrastColor;
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    @include breakpoint(tablet) {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+    }
+    @include breakpoint(laptop) {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+    }
+  }
+  .backContainer {
+    position: absolute;
+    bottom: 5px;
+    right: 70px;
+    @include breakpoint(tablet) {
+      position: absolute;
+      bottom: 7px;
+      right: 80px;
+    }
+    @include breakpoint(laptop) {
+      position: absolute;
+      bottom: 14px;
+      right: 90px;
+    }
+  }
   .magnifierContainer {
-    @import '../objects/specialButton';
     position: absolute;
     bottom: 5px;
     right: 5px;

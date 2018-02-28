@@ -1,7 +1,7 @@
-import scrollReducer from '../../src/js/views/bars/reducers/scrollReducer';
-import searchReducer from '../../src/js/views/bars/reducers/searchReducer';
-import menuReducer from '../../src/js/views/app/reducers/menuReducer';
-import * as types from '../../src/js/constants/actionTypes';
+import scrollReducer from '../../js/views/bars/reducers/scrollReducer';
+import searchReducer from '../../js/views/bars/reducers/searchReducer';
+import menuReducer from '../../js/views/app/reducers/menuReducer';
+import * as types from '../../js/constants/actionTypes';
 
 import chai from 'chai';
 var expect = chai.expect;

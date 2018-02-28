@@ -4,6 +4,26 @@ import { Link, NavLink } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
 const Navigation = props => {
+  const guestLinks = (
+    <div className="menu">
+      <div className="spaceHolderMobile"></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/bars">BARS</NavLink></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/about">ABOUT</NavLink></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/login">LOG IN</NavLink></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/signup">SIGN UP</NavLink></div>
+      <div className="spaceHolderDesktop"></div>
+    </div>
+  )
+  const userLinks = (
+    <div className="menu">
+      <div className="spaceHolderMobile"></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/bars">BARS</NavLink></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/about">ABOUT</NavLink></div>
+      <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/profile">PROFILE</NavLink></div>
+      <div onClick={props.toogleMenuOnMobile} className="menuLabel"><a href="#" onClick={props.logout}>LOG OUT</a></div>
+      <div className="spaceHolderDesktop"></div>
+    </div>
+  )
   return (
     <nav>
       <div><button onClick={props.hamburgerClick} className= { props.expandMenu ? "hamburger close" : "hamburger" } ><span></span></button></div>
@@ -13,14 +33,7 @@ const Navigation = props => {
       transitionLeaveTimeout={150}>
         {
           props.expandMenu ?
-          <div className="menu">
-            <div className="spaceHolderMobile"></div>
-            <div><NavLink className="menuLabel" activeClassName="selected" to="/bars">BARS</NavLink></div>
-            <div><NavLink className="menuLabel" activeClassName="selected" to="/about">ABOUT</NavLink></div>
-            <div><NavLink className="menuLabel" activeClassName="selected" to="/login">LOG IN</NavLink></div>
-            <div><NavLink className="menuLabel" activeClassName="selected" to="/signup">SIGN UP</NavLink></div>
-            <div className="spaceHolderDesktop"></div>
-          </div>
+            props.isAuthenticated ? userLinks : guestLinks
           : ""
         }
       </ReactCSSTransitionGroup>

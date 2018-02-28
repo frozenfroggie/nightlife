@@ -23,9 +23,7 @@ const configureStore = () => {
   );
 
   store.subscribe(throttle(() => {
-    saveState({
-      todos: store.getState().todos,
-    });
+    saveState({authReducer: store.getState().authReducer});
   }, 1000));
 
   return store;

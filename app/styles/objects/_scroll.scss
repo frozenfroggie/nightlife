@@ -1,0 +1,33 @@
+.scroll {
+  display: none;
+  position: absolute;
+  right: -10px;
+  top: 20px;
+  width: 7px;
+  box-sizing: border-box;
+  margin: 0px 5px;
+  z-index: 10;
+  border: 1px solid $contrastColorDarker;
+  opacity: 0.9;
+  border-radius: 4px;
+  background-color: rgba(255,255,255,0.1);
+  .scrollBtn {
+    position: relative;
+    left: -2px;
+    width: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 2px 2px 7px 1px rgba(0,0,0,0.75);
+    background-color: $contrastColorDarker;
+    &:hover {
+      cursor: grab;
+    }
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  @include breakpoint(laptop) {
+    display: block;
+  }
+}

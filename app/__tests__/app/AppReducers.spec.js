@@ -1,5 +1,5 @@
-import menuReducer from '../../src/js/views/app/reducers/menuReducer';
-import * as types from '../../src/js/constants/actionTypes';
+import menuReducer from '../../js/views/app/reducers/menuReducer';
+import * as types from '../../js/constants/actionTypes';
 
 import chai from 'chai';
 var expect = chai.expect;

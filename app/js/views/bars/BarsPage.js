@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 //actions
 import { handleInputChange, search } from './actions/searchActions';
-import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition } from './actions/scrollActions';
-//components
+import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
+         setScrollbarPositionY } from '../shared/scroll/scrollActions';//components
 import SearchPanel from './components/SearchPanel';
 import Bars from './components/Bars';
 import Background from './components/Background';
@@ -12,13 +12,13 @@ import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class BarsPage extends React.Component {
-  scroll = event => {
+  scroll = (event) => {
     const isMouseEvent = event.type === "mousemove" ? true : false;
     const hiddenContentHeight = this.props.scrollState.barsHeight - this.props.scrollState.barsContainerHeight;
     const halfOfScrollBtnHeight = this.props.scrollState.scrollButton.height / 2;
-    const scrollbarPositionY = this.props.scrollState.scrollbar.positionY
+    const scrollbarPositionY = this.props.scrollState.scrollbar.positionY;
     const scrollBtnPositionY = this.props.scrollState.scrollButton.positionY;
-    const nextScrollBtnPosition = isMouseEvent ? event.pageY - scrollbarPositionY - halfOfScrollBtnHeight:
+    const nextScrollBtnPosition = isMouseEvent ? event.pageY - scrollbarPositionY - halfOfScrollBtnHeight :
                                                  event.deltaY + scrollBtnPositionY - halfOfScrollBtnHeight;
     const scrolledFraction = nextScrollBtnPosition / this.props.scrollState.scrollbar.height;
     if((isMouseEvent && this.props.scrollState.isGrabbed) || !isMouseEvent) {
@@ -56,4 +56,4 @@ class BarsPage extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default withRouter(connect(mapStateToProps, {handleInputChange: handleInputChange, search: search, toogleIsGrabbed: toogleIsGrabbed, changeScrollButtonPosition: changeScrollButtonPosition, changeBarsPosition: changeBarsPosition})(BarsPage));
+ export default withRouter(connect(mapStateToProps, {handleInputChange, search, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition})(BarsPage));

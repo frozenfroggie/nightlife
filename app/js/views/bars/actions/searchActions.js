@@ -6,7 +6,7 @@ export const handleInputChange = event => ({
 });
 
 const startSearching = () => ({
-    type: START_SEARCHING
+  type: START_SEARCHING
 })
 
 const saveSearchData = data => ({

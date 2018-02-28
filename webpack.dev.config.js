@@ -5,14 +5,14 @@ const webpack = require('webpack');
 require("babel-polyfill");
 
 module.exports = {
-    entry: ['babel-polyfill', './src/js/index.js'],
+    entry: ['babel-polyfill', './app/js/index.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
     resolve: {
       alias: {
-        images: path.resolve('./src/images'),
+        images: path.resolve('./app/images'),
       }
     },
     module: {
@@ -45,7 +45,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
-        new HtmlWebpackPlugin({template: 'src/index.html'}),
+        new HtmlWebpackPlugin({template: 'app/index.html'}),
         new BrowserSyncPlugin({
           host: 'localhost',
           port: 8080,

@@ -1,7 +1,6 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import { handleInputChange, search } from '../actions/searchActions';
-import { deleteSearchData } from '../actions/searchActions';
+import { handleInputChange, search, deleteSearchData } from '../actions/searchActions';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
@@ -21,7 +20,7 @@ class SearchInput extends React.Component {
     }
   }
   handleInputChange = () => {
-    this.props.handleInputChange();
+    this.props.handleInputChange(this.props.searchState.inputValue);
     this.props.search(this.props.searchState.inputValue);
   }
   render() {
@@ -32,7 +31,7 @@ class SearchInput extends React.Component {
         </div>
         <div className="hiddenSearchbarContainer" ref="hiddenSearchbarContainer" onMouseOver={() => this.expandSearchbar()} onMouseOut={() => this.expandSearchbar()}>
           <div className="hiddenSearchbar" ref="hiddenSearchbar">
-            <input autoFocus className="searchInput" placeholder="City i.e. New York" type="text" value={this.props.searchState.inputValue} onChange={this.handleInputChange} />
+            <input autoFocus className="searchInput" placeholder="Bar i.e. Spiz" type="text" value={this.props.searchState.inputValue} onChange={this.handleInputChange} />
           </div>
           <div className="specialButton" ref="searchButton" >
             <FontAwesome name='search' />

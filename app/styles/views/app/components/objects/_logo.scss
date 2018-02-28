@@ -10,7 +10,7 @@
   font-family: 'Dancing Script', "cursive";
   text-shadow: 0px 0px 15px rgba(255,255,255,0.85);
   opacity: 0.85;
-  animation: glowing 4s infinite;
+  animation: glowing 5s infinite;
   & > span {
     margin: 5px;
     letter-spacing: 2px;
@@ -24,7 +24,7 @@
 }
 
 @keyframes glowing {
-  0% { text-shadow: 0px 0px 15px rgba(255,255,255,0.8); opacity: 0.85; }
-  50% { text-shadow: 0px 0px 40px rgb(255,255,255); opacity: 0.95; }
-  100% { text-shadow: 0px 0px 15px rgba(255,255,255,0.8); opacity: 0.85; }
+  0% { text-shadow: 0px 0px 15px rgb(255,255,255); opacity: 0.75; }
+  50% { text-shadow: 0px 0px 35px rgb(255,255,255); opacity: 0.95; }
+  100% { text-shadow: 0px 0px 15px rgb(255,255,255); opacity: 0.75; }
 }

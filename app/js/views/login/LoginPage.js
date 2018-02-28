@@ -1,23 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+//components
+import Background from './components/Background';
+import Content from './components/Content';
 
-class LoginPage extends React.Component {
-  render() {
-    return (
-      <div className="wrapper">
-        <div className="content">
-          <div>
-            <h1> LOGIN </h1>
-          </div>
-        </div>
-      </div>
-     )
-   }
+const LoginPage = () => {
+  return (
+    <div className="wrapper">
+      <Background />
+      <Content />
+    </div>
+   )
  }
 
- const mapStateToProps = store => ({
-     sampleState: store.sampleReducer,
-     secondState: store.secondReducer
- });
-
- export default connect(mapStateToProps)(LoginPage);
+export default LoginPage;
