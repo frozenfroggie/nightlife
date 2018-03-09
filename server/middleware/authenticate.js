@@ -1,22 +1,26 @@
 const User = require('../models/user');
 
 const authenticate = (req, res, next) => {
-  let token;
+  let authToken;
   try {
-    token = req.headers['authorization'].split(' ')[1];
+    authToken = req.headers['authorization'].split(' ')[1];
   } catch(err) {
     //ignore if token occurs undefined and split can't work
   }
-  User.findByToken(token)
+  User.findByToken(authToken)
       .then(user => {
         if(!user) {
           return Promise.reject();
         } else {
+          console.log('auth token used');
           req.user = user;
-          req.token = token;
+          req.authToken = authToken;
           next();
         }
-      }).catch(e => res.status(401).send());
+      }).catch(err => {
+          console.log('auth token expired');
+          res.status(401).send(err);
+      });
 };
 
 module.exports = authenticate;

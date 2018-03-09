@@ -85,6 +85,10 @@
             font-size: 1.2em;
             font-weight: 500;
             color: $contrastColor;
+            &:hover {
+              cursor: pointer;
+              text-decoration: underline;
+            }
           }
           .location {
             width: 320px;

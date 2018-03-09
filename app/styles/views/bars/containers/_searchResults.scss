@@ -60,6 +60,10 @@
             @include breakpoint(laptop) {
               font-size: 1em;
             }
+            .barName:hover {
+              cursor: pointer;
+              text-decoration: underline;
+            }
             .stars {
               color: #ffc404;
               text-shadow: black 1px 1px 10px;
@@ -77,6 +81,9 @@
           }
           .wantToGo {
             color: $contrastColor;
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
         & > div > hr {
@@ -96,16 +103,10 @@
     box-sizing: border-box;
     border: 1px solid $contrastColor;
     border-radius: 4px;
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   .barInactive {
     box-sizing: border-box;
-    &:hover {
-      cursor: pointer;
-    }
   }
 
 }

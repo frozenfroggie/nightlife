@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pick = require('lodash/pick');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
+const randtoken = require('rand-token');
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -36,36 +37,47 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
   },
-  tokens: [{
-    access: {
-      type: String,
-      required: true
+  tokens: {
+    authToken: {
+      type: String
     },
-    token: {
-      type: String,
-      required: true
+    refreshToken: {
+      type: String
     }
-  }],
+  },
   bars: []
 });
 
 UserSchema.plugin(beautifyUnique);
 
-UserSchema.statics.findByToken = function(token) {
-//console.log(token);
+UserSchema.statics.findByToken = function(authToken) {
   const User = this;
   let decoded;
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
+    decoded = jwt.verify(authToken, process.env.JWT_SECRET_1);
   } catch(err) {
     return Promise.reject(err);
   }
   return User.findOne({
     '_id': decoded._id,
-    'tokens.token': token,
-    'tokens.access': 'auth'
+    'tokens.authToken': authToken
   });
+}
+
+UserSchema.statics.findByRefreshToken = function(refreshToken) {
+  const User = this;
+  let decoded;
+  try {
+    decoded = jwt.verify(refreshToken, process.env.JWT_SECRET_2);
+  } catch(err) {
+    return Promise.reject(err);
+  }
+  return User.findOne({
+    '_id': decoded._id,
+    'tokens.refreshToken': refreshToken
+  }).then(user => {
+    return user;
+  }).catch(err => console.log(err));
 }
 
 UserSchema.methods.toJSON = function() {
@@ -73,19 +85,28 @@ UserSchema.methods.toJSON = function() {
   return pick(user, ['_id', 'email', 'username', 'bars']);
 };
 
-UserSchema.methods.generateAndSaveAuthToken = function() {
+UserSchema.methods.generateAndSaveTokens = function() {
   const user = this;
-  const access = 'auth';
-  const token = jwt.sign({_id: user._id.toHexString(), email: user.email, username: user.username, access}, process.env.JWT_SECRET);
-  user.tokens.push({access, token});
-  return user.save().then(() => token);
+
+  const authTokenExpirationTime = 60;
+  const authToken = jwt.sign({_id: user._id.toHexString(), email: user.email, username: user.username, access: 'auth'}, process.env.JWT_SECRET_1, {
+    expiresIn: authTokenExpirationTime
+  });
+
+  const refreshTokenExpirationTime = '7d';
+  const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_SECRET_2, {
+    expiresIn: refreshTokenExpirationTime
+  });
+
+  user.tokens = {authToken, refreshToken};
+  return user.save().then(() => user.tokens);
 };
 
-UserSchema.methods.removeToken = function(token) {
+UserSchema.methods.removeToken = function(authToken, refreshToken) {
   const user = this;
   return user.update({
     $pull: {
-      tokens: {token}
+      tokens: {authToken, refreshToken}
     }
   });
 };

@@ -16,8 +16,10 @@ router.post('/', function(req, res) {
   const body = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
   const user = new User(body);
   user.save()
-      .then(() => user.generateAndSaveAuthToken())
-      .then(token => res.header('Authorization', `Bearer ${token}`).send(user))
+      .then(() => user.generateAndSaveTokens())
+      .then(tokens => {
+        res.header('Authorization', `Bearer ${tokens.authToken}`).send({user, refreshToken: tokens.refreshToken});
+      })
       .catch(err => res.status(400).send(err));
 });
 
@@ -26,10 +28,23 @@ router.post('/login', function(req, res) {
   const body = pick(req.body, ['password', 'credentials']);
   User.findByCredentials(body.credentials, body.password)
       .then(user => {
-        return user.generateAndSaveAuthToken().then(token => {
-          res.header('Authorization', `Bearer ${token}`).send(user);
+        return user.generateAndSaveTokens().then(tokens => {
+          res.header('Authorization', `Bearer ${tokens.authToken}`).send({user, refreshToken: tokens.refreshToken});
         });
       }).catch(err => res.status(400).send(err));
+});
+
+//refresh tokens
+router.post('/refreshTokens', function(req, res) {
+  const refreshToken = req.body.refreshToken;
+  User.findByRefreshToken(refreshToken).then(user => {
+    return user.generateAndSaveTokens().then(newTokens => {
+      res.header('Authorization', `Bearer ${newTokens.authToken}`).send({refreshToken: newTokens.refreshToken});
+    });
+  }).catch(err => {
+    console.log(err);
+    res.status(401).send(err);
+  });
 });
 
 //get user info
@@ -39,18 +54,28 @@ router.get('/me', authenticate, function(req, res) {
 
 //add favourite bar to user account
 router.patch('/', authenticate, function(req, res) {
-  const body = pick(req.body, ['name', 'phone', 'address', 'url']);
+  const body = pick(req.body.bar, ['id', 'name', 'phone', 'address', 'url']);
   const user = req.user;
-  user.bars.push(body);
+  user.bars.find(bar => bar.id === body.id) || user.bars.push(body);
   User.findByIdAndUpdate(user._id, {$set: {bars: user.bars}}, {new: true}).then(user => {
-    res.send(user);
+    res.send({user, refreshToken: req.refreshToken});
+  }).catch(err => res.status(400).send(err));
+});
+
+//delete bar from user account
+router.delete('/:id', authenticate, function(req,res) {
+  const barId = req.params.id;
+  const user = req.user;
+  const bars = user.bars.filter(bar => bar.id !== barId);
+  User.findByIdAndUpdate(user._id, {$set: {bars}}, {new: true}).then(user => {
+    res.send({user, refreshToken: req.refreshToken});
   }).catch(err => res.status(400).send(err));
 });
 
 //logout
 router.delete('/me', authenticate, function(req, res) {
-  req.user.removeToken(req.token)
-          .then(() => res.status(200).send({message: 'token successfully deleted'}))
+  req.user.removeToken(req.authToken, req.refreshToken)
+          .then(() => res.status(200).send({message: 'tokens successfully deleted'}))
           .catch(err => res.status(400).send(err));
 });
 

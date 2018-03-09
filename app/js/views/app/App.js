@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Switch } from 'react-router-dom'
 
 import { toogleExpandMenu } from './actions/menuActions';
-import { logout } from '../shared/auth/authActions';
+import { logout, refreshToken } from '../shared/auth/authActions';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -18,9 +18,13 @@ import BarsPage from '../bars/BarsPage';
 import ProfilePage from '../profile/ProfilePage';
 
 import requireAuth from '../shared/auth/utils/requireAuth';
+import setAuthorizationToken from '../shared/auth/utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {
+    const timer = JSON.parse(localStorage.getItem('timer'));
+    console.log(timer - Date.now());
+
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
     window.addEventListener('resize', this.handleResizing);
   }
@@ -63,4 +67,4 @@ class App extends React.Component {
      authState: store.authReducer
  });
 
- export default connect(mapStateToProps, {toogleExpandMenu, logout})(App);
+ export default connect(mapStateToProps, {toogleExpandMenu, logout, refreshToken})(App);

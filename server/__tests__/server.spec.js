@@ -119,11 +119,11 @@ describe('Logging in', () => {
   });
 });
 
-describe('Get user information', () => {
+describe('Getting user information', () => {
   it('should return user if authenticated', (done) => {
     request(app)
       .get('/users/me')
-      .set({'Authorization': `Bearer ${users[0].tokens[0].token}`})
+      .set({'Authorization': `Bearer ${users[0].tokens.authToken}`})
       .expect(200)
       .expect((res) => {
         expect(res.body._id).to.equal(users[0]._id.toHexString());
@@ -142,11 +142,28 @@ describe('Get user information', () => {
   });
 });
 
+describe('Refreshing tokens after expiration of auth token', () => {
+  it('should generate new tokens', (done) => {
+    request(app)
+      .post('/users/refreshTokens')
+      .send({
+        refreshToken: users[0].tokens.refreshToken
+      })
+      .expect(200)
+      .expect(res => {
+        expect(res.body.refreshToken).to.be.ok;
+        expect(res.body.refreshToken).to.not.equal(users[0].tokens.refreshToken);
+        expect(res.headers['authorization']).to.be.ok;
+      })
+      .end(done);
+  });
+});
+
 describe('Logging out', () => {
   it('should remove auth bearer token on logout', done => {
     request(app)
       .delete('/users/me')
-      .set({'Authorization': `Bearer ${users[0].tokens[0].token}`})
+      .set({'Authorization': `Bearer ${users[0].tokens.authToken}`})
       .expect(200)
       .end((err, res) => {
         if(err) {

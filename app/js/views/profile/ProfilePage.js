@@ -9,7 +9,7 @@ import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition, chang
 
 class ProfilePage extends React.Component {
   componentDidMount() {
-     this.props.setBarsContainerHeight(230);
+     this.props.setBarsContainerHeight(240);
      this.props.resetScrollSettings();
   }
   scroll = event => {
@@ -17,7 +17,7 @@ class ProfilePage extends React.Component {
       return;
     }
     const isMouseEvent = event.type === "mousemove" ? true : false;
-    const hiddenContentHeight = this.props.scrollState.barsHeight - this.props.scrollState.barsContainerHeight;
+    const hiddenContentHeight = this.props.scrollState.barsHeight - this.props.scrollState.barsContainerHeight + 10;
     const halfOfScrollBtnHeight = this.props.scrollState.scrollButton.height / 2;
     const scrollbarPositionY = this.props.scrollState.scrollbar.positionY;
     const scrollBtnPositionY = this.props.scrollState.scrollButton.positionY;

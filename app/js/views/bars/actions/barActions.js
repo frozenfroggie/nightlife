@@ -8,17 +8,30 @@ export const setActiveBar = barIdx => ({
 
 export const saveUser = user => ({
   type: SAVE_USER,
-  payload: user
+  user
 });
 
 export function wantToGo(bar) {
   return dispatch => {
-    return axios.patch('/users', bar)
+    return axios.patch('/users', {refreshToken: localStorage.getItem('refreshToken'), bar})
                 .then(res => {
-                  dispatch(saveUser(res.data));
+                  dispatch(saveUser(res.data.user));
                 })
                 .catch(err => {
-                  console.log(err);
+                  throw err;
+                });
+  }
+}
+
+export function removeBarFromUser(id, idx) {
+  return dispatch => {
+    return axios.delete(`/users/${id}`)
+                .then(res => {
+                  console.log(res);
+                  dispatch(saveUser(res.data.user));
+                })
+                .catch(err => {
+                  throw err;
                 });
   }
 }

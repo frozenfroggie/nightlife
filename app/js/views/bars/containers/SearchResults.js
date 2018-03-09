@@ -53,8 +53,8 @@ class SearchResults extends React.Component {
   }
   onClick = (barIdx) => {
     this.props.setActiveBar(barIdx);
-    //const barUrl =  this.props.searchState.searchData[barIdx].url;
-    //window.open(barUrl, '_blank');
+    const barUrl =  this.props.searchState.searchData[barIdx].url;
+    window.open(barUrl, '_blank');
   }
   onHover = (barIdx) => {
     this.props.setActiveBar(barIdx);
@@ -68,11 +68,13 @@ class SearchResults extends React.Component {
       }
       bar.rating % 1 !== 0 && stars.push(<span key={stars.length}><FontAwesome name='star-half'/></span>);
       return (
-        <div ref="bar" key={bar.name} onClick={() => this.onClick(idx)} onMouseOver={() => this.onHover(idx)} >
+        <div ref="bar" key={bar.name} onMouseOver={() => this.onHover(idx)} >
           <div className={this.props.activityState.activeBar === idx ? "bar barActive" : "bar barInactive"} style={this.props.scrollState.barStyle} >
             <img className="barImage" src={bar.image_url || coctailIcon} />
             <div className="barInfo">
-              <div><h3> {bar.name} </h3></div>
+              <div className="barName">
+                <h3 onClick={() => this.onClick(idx)}> {bar.name} </h3>
+              </div>
               <div className="stars"> { stars } </div>
               <div>
                 <span> { bar.price ? bar.price : '' } </span>
@@ -84,7 +86,7 @@ class SearchResults extends React.Component {
               <div> { bar.location.display_address.join(", ") } </div>
               <div> Phone: { bar.phone ? bar.phone : 'not specified' } </div>
             </div>
-            <div className="wantToGo" onClick={() => this.props.wantToGo({name: bar.name, imgUrl: bar.image_url, address: bar.location.display_address.join(", "), phone: bar.phone, url: bar.url })}><FontAwesome name="heart" /></div>
+            <div className="wantToGo" onClick={() => this.props.wantToGo({id: bar.id, name: bar.name, imgUrl: bar.image_url, address: bar.location.display_address.join(", "), phone: bar.phone, url: bar.url }).catch(err => console.log(err))}><FontAwesome name="heart" /></div>
           </div>
           {
             idx !== searchData.length - 1 ?

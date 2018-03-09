@@ -70,6 +70,7 @@
     "jwt-decode": "^2.2.0",
     "mongoose": "^5.0.4",
     "mongoose-beautiful-unique-validation": "^7.1.0",
+    "rand-token": "^0.4.0",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^15.6.1",

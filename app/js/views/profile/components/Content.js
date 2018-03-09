@@ -2,36 +2,52 @@ import React from 'react';
 import {connect} from 'react-redux'
 import trim from 'lodash/trim';
 import FontAwesome from 'react-fontawesome';
+
 import Scrollbar from '../../shared/scroll/Scrollbar';
+import {removeBarFromUser} from '../../bars/actions/barActions.js';
 
 class Content extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      barsEl: null
+      barsEl: null,
+      barLocationToExpand: undefined
     }
   }
   beautyLocation(location) {
-    let beauty = location.split('');
-    if(beauty.length > 38) {
-      beauty = trim(beauty.slice(0,30).join(''));
-      return beauty + '...'
-    } else {
-      return location
+    try {
+      let beauty = location.split('');
+      if(beauty.length > 31) {
+        beauty = beauty.slice(0, 31);
+        if(beauty[beauty.length - 1] === ',') {
+          beauty = beauty.slice(0, 30);
+        }
+        if(beauty[beauty.length - 1] === ' ' && beauty[beauty.length - 2] === ',') {
+          beauty = beauty.slice(0, 28);
+        }
+        return trim(beauty.join('')) + '...'
+      } else {
+        return location
+      }
+    } catch(e) {
+      console.log(e);
     }
+  }
+  setBarLocationToExpand = i => {
+    this.setState({barLocationToExpand: i});
   }
   barsList = () => {
     return this.props.user.bars.map((bar, i) => {
       return (
-        <div className='bar' key={i} >
+        <div className='bar' key={i} onMouseOver={() => this.setBarLocationToExpand(i)} onMouseOut={() => this.setBarLocationToExpand(undefined)} onMouse>
           <div className="wantToGo"><FontAwesome name="heart" /></div>
           <div>
-            <p className="barName"> { bar.name } </p>
-            <p className="location"> Location: { this.beautyLocation(bar.address) } </p>
+            <p className="barName" onClick={() => window.open(bar.url, '_blank')}> { bar.name } </p>
+            <p className="location"> Location: { this.state.barLocationToExpand === i ? bar.address : this.beautyLocation(bar.address) } </p>
             <p> Phone: { bar.phone } </p>
           </div>
           <div className="deleteContainer">
-            <div className="delete"><FontAwesome name="trash" /></div>
+            <div onClick={() => this.props.removeBarFromUser(bar.id)} className="delete"><FontAwesome name="trash" /></div>
           </div>
         </div>
       )
@@ -76,4 +92,4 @@ class Content extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default connect(mapStateToProps, {})(Content);
+ export default connect(mapStateToProps, {removeBarFromUser})(Content);

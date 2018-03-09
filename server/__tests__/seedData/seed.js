@@ -11,19 +11,19 @@ const users = [{
   username: 'firstuser',
   email: 'andrew@example.com',
   password: 'userOnePass',
-  tokens: [{
-    access: 'auth',
-    token: `${jwt.sign({_id: userOneId, access: 'auth'}, process.env.JWT_SECRET)}`
-  }]
+  tokens: {
+    authToken: `${jwt.sign({_id: userOneId, access: 'auth'}, process.env.JWT_SECRET_1)}`,
+    refreshToken: `${jwt.sign({_id: userOneId, access: 'refresh'}, process.env.JWT_SECRET_2)}`
+  }
 }, {
   _id: userTwoId,
   username: 'seconduser',
   email: 'jen@example.com',
   password: 'userTwoPass',
-  tokens: [{
-    access: 'auth',
-    token: `${jwt.sign({_id: userTwoId, access: 'auth'}, process.env.JWT_SECRET)}`
-  }]
+  tokens: {
+    authToken: `${jwt.sign({_id: userTwoId, access: 'auth'}, process.env.JWT_SECRET_1)}`,
+    refreshToken:`${jwt.sign({_id: userTwoId, access: 'refresh'}, process.env.JWT_SECRET_2)}`
+  }
 }];
 
 const populateUsers = done => {
