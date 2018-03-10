@@ -3,7 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Link, NavLink } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
-const Navigation = props => {
+const TheNavigation = props => {
   const guestLinks = (
     <div className="menu">
       <div className="spaceHolderMobile"></div>
@@ -47,4 +47,4 @@ const Navigation = props => {
   );
 };
 
-export default Navigation;
+export default TheNavigation;

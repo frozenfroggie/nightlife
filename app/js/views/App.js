@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Switch } from 'react-router-dom'
 
-import { toogleExpandMenu } from './actions/menuActions';
-import { logout, refreshToken } from '../shared/actions/authActions';
+import { toogleExpandMenu } from './shared/actions/menuActions';
+import { logout, refreshToken } from './shared/actions/authActions';
 
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
+import TheNavigation from './shared/components/TheNavigation';
+import TheFooter from './shared/components/TheFooter';
 
-import HomePage from '../home/HomePage';
-import LoginPage from '../login/LoginPage';
-import SignupPage from '../signup/SignupPage';
-import AboutPage from '../about/AboutPage';
-import BarsPage from '../bars/BarsPage';
-import ProfilePage from '../profile/ProfilePage';
+import HomePage from './home/HomePage';
+import LoginPage from './login/LoginPage';
+import SignupPage from './signup/SignupPage';
+import AboutPage from './about/AboutPage';
+import BarsPage from './bars/BarsPage';
+import ProfilePage from './profile/ProfilePage';
 
-import requireAuth from '../shared/utils/requireAuth';
-import setAuthorizationToken from '../shared/utils/setAuthorizationToken';
+import requireAuth from './shared/utils/requireAuth';
+import setAuthorizationToken from './shared/utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {
@@ -43,7 +43,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="container">
-          <Navigation toogleMenuOnMobile={this.toogleMenuOnMobile} logout={this.logout} isAuthenticated={this.props.authState.isAuthenticated} expandMenu={this.props.menuState.expandMenu} hamburgerClick={this.props.toogleExpandMenu} />
+          <TheNavigation toogleMenuOnMobile={this.toogleMenuOnMobile} logout={this.logout} isAuthenticated={this.props.authState.isAuthenticated} expandMenu={this.props.menuState.expandMenu} hamburgerClick={this.props.toogleExpandMenu} />
           <Route render={({ location, history }) => (
             <ReactCSSTransitionGroup transitionName="routes" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
               <Switch key={history.location.pathname.split('/')[1] || '/'} pathname={history.location.pathname} location={history.location}>
