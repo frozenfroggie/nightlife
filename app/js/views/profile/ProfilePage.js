@@ -42,7 +42,7 @@ class ProfilePage extends React.Component {
       return <Redirect to={'/'} />;
     }
     return (
-      <div >
+      <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)}>
         <div className="wrapper">
           <Background />
           <Content user={this.props.authState.user} scroll={this.scroll} barsContainerHeight={this.props.scrollState.barsContainerHeight} barsPosition={this.props.scrollState.barsPosition} />
@@ -57,4 +57,4 @@ class ProfilePage extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition})(ProfilePage);
+ export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, toogleIsGrabbed})(ProfilePage);

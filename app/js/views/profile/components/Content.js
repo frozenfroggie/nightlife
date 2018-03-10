@@ -43,7 +43,7 @@ class Content extends React.Component {
           <div className="wantToGo"><FontAwesome name="heart" /></div>
           <div>
             <p className="barName" onClick={() => window.open(bar.url, '_blank')}> { bar.name } </p>
-            <p className="location"> Location: { this.state.barLocationToExpand === i ? bar.address : this.beautyLocation(bar.address) } </p>
+            <div className="locationContainer" style={{display: "flex"}}><div className="locationTitle">Location:</div> <div className="location"><span style={this.state.barLocationToExpand === i && bar.address.length > 31 ? {left: -(bar.address.length - 31) * 7} : {}}> { bar.address } </span></div></div>
             <p> Phone: { bar.phone } </p>
           </div>
           <div className="deleteContainer">
@@ -61,8 +61,8 @@ class Content extends React.Component {
         <h4 className="profileEmail"> { this.props.user.email } </h4>
         <br />
         <div className="profileButtonsContainer">
-        <div className="profileButton"> ACTIVITIES </div>
-        <div className='profileButton'> SETTINGS </div>
+          <div className="profileButton"> ACTIVITIES </div>
+          <div className='profileButton'> SETTINGS </div>
         </div>
         <br />
         <h3> Recent activities: </h3>
