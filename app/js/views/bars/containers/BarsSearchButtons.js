@@ -4,7 +4,7 @@ import { handleInputChange, search, deleteSearchData } from '../actions/searchAc
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 
-class SearchInput extends React.Component {
+class BarsSearchButtons extends React.Component {
   expanded = false;
   expandSearchbar() {
     if(!this.expanded) {
@@ -47,4 +47,4 @@ class SearchInput extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default withRouter(connect(mapStateToProps, {handleInputChange, search, deleteSearchData})(SearchInput));
+ export default withRouter(connect(mapStateToProps, {handleInputChange, search, deleteSearchData})(BarsSearchButtons));

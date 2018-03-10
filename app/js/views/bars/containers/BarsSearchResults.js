@@ -15,7 +15,7 @@ import coctailIcon from '../../../../images/coctail.png';
 const horizontalLineHeight = 1;
 const borderWidthOfActiveBar = 1;
 
-class SearchResults extends React.Component {
+class BarsSearchResults extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -127,4 +127,4 @@ class SearchResults extends React.Component {
      activityState: store.activityReducer
  });
 
- export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, wantToGo, setActiveBar, handleInputChange, search, deleteSearchData})(SearchResults);
+ export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, wantToGo, setActiveBar, handleInputChange, search, deleteSearchData})(BarsSearchResults);

@@ -1,8 +1,8 @@
 import React from 'react';
 //containers
-import SearchButtons from '../containers/SearchButtons';
-import SearchResults from '../containers/SearchResults';
-import GoogleMap from '../containers/GoogleMap';
+import BarsSearchButtons from '../containers/BarsSearchButtons';
+import BarsSearchResults from '../containers/BarsSearchResults';
+import TheGoogleMap from '../../shared/components/TheGoogleMap';
 import FontAwesome from 'react-fontawesome';
 
 const Bars = (props) => {
@@ -10,15 +10,15 @@ const Bars = (props) => {
     <div className="wrapper">
       <div className="searchContainerComplex">
         <div className="searchResults">
-          <SearchButtons />
-          <SearchResults />
+          <BarsSearchButtons />
+          <BarsSearchResults />
         </div>
         <div className="nextBarButtonContainer">
           <div className="specialButton">
             <FontAwesome name="chevron-down" />
           </div>
         </div>
-        <GoogleMap />
+        <TheGoogleMap />
       </div>
     </div>
   )

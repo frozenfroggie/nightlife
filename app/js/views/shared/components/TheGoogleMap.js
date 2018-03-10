@@ -82,7 +82,7 @@ const mapStyle = [
      }
    ];
 
-class GoogleMap extends React.Component {
+class TheGoogleMap extends React.Component {
   componentDidMount() {
      // Connect the initMap() function within this class to the global window context,
      // so Google Maps can invoke it
@@ -170,4 +170,4 @@ function loadGoogleMapsScript(src) {
      activityState: store.activityReducer
  });
 
- export default connect(mapStateToProps)(GoogleMap);
+ export default connect(mapStateToProps)(TheGoogleMap);

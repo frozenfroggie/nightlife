@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { handleInputChange, search } from './actions/searchActions';
 import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
          setScrollbarPositionY } from '../shared/actions/scrollActions';//components
-import SearchPanel from './components/SearchPanel';
+import SearchInput from './containers/SearchInput';
 import Bars from './components/Bars';
 import TheBackground from '../shared/components/TheBackground';
 
@@ -40,10 +40,12 @@ class BarsPage extends React.Component {
             <TheBackground backgroundName='citylight' />
             <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
               <Switch key={this.props.history.location.pathname} pathname={this.props.history.location.pathname} location={this.props.history.location}>
-                <Route exact path={this.props.match.url} key="searchPanel" render={() => (
-                  <SearchPanel searchData={this.props.searchState.searchData} />
-                )} />
-                <Route path={`${this.props.match.url}/:city`} component={Bars} key="bars" />
+                <Route exact path={this.props.match.url} key="searchPanel" render={() =>
+                  ( <SearchInput searchData={this.props.searchState.searchData} /> )}
+                />
+                <Route path={`${this.props.match.url}/:city`}
+                       key="bars"
+                       component={Bars} />
               </Switch>
             </ReactCSSTransitionGroup>
         </div>

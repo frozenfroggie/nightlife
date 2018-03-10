@@ -12,22 +12,28 @@ class SearchInput extends React.Component {
   render() {
     const searchIfEnter = event => event.key === "Enter" ? this.props.search(this.props.searchState.inputValue) : '';
     return (
-      <div className="search">
-        <div className="hint"> Please enter your city </div>
-        <input className="searchInput" autoFocus placeholder="City i.e. New York" type="text" value={this.props.searchState.inputValue} onChange={this.props.handleInputChange} onKeyDown={searchIfEnter}/>
-        <div className="backContainer">
-          <div className="specialButton" onClick={() => this.props.history.push('/')}>
-            <FontAwesome name='chevron-left'/>
-          </div>
-        </div>
-        <div className="magnifierContainer">
-          <div className="specialButton" onClick={() => this.props.search(this.props.searchState.inputValue)}>
-            {
-              this.props.searchState.isSearching ?
-              <FontAwesome name='spinner' pulse />
-              :
-              <FontAwesome name='search' />
-            }
+      <div className="wrapper">
+        <div className="content">
+          <div className="searchContainerSimple" key="1">
+            <div className="search">
+              <div className="hint"> Please enter your city </div>
+              <input className="searchInput" autoFocus placeholder="City i.e. New York" type="text" value={this.props.searchState.inputValue} onChange={this.props.handleInputChange} onKeyDown={searchIfEnter}/>
+              <div className="backContainer">
+                <div className="specialButton" onClick={() => this.props.history.push('/')}>
+                  <FontAwesome name='chevron-left'/>
+                </div>
+              </div>
+              <div className="magnifierContainer">
+                <div className="specialButton" onClick={() => this.props.search(this.props.searchState.inputValue)}>
+                {
+                  this.props.searchState.isSearching ?
+                  <FontAwesome name='spinner' pulse />
+                  :
+                  <FontAwesome name='search' />
+                }
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
