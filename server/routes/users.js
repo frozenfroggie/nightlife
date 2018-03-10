@@ -3,6 +3,7 @@ const router = express.Router();
 const authenticate = require('../middleware/authenticate');
 const User = require('../models/user');
 const pick = require('lodash/pick');
+const moment = require('moment');
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -56,6 +57,7 @@ router.get('/me', authenticate, function(req, res) {
 router.patch('/', authenticate, function(req, res) {
   const body = pick(req.body.bar, ['id', 'name', 'phone', 'address', 'url']);
   const user = req.user;
+  body.timestamp = moment().format('MMMM Do YYYY');
   user.bars.find(bar => bar.id === body.id) || user.bars.push(body);
   User.findByIdAndUpdate(user._id, {$set: {bars: user.bars}}, {new: true}).then(user => {
     res.send({user, refreshToken: req.refreshToken});
