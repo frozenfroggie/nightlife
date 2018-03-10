@@ -1,12 +1,12 @@
 import React from 'react';
 //components
-import Background from './components/Background';
+import TheBackground from '../shared/components/TheBackground';
 import Content from './components/Content';
 
 const AboutPage = () => {
   return (
     <div className="wrapper">
-      <Background />
+      <TheBackground backgroundName='bgFoggy'/>
       <Content />
     </div>
    )

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 //actions
 import { handleInputChange, search } from './actions/searchActions';
 import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
-         setScrollbarPositionY } from '../shared/scroll/scrollActions';//components
+         setScrollbarPositionY } from '../shared/actions/scrollActions';//components
 import SearchPanel from './components/SearchPanel';
 import Bars from './components/Bars';
-import Background from './components/Background';
+import TheBackground from '../shared/components/TheBackground';
 
 import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -37,7 +37,7 @@ class BarsPage extends React.Component {
   render() {
     return (
         <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)} >
-            <Background />
+            <TheBackground backgroundName='citylight' />
             <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
               <Switch key={this.props.history.location.pathname} pathname={this.props.history.location.pathname} location={this.props.history.location}>
                 <Route exact path={this.props.match.url} key="searchPanel" render={() => (

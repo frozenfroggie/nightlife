@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Switch } from 'react-router-dom'
 
 import { toogleExpandMenu } from './actions/menuActions';
-import { logout, refreshToken } from '../shared/auth/authActions';
+import { logout, refreshToken } from '../shared/actions/authActions';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -17,8 +17,8 @@ import AboutPage from '../about/AboutPage';
 import BarsPage from '../bars/BarsPage';
 import ProfilePage from '../profile/ProfilePage';
 
-import requireAuth from '../shared/auth/utils/requireAuth';
-import setAuthorizationToken from '../shared/auth/utils/setAuthorizationToken';
+import requireAuth from '../shared/utils/requireAuth';
+import setAuthorizationToken from '../shared/utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {

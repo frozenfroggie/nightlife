@@ -8,7 +8,7 @@ import App from './views/app/App';
 
 const store = configureStore();
 
-import './views/shared/auth/utils/setAuthorizationToken';
+import './views/shared/utils/setAuthorizationToken';
 
 ReactDOM.render(
   <Provider store={store}>

@@ -4,11 +4,11 @@ import FontAwesome from 'react-fontawesome';
 import { withRouter } from "react-router-dom";
 
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
-         setScrollbarPositionY, setBarsContainerHeight } from '../../shared/scroll/scrollActions';
+         setScrollbarPositionY, setBarsContainerHeight } from '../../shared/actions/scrollActions';
 import { handleInputChange, search, deleteSearchData } from '../actions/searchActions';
 import { setActiveBar, wantToGo } from '../actions/barActions';
 
-import Scrollbar from '../../shared/scroll/Scrollbar';
+import TheScrollbar from '../../shared/components/TheScrollbar';
 
 import coctailIcon from '../../../../images/coctail.png';
 
@@ -67,6 +67,7 @@ class SearchResults extends React.Component {
         stars.push(<span key={i}><FontAwesome name='star' /></span>);
       }
       bar.rating % 1 !== 0 && stars.push(<span key={stars.length}><FontAwesome name='star-half'/></span>);
+      const favoriteBar = {id: bar.id, name: bar.name, imgUrl: bar.image_url, address: bar.location.display_address.join(", "), phone: bar.phone, url: bar.url };
       return (
         <div ref="bar" key={bar.name} onMouseOver={() => this.onHover(idx)} >
           <div className={this.props.activityState.activeBar === idx ? "bar barActive" : "bar barInactive"} style={this.props.scrollState.barStyle} >
@@ -86,7 +87,9 @@ class SearchResults extends React.Component {
               <div> { bar.location.display_address.join(", ") } </div>
               <div> Phone: { bar.phone ? bar.phone : 'not specified' } </div>
             </div>
-            <div className="wantToGo" onClick={() => this.props.wantToGo({id: bar.id, name: bar.name, imgUrl: bar.image_url, address: bar.location.display_address.join(", "), phone: bar.phone, url: bar.url }).catch(err => console.log(err))}><FontAwesome name="heart" /></div>
+            <div className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
+              <FontAwesome name="heart" />
+            </div>
           </div>
           {
             idx !== searchData.length - 1 ?
@@ -99,7 +102,8 @@ class SearchResults extends React.Component {
     return (
       <div className="searchedDataContainer">
         <div className="barsWrapper">
-          <div className="barsContainer" style={{height: this.props.scrollState.barsContainerHeight}} onWheel={this.scroll}>
+          <div className="barsContainer" style={{height: this.props.scrollState.barsContainerHeight}}
+                                         onWheel={this.scroll}>
             <div className="bars" id="bars"
                  style={{top: this.props.scrollState.barsPosition}}
                  ref={ barsRef => !this.state.barsEl && this.setState({ barsEl: barsRef }) } >
@@ -107,7 +111,7 @@ class SearchResults extends React.Component {
             </div>
             {
               this.state.barsEl ?
-              <Scrollbar barsRef={this.state.barsEl} scrollbarHeight={385} />
+              <TheScrollbar barsRef={this.state.barsEl} scrollbarHeight={385} />
               : ''
             }
           </div>

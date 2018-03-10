@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
-         setBarsHeight, setScrollbarPositionY, setScrollbarHeight } from './scrollActions';
+         setBarsHeight, setScrollbarPositionY, setScrollbarHeight } from '../actions/scrollActions';
 
 class Scrollbar extends React.Component {
   componentDidMount() {

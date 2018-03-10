@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
-import {withRouter, Link} from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
-import {login} from '../../shared/auth/authActions';
+import { login } from '../../shared/actions/authActions';
 import validateInput from '../utils/clientValidation';
 import TextInputField from '../components/TextInputField';
 import SubmitInputField from '../components/SubmitInputField';

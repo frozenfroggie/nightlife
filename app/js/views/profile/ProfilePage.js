@@ -5,7 +5,8 @@ import { Switch, Redirect } from 'react-router-dom'
 import Background from './components/Background';
 import Content from './components/Content';
 
-import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition, setBarsContainerHeight } from '../shared/scroll/scrollActions';
+import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
+         changeBarsPosition, setBarsContainerHeight } from '../shared/actions/scrollActions';
 
 class ProfilePage extends React.Component {
   componentDidMount() {

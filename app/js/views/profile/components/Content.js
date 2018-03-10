@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import trim from 'lodash/trim';
 import FontAwesome from 'react-fontawesome';
 
-import Scrollbar from '../../shared/scroll/Scrollbar';
+import TheScrollbar from '../../shared/components/TheScrollbar';
 import {removeBarFromUser} from '../../bars/actions/barActions.js';
 
 class Content extends React.Component {
@@ -43,7 +43,14 @@ class Content extends React.Component {
           <div className="wantToGo"><FontAwesome name="heart" /></div>
           <div>
             <div className="barNameContainer"><div className="barName" onClick={() => window.open(bar.url, '_blank')}> { bar.name } </div><div className="timestamp"> { bar.timestamp } </div></div>
-            <div className="locationContainer" style={{display: "flex"}}><div className="locationTitle">Location:</div> <div className="location"><span style={this.state.barLocationToExpand === i && bar.address.length > 31 ? {left: -(bar.address.length - 31) * 7} : {}}> { bar.address } </span></div></div>
+            <div className="locationContainer" style={{display: "flex"}}>
+              <div className="locationTitle"> Location: </div>
+              <div className="location">
+                <span style={this.state.barLocationToExpand === i && bar.address.length > 31 ? {left: -(bar.address.length - 31) * 7} : {}}>
+                  { bar.address }
+                </span>
+              </div>
+            </div>
             <p> Phone: { bar.phone } </p>
           </div>
           <div className="deleteContainer">
@@ -75,7 +82,7 @@ class Content extends React.Component {
             </div>
             {
               this.state.barsEl && this.props.user.bars.length > 3 ?
-              <Scrollbar barsRef={this.state.barsEl} scrollbarHeight={175} />
+              <TheScrollbar barsRef={this.state.barsEl} scrollbarHeight={175} />
               : ''
             }
           </div>
