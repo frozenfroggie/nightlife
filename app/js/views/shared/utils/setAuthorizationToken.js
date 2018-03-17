@@ -1,5 +1,64 @@
 import axios from 'axios';
 
+var myInterceptor = axios.interceptors.response.use(function (response) {
+    // Do something with response data
+    return response;
+  }, function (error) {
+    // Do something with response error
+    const originalRequest = error.config;
+    if(error.response.status === 401 && !error.config._retry) {
+      axios.interceptors.response.eject(myInterceptor);
+      const refreshToken = window.localStorage.getItem('refreshToken');
+      return axios.post('/users/refreshTokens', {refreshToken})
+                  .then(res => {
+                    const authToken = res.headers.authorization.split(' ')[1];
+                    const refreshToken = res.data.refreshToken;
+                    window.sessionStorage.setItem('authToken', authToken);
+                    window.localStorage.setItem('refreshToken', refreshToken);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
+                    originalRequest.headers['Authorization'] = 'Bearer ' + authToken;
+                    return axios(originalRequest);
+                  })
+                  .catch(error => {
+                    return Promise.reject(error);
+                  });
+    }
+    return Promise.reject(error);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // export default function setAuthorizationToken(authToken) {
 //   if (authToken) {
 //     axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
@@ -7,30 +66,30 @@ import axios from 'axios';
 //     delete axios.defaults.headers.common['Authorization'];
 //   }
 // }
-
-axios.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
-  console.log(error);
-  const originalRequest = error.config;
-  if (error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true;
-    const refreshToken = window.localStorage.getItem('refreshToken');
-    console.log(refreshToken);
-    return axios.post('/users/refreshTokens', {refreshToken})
-      .then(res => {
-        const authToken = res.headers.authorization.split(' ')[1];
-        console.log(res.headers);
-        window.sessionStorage.setItem('authToken', authToken);
-        window.localStorage.setItem('refreshToken', res.data.refreshToken);
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
-        originalRequest.headers['Authorization'] = 'Bearer ' + authToken;
-        return axios(originalRequest);
-      });
-  }
-  return Promise.reject(error);
-});
 //
+// axios.interceptors.response.use(function (response) {
+//   return response;
+// }, function (error) {
+//   console.log(error);
+//   const originalRequest = error.config;
+//   if (error.response.status === 401 && !originalRequest._retry) {
+//     originalRequest._retry = true;
+//     const refreshToken = window.localStorage.getItem('refreshToken');
+//     console.log(refreshToken);
+//     return axios.post('/users/refreshTokens', {refreshToken})
+//       .then(res => {
+//         const authToken = res.headers.authorization.split(' ')[1];
+//         console.log(res.headers);
+//         window.sessionStorage.setItem('authToken', authToken);
+//         window.localStorage.setItem('refreshToken', res.data.refreshToken);
+//         axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
+//         originalRequest.headers['Authorization'] = 'Bearer ' + authToken;
+//         return axios(originalRequest);
+//       });
+//   }
+//   return Promise.reject(error);
+// });
+// //
 // Vue.axios.interceptors.response.use((response) => { // intercept the global error
 //     return response
 //   }, function (error) {

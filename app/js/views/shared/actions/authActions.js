@@ -18,8 +18,9 @@ export function signup(data) {
     return axios.post('/users', data)
                 .then(res => {
                   const authToken = res.headers.authorization.split(' ')[1];
+                  console.log(authToken);
                   try {
-                    localStorage.setItem('authToken', authToken);
+                    sessionStorage.setItem('authToken', authToken);
                     //setAuthorizationToken(authToken);
 
                     const refreshToken = res.data.refreshToken;
@@ -78,7 +79,6 @@ export function login(data) {
 export function logout() {
   return dispatch => {
     dispatch(saveUser({}));
-    //setAuthorizationToken(false);
     sessionStorage.removeItem('authToken');
     localStorage.removeItem('refreshToken');
   }

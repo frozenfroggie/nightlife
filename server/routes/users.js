@@ -9,7 +9,7 @@ const moment = require('moment');
 router.get('/search/:identifier', function(req, res) {
   User.checkUserExists(req.params.identifier)
       .then(isUserExists => res.send({isUserExists}))
-      .catch(err => console.log(err));
+      .catch(err => res.status(400).send(err));
 });
 
 //signup
@@ -43,8 +43,7 @@ router.post('/refreshTokens', function(req, res) {
       res.header('Authorization', `Bearer ${newTokens.authToken}`).send({refreshToken: newTokens.refreshToken});
     });
   }).catch(err => {
-    console.log(err);
-    res.status(401).send(err);
+    res.status(401).send({error: 'refresh token expired'});
   });
 });
 
@@ -75,10 +74,14 @@ router.delete('/:id', authenticate, function(req,res) {
 });
 
 //logout
-router.delete('/me', authenticate, function(req, res) {
-  req.user.removeToken(req.authToken, req.refreshToken)
-          .then(() => res.status(200).send({message: 'tokens successfully deleted'}))
-          .catch(err => res.status(400).send(err));
-});
+// router.delete('/me', authenticate, function(req, res) {
+//   const user = req.user;
+//   user.removeToken()
+//       .then(tokens => {
+//         console.log(tokens);
+//         res.send({message: 'tokens successfully deleted'})
+//       })
+//       .catch(err => res.status(400).send(err));
+// });
 
 module.exports = router;

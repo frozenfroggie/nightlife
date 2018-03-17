@@ -1,4 +1,5 @@
 import { SET_ACTIVE_BAR, SAVE_USER } from '../../../constants/actionTypes';
+import { logout } from '../../shared/actions/authActions';
 import axios from 'axios';
 
 export const setActiveBar = barIdx => ({
@@ -13,7 +14,7 @@ export const saveUser = user => ({
 
 export function wantToGo(bar) {
   return dispatch => {
-    return axios.patch('/users', {refreshToken: localStorage.getItem('refreshToken'), bar})
+    return axios.patch('/users', {bar})
                 .then(res => {
                   dispatch(saveUser(res.data.user));
                 })
@@ -23,7 +24,7 @@ export function wantToGo(bar) {
   }
 }
 
-export function removeBarFromUser(id, idx) {
+export function removeBarFromUser(id) {
   return dispatch => {
     return axios.delete(`/users/${id}`)
                 .then(res => {
@@ -31,7 +32,8 @@ export function removeBarFromUser(id, idx) {
                   dispatch(saveUser(res.data.user));
                 })
                 .catch(err => {
-                  throw err;
+                  console.log(err);
+                  dispatch(logout());
                 });
   }
 }

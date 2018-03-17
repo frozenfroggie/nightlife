@@ -1,8 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Switch } from 'react-router-dom'
 
 import { toogleExpandMenu } from './shared/actions/menuActions';
 import { logout, refreshToken } from './shared/actions/authActions';
@@ -16,6 +15,7 @@ import SignupPage from './signup/SignupPage';
 import AboutPage from './about/AboutPage';
 import BarsPage from './bars/BarsPage';
 import ProfilePage from './profile/ProfilePage';
+import PageNotFound from './404/PageNotFound';
 
 import requireAuth from './shared/utils/requireAuth';
 import setAuthorizationToken from './shared/utils/setAuthorizationToken';
@@ -53,6 +53,7 @@ class App extends React.Component {
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/profile" component={requireAuth(ProfilePage)} />
+                <Route component={PageNotFound} />
               </Switch >
             </ReactCSSTransitionGroup >
           )}/>

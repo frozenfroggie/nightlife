@@ -19,7 +19,7 @@ const authenticate = (req, res, next) => {
         }
       }).catch(err => {
           console.log('auth token expired');
-          res.status(401).send(err);
+          res.status(401).send({error: 'auth token expired'});
       });
 };
 

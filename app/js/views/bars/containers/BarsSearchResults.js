@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
          setScrollbarPositionY, setBarsContainerHeight } from '../../shared/actions/scrollActions';
 import { handleInputChange, search, deleteSearchData } from '../actions/searchActions';
-import { setActiveBar, wantToGo } from '../actions/barActions';
+import { setActiveBar, wantToGo, removeBarFromUser } from '../actions/barActions';
 
 import TheScrollbar from '../../shared/components/TheScrollbar';
 
@@ -59,6 +59,15 @@ class BarsSearchResults extends React.Component {
   onHover = (barIdx) => {
     this.props.setActiveBar(barIdx);
   }
+  isLoved = (barId) => {
+    let isLoved = false;
+    if(this.props.authState.user.bars) {
+      this.props.authState.user.bars.forEach( (likedBar, idx) => {
+        likedBar.id === barId ? isLoved = true : '';
+      });
+    }
+    return isLoved;
+  }
   render() {
     const { searchData } = this.props.searchState;
     const bars = Array.isArray(searchData) && searchData.map( (bar, idx) => {
@@ -87,8 +96,19 @@ class BarsSearchResults extends React.Component {
               <div> { bar.location.display_address.join(", ") } </div>
               <div> Phone: { bar.phone ? bar.phone : 'not specified' } </div>
             </div>
-            <div className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
-              <FontAwesome name="heart" />
+            <div>
+            {
+              this.isLoved(bar.id) ?
+                <div key={idx} className="wantToGo loved" onClick={() => this.props.removeBarFromUser(favoriteBar.id).catch(err => console.log(err))}>
+                  <div className='heart'><FontAwesome name="heart" /></div>
+                  Loved
+                </div>
+                :
+                <div key={idx} className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
+                  <div className='heart'><FontAwesome name="heart" /></div>
+                  Love it!
+                </div>
+            }
             </div>
           </div>
           {
@@ -124,7 +144,8 @@ class BarsSearchResults extends React.Component {
  const mapStateToProps = store => ({
      searchState: store.searchReducer,
      scrollState: store.scrollReducer,
-     activityState: store.activityReducer
+     activityState: store.activityReducer,
+     authState: store.authReducer
  });
 
- export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, wantToGo, setActiveBar, handleInputChange, search, deleteSearchData})(BarsSearchResults);
+ export default connect(mapStateToProps, {removeBarFromUser, resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, wantToGo, setActiveBar, handleInputChange, search, deleteSearchData})(BarsSearchResults);

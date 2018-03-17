@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const webpack = require('webpack');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 require("babel-polyfill");
 
 module.exports = {
@@ -46,6 +47,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
         new HtmlWebpackPlugin({template: 'app/index.html'}),
+        new FaviconsWebpackPlugin('./app/logo.png'),
         new BrowserSyncPlugin({
           host: 'localhost',
           port: 8080,

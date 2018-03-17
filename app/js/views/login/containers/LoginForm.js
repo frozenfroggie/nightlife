@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
 import { withRouter, Link } from "react-router-dom";
+import Recaptcha from 'react-recaptcha';
 
 import { login } from '../../shared/actions/authActions';
 import validateInput from '../utils/clientValidation';
@@ -52,6 +53,9 @@ class LoginForm extends React.Component {
         <TextInputField fieldName="credentials" placeholder="Username or email" onChange={this.onChange} errors={errors} required={true} fontAwesomeName="user"/>
         <TextInputField fieldName="password" placeholder="Password" onChange={this.onChange} errors={errors} required={true} fontAwesomeName="lock" passwordField={true}/>
         <SubmitInputField isLoading={isLoading}/>
+        <div className='recaptchaContainer'>
+        <Recaptcha sitekey="6LeoaEwUAAAAAFN3PZHe2G3Oys935qZ6WvDIuiUf" />
+        </div>
         <Dividor />
         <div className="socialBtns">
           <SocialLoginButton name="facebook"/>

@@ -77,7 +77,7 @@ UserSchema.statics.findByRefreshToken = function(refreshToken) {
     'tokens.refreshToken': refreshToken
   }).then(user => {
     return user;
-  }).catch(err => console.log(err));
+  }).catch(err => Promise.reject(err));
 }
 
 UserSchema.methods.toJSON = function() {
@@ -93,7 +93,7 @@ UserSchema.methods.generateAndSaveTokens = function() {
     expiresIn: authTokenExpirationTime
   });
 
-  const refreshTokenExpirationTime = '7d';
+  const refreshTokenExpirationTime = 120;
   const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_SECRET_2, {
     expiresIn: refreshTokenExpirationTime
   });
@@ -102,14 +102,14 @@ UserSchema.methods.generateAndSaveTokens = function() {
   return user.save().then(() => user.tokens);
 };
 
-UserSchema.methods.removeToken = function(authToken, refreshToken) {
-  const user = this;
-  return user.update({
-    $pull: {
-      tokens: {authToken, refreshToken}
-    }
-  });
-};
+// UserSchema.methods.removeToken = function(authToken, refreshToken) {
+//   const user = this;
+//   return user.update({
+//     $pull: {
+//       tokens: {authToken, refreshToken}
+//     }
+//   });
+// };
 
 UserSchema.statics.checkUserExists = function(identifier) {
   const User = this;

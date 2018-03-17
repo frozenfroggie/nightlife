@@ -80,10 +80,23 @@
             }
           }
           .wantToGo {
+            @include flexCenter;
             color: $contrastColor;
+            border: 1px solid $contrastColor;
+            width: 80px;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            .heart {
+              padding: 5px;
+            }
             &:hover {
               cursor: pointer;
             }
+          }
+          .loved {
+            background-color: $contrastColor;
+            color: white;
           }
         }
         & > div > hr {

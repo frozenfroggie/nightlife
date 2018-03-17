@@ -22,7 +22,9 @@ const users = [{
   password: 'userTwoPass',
   tokens: {
     authToken: `${jwt.sign({_id: userTwoId, access: 'auth'}, process.env.JWT_SECRET_1)}`,
-    refreshToken:`${jwt.sign({_id: userTwoId, access: 'refresh'}, process.env.JWT_SECRET_2)}`
+    refreshToken:`${jwt.sign({_id: userTwoId, access: 'refresh'}, process.env.JWT_SECRET_2, {
+      expiresIn: 0 //the token expired at the same moment it was created
+    })}`
   }
 }];
 
