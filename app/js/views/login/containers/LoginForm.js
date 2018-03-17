@@ -13,6 +13,12 @@ import SocialLoginButton from '../components/SocialLoginButton';
 import LoginDescription from '../components/LoginDescription';
 import Dividor from '../components/Dividor';
 
+let recaptchaInstance;
+
+const resetRecaptcha = () => {
+  recaptchaInstance.reset();
+};
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +27,8 @@ class LoginForm extends React.Component {
       isLoading: false,
       credentials: undefined,
       password: undefined,
+      recaptchaVerified: true,
+      loginAttempt: 0
     }
   }
   onChange = e => {
@@ -41,20 +49,36 @@ class LoginForm extends React.Component {
                 .then(() => {
                   this.props.history.push(`/`);
                 })
-                .catch(errors => {
-                  this.setState({ errors, isLoading: false });
+                .catch(err => {
+                  this.setState({ loginAttempt: this.state.loginAttempt + 1, errors: {password: {message: 'Username and/or Password Invalid'}}, isLoading: false }, () => {
+                    if(this.state.loginAttempt >= 3) {
+                      this.setState({ recaptchaVerified: false });
+                      resetRecaptcha();
+                    }
+                  });
                 });
     }
   }
+  verifyCallback = (res) => {
+    if(res) {
+      this.setState({recaptchaVerified: true});
+    }
+  }
   render() {
-    const {errors, userAlreadyExists, isLoading} = this.state;
+    const {errors, userAlreadyExists, isLoading, recaptchaVerified} = this.state;
     return (
       <form onSubmit={this.onSubmit}>
         <TextInputField fieldName="credentials" placeholder="Username or email" onChange={this.onChange} errors={errors} required={true} fontAwesomeName="user"/>
         <TextInputField fieldName="password" placeholder="Password" onChange={this.onChange} errors={errors} required={true} fontAwesomeName="lock" passwordField={true}/>
-        <SubmitInputField isLoading={isLoading}/>
+        <SubmitInputField isLoading={isLoading} recaptchaVerified={recaptchaVerified} />
         <div className='recaptchaContainer'>
-        <Recaptcha sitekey="6LeoaEwUAAAAAFN3PZHe2G3Oys935qZ6WvDIuiUf" />
+        {
+          this.state.loginAttempt >= 3 ?
+            <Recaptcha ref={e => recaptchaInstance = e}
+                       sitekey="6LeoaEwUAAAAAFN3PZHe2G3Oys935qZ6WvDIuiUf"
+                       verifyCallback={this.verifyCallback} />
+          : ''
+        }
         </div>
         <Dividor />
         <div className="socialBtns">

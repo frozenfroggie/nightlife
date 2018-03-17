@@ -17,6 +17,9 @@ export function signup(data) {
   return dispatch => {
     return axios.post('/users', data)
                 .then(res => {
+
+                  console.log('res', res);
+
                   const authToken = res.headers.authorization.split(' ')[1];
                   console.log(authToken);
                   try {
@@ -35,6 +38,8 @@ export function signup(data) {
                   return res;
                 })
                 .catch(err => {
+                  console.log('catch', err.response);
+                  console.log('catch', err.response.data.errors);
                   throw err.response.data.errors;
                 });
   }
@@ -45,6 +50,9 @@ export function login(data) {
   return dispatch => {
     return axios.post('/users/login', data)
                 .then(res => {
+
+                  console.log('res', res);
+
                   const authToken = res.headers.authorization.split(' ')[1];
                   sessionStorage.setItem('authToken', authToken);
                   //setAuthorizationToken(authToken);
@@ -59,22 +67,10 @@ export function login(data) {
                   return res;
                 })
                 .catch(err => {
-                  throw err.response.data.errors;
+                  throw err.response
                 });
   }
 }
-
-// export function refreshToken(refreshToken) {
-//   return dispatch => {
-//     return axios.post('/users/refreshToken', refreshToken)
-//                 .then(newToken => {
-//                   return newToken;
-//                 })
-//                 .catch(err => {
-//                   throw err;
-//                 })
-//   }
-// }
 
 export function logout() {
   return dispatch => {

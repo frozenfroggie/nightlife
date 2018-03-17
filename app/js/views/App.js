@@ -15,7 +15,6 @@ import SignupPage from './signup/SignupPage';
 import AboutPage from './about/AboutPage';
 import BarsPage from './bars/BarsPage';
 import ProfilePage from './profile/ProfilePage';
-import PageNotFound from './404/PageNotFound';
 
 import requireAuth from './shared/utils/requireAuth';
 import setAuthorizationToken from './shared/utils/setAuthorizationToken';
@@ -53,7 +52,6 @@ class App extends React.Component {
                 <Route path="/login" component={LoginPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/profile" component={requireAuth(ProfilePage)} />
-                <Route component={PageNotFound} />
               </Switch >
             </ReactCSSTransitionGroup >
           )}/>

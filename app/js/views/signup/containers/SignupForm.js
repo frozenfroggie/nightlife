@@ -13,7 +13,20 @@ class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errors: {},
+      errors: {
+        username: {
+          message: ''
+        },
+        email: {
+          message: ''
+        },
+        password: {
+          message: ''
+        },
+        passwordConfirmation: {
+          message: ''
+        }
+      },
       userAlreadyExists: false,
       isLoading: false,
       username: undefined,
@@ -48,7 +61,10 @@ class SignupForm extends React.Component {
     }
   }
   onBlur = e => {
-    this.checkUserExists(e);
+    if(this.state.errors.username.message === 'User with such username already exists' || this.state.errors.username.message === ''
+        && this.state.errors.email.message === 'User with such email already exists' ||  this.state.errors.email.message === '' ) {
+      this.checkUserExists(e)
+    }
   }
   isValid = () => {
     const { errors, isValid } = validateInput(this.state);
@@ -64,6 +80,7 @@ class SignupForm extends React.Component {
                   this.props.history.push(`/`);
                 })
                 .catch(errors => {
+                  console.log(errors);
                   this.setState({ errors, isLoading: false });
                 });
     }
