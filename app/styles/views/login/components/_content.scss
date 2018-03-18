@@ -5,7 +5,7 @@
   top: 30px;
   z-index: 4;
   width: auto;
-  padding: 1% 3% !important;
+  padding: 3vh 3vw;
   border: 1px solid $contrastColor;
   box-shadow: 2px 2px 10px 2px rgba(0,0,0,0.75);
   border-radius: 4px;
@@ -35,7 +35,6 @@
     }
     @include flexCenter;
     flex-direction: column;
-    padding: 4% 7%;
     border-radius: 5px;
     text-shadow: #333 1px 1px 10px, #333 1px 1px 10px;
     .required::after {

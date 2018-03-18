@@ -88,7 +88,7 @@ class SignupForm extends React.Component {
   render() {
     const {errors, userAlreadyExists, isLoading} = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form autoComplete="off" onSubmit={this.onSubmit}>
         <TextInputField fieldName="username" placeholder="Username" onChange={this.onChange} onBlur={this.onBlur} errors={errors} required={true} FontAwesomeName="user"/>
         <TextInputField fieldName="firstName" placeholder="First Name" onChange={this.onChange} />
         <TextInputField fieldName="lastName" placeholder="Last Name" onChange={this.onChange} />
