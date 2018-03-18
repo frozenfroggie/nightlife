@@ -6,7 +6,7 @@ import Content from './components/Content';
 const AboutPage = () => {
   return (
     <div className="wrapper">
-      <TheBackground backgroundName='bgFoggy'/>
+      <TheBackground backgroundName='bgAbout'/>
       <Content />
     </div>
    )

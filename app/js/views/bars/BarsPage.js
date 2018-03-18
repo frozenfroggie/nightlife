@@ -37,7 +37,7 @@ class BarsPage extends React.Component {
   render() {
     return (
         <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)} >
-            <TheBackground backgroundName='citylight' />
+            <TheBackground backgroundName='bgBars' />
             <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
               <Switch key={this.props.history.location.pathname} pathname={this.props.history.location.pathname} location={this.props.history.location}>
                 <Route exact path={this.props.match.url} key="searchPanel" render={() =>

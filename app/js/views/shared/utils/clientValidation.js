@@ -3,7 +3,6 @@ import Validator from 'validator';
 const validateInput = data => {
   let formData = Object.assign({}, data);
   let errors = formData.errors;
-  console.log(errors);
   const username = formData.username;
   const email = formData.email;
   const password = formData.password;
@@ -13,8 +12,7 @@ const validateInput = data => {
     errors.username.message = '';
     if (typeof username !== 'undefined' && Validator.isEmpty(username)) {
       errors.username.message = 'This field is required';
-    }
-    if(typeof username !== 'undefined' && username.length < 4) {
+    } else if(typeof username !== 'undefined' && username.length < 4) {
       errors.username.message = 'Username must be at least 4 characters';
     }
   }
@@ -23,8 +21,7 @@ const validateInput = data => {
     errors.email.message = '';
     if (typeof email !== 'undefined' && Validator.isEmpty(email)) {
       errors.email.message = 'This field is required';
-    }
-    if (typeof email !== 'undefined' && !Validator.isEmail(email)) {
+    } else if (typeof email !== 'undefined' && !Validator.isEmail(email)) {
       errors.email.message = 'Email is invalid';
     }
   }
@@ -32,16 +29,14 @@ const validateInput = data => {
   errors.password.message = '';
   if (typeof password !== 'undefined' && Validator.isEmpty(password)) {
     errors.password.message = 'This field is required';
-  }
-  if (typeof passwordConfirmation !== 'undefined' && Validator.isEmpty(passwordConfirmation)) {
+  } else if (typeof passwordConfirmation !== 'undefined' && Validator.isEmpty(passwordConfirmation)) {
     errors.passwordConfirmation.message = 'This field is required';
   }
 
   errors.passwordConfirmation.message = '';
   if (typeof password !== 'undefined' && typeof passwordConfirmation !== 'undefined' && !Validator.equals(data.password, data.passwordConfirmation)) {
     errors.passwordConfirmation.message = 'Passwords must match';
-  }
-  if(typeof password !== 'undefined' && password.length < 6) {
+  } else if(typeof password !== 'undefined' && password.length < 6) {
     errors.password.message = 'Password must be at least 6 characters';
   }
 

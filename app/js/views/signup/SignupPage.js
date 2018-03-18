@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Background from './components/Background';
+import TheBackground from '../shared/components/TheBackground';
 import Content from './components/Content';
 
 const SignupPage = () => {
   return (
     <div className="wrapper">
-      <Background />
+      <TheBackground backgroundName='bgSignup'/>
       <Content />
     </div>
    )

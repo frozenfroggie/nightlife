@@ -61,8 +61,8 @@ class SignupForm extends React.Component {
     }
   }
   onBlur = e => {
-    if(this.state.errors.username.message === 'User with such username already exists' || this.state.errors.username.message === ''
-        && this.state.errors.email.message === 'User with such email already exists' ||  this.state.errors.email.message === '' ) {
+    if((this.state.errors.username.message === 'User with such username already exists' || this.state.errors.username.message === '')
+        && (this.state.errors.email.message === 'User with such email already exists' ||  this.state.errors.email.message === '' )) {
       this.checkUserExists(e)
     }
   }

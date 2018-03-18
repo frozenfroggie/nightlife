@@ -4,6 +4,7 @@ import { Switch, Redirect } from 'react-router-dom'
 //components
 import Background from './components/Background';
 import Content from './components/Content';
+import TheBackground from '../shared/components/TheBackground';
 
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
          changeBarsPosition, setBarsContainerHeight } from '../shared/actions/scrollActions';
@@ -45,7 +46,7 @@ class ProfilePage extends React.Component {
     return (
       <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)}>
         <div className="wrapper">
-          <Background />
+        <TheBackground backgroundName='bgProfile'/>
           <Content user={this.props.authState.user} scroll={this.scroll} barsContainerHeight={this.props.scrollState.barsContainerHeight} barsPosition={this.props.scrollState.barsPosition} />
         </div>
       </div>

@@ -11,7 +11,8 @@
   margin: 5px;
   .font {
     position: absolute;
-    right: 20px;
+    top: 14px;
+    right: 18px;
     color: $contrastColorDarker;
     text-shadow: none;
   }
@@ -29,4 +30,5 @@
 
 .inputError {
   border: 2px solid #cb2431 !important;
+  color: #cb2431 !important;
 }
