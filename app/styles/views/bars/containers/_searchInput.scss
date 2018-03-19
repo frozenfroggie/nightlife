@@ -21,6 +21,20 @@
       left: 14px;
     }
   }
+  .searchLabel {
+    position: relative;
+    top: 0px;
+    height: 30px;
+    text-align: left;
+    font-size: 1.5em;
+    transition: top .3s;
+    transition: font-size .5s;
+    color: $contrastColor;
+  }
+  .floatSearchLabel {
+    top: -20px;
+    font-size: 1em;
+  }
   .backContainer {
     position: absolute;
     bottom: 5px;
@@ -51,5 +65,23 @@
       right: 14px;
     }
   }
-  @import '../objects/searchInput';
+  .searchInput {
+    position: relative;
+    top: -30px;
+    z-index: 5;
+    height: 35px;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid $contrastColor;
+    color: $contrastColor;
+    font-weight: 400;
+    font-size: 22px;
+    @include breakpoint(tablet) {
+      font-size: 24px;
+    }
+    @include breakpoint(laptop) {
+      font-size: 26px;
+    }
+  }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import reactIcon from '../../../../images/react.png';
-import reduxIcon from '../../../../images/redux.png';
-import nodeIcon from '../../../../images/nodejs.png';
-import mongoIcon from '../../../../images/mongo.png';
-import yelpIcon from '../../../../images/yelp.png';
-import googleMapsIcon from '../../../../images/googleMaps.png';
+import reactIcon from '../../../../assets/react.png';
+import reduxIcon from '../../../../assets/redux.png';
+import nodeIcon from '../../../../assets/nodejs.png';
+import mongoIcon from '../../../../assets/mongo.png';
+import yelpIcon from '../../../../assets/yelp.png';
+import googleMapsIcon from '../../../../assets/googleMaps.png';
 import FontAwesome from 'react-fontawesome';
 
 const Content = () => {

@@ -34,6 +34,7 @@
           background-color: rgba(0,0,0,0.9);
         }
         position: relative;
+        transition: top .4s;
         .bar {
           @include flexRow;
           @include flexCenter;

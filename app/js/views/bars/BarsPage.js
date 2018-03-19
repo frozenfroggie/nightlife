@@ -5,7 +5,7 @@ import { handleInputChange, search } from './actions/searchActions';
 import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
          setScrollbarPositionY } from '../shared/actions/scrollActions';//components
 import SearchInput from './containers/SearchInput';
-import Bars from './components/Bars';
+import Bars from './containers/Bars';
 import TheBackground from '../shared/components/TheBackground';
 
 import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom';

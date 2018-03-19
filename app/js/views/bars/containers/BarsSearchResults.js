@@ -10,7 +10,7 @@ import { setActiveBar, wantToGo, removeBarFromUser } from '../actions/barActions
 
 import TheScrollbar from '../../shared/components/TheScrollbar';
 
-import coctailIcon from '../../../../images/coctail.png';
+import coctailIcon from '../../../../assets/coctail.png';
 
 const horizontalLineHeight = 1;
 const borderWidthOfActiveBar = 1;
@@ -98,16 +98,18 @@ class BarsSearchResults extends React.Component {
             </div>
             <div>
             {
-              this.isLoved(bar.id) ?
-                <div key={idx} className="wantToGo loved" onClick={() => this.props.removeBarFromUser(favoriteBar.id).catch(err => console.log(err))}>
-                  <div className='heart'><FontAwesome name="heart" /></div>
-                  Loved
-                </div>
-                :
-                <div key={idx} className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
-                  <div className='heart'><FontAwesome name="heart" /></div>
-                  Love it!
-                </div>
+              this.props.authState.isAuthenticated ?
+                this.isLoved(bar.id) ?
+                  <div key={idx} className="wantToGo loved" onClick={() => this.props.removeBarFromUser(favoriteBar.id).catch(err => console.log(err))}>
+                    <div className='heart'><FontAwesome name="heart" /></div>
+                    Loved
+                  </div>
+                  :
+                  <div key={idx} className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
+                    <div className='heart'><FontAwesome name="heart" /></div>
+                    Love it!
+                  </div>
+                : ''
             }
             </div>
           </div>

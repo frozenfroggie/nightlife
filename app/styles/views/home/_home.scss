@@ -5,13 +5,13 @@
   width: 100vw;
   z-index: 0;
   background: {
-    image: url('../images/party-small.png');
+    image: url('../assets/party-small.png');
     size: cover;
     repeat: no-repeat;
     attachment: fixed;
   }
   @include breakpoint(laptop) {
-    background-image: url('../images/party.png');
+    background-image: url('../assets/party.png');
   }
 }
 
@@ -24,7 +24,7 @@
     left: 0px;
     z-index: 2;
     background: {
-      image: url('../images/glass.png');
+      image: url('../assets/glass.png');
       size: cover;
       repeat: no-repeat;
       attachment: fixed;

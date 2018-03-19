@@ -1,5 +1,5 @@
-@import './components/footer';
-@import './components/navigation';
+@import '../shared/components/footer';
+@import '../shared/components/navigation';
 
 @import './transitions/menuTransition';
 @import './transitions/routesTransition';

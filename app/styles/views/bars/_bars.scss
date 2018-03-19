@@ -2,26 +2,118 @@
 @import './transitions/searchbarTransition';
 @import './transitions/searchTransition';
 //containers
-@import './containers/searchResults';
+@import './containers/barsSearchResults';
+@import './containers/barsSearchButtons';
 @import './containers/searchInput';
-@import './containers/searchButtons';
 //componets
-@import './components/searchPanel';
-@import './components/googleMap';
-@import './components/searchTitle';
+@import '../shared/components/googleMap';
 
 .bgBars {
   width: 100vw;
   height: 100vh;
   z-index: 5;
   background: {
-    image: url('../images/bgBarsSmall.jpg');
+    image: url('../assets/bgBarsSmall.jpg');
     size: cover;
     repeat: no-repeat;
     attachment: fixed;
     position: center;
   }
   @include breakpoint(laptop) {
-    background-image: url('../images/bgBars.jpg');
+    background-image: url('../assets/bgBars.jpg');
+  }
+}
+
+.searchContainerSimple {
+  border: 1px solid $contrastColor;
+  position: relative;
+  width: auto;
+  background-color: rgba(0,0,0,0.9);
+  padding: 26% 20%;
+  box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.75);
+  border-radius: 5px;
+  @include flexColumn;
+}
+
+.searchContainerComplex {
+  display: flex;
+  @include flexRow;
+  @include flexCenter;
+  justify-content: space-around;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 3;
+  box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.75);
+  background-color: rgba(0,0,0,0.2);
+  .searchResults {
+    @include flexColumn;
+    @include flexCenterX;
+    position: absolute;
+    top: 55px;
+    @include breakpoint(laptop) {
+      position: relative;
+      top: 20px;
+    }
+    @import './objects/specialButton';
+  }
+  .backButtonContainer {
+    position: absolute;
+    bottom: 10vh;
+    left: 1vw;
+    .backButton {
+      position: relative;
+      @include flexCenterX;
+      @import './objects/specialButton';
+      & > .specialButton {
+        margin: 5px;
+      }
+      @include breakpoint(laptop) {
+        display: none;
+      }
+    }
+  }
+  .barsButtonsContainer {
+    position: absolute;
+    bottom: 10vh;
+    right: 1vw;
+    .nextBarButtonContainer {
+      position: relative;
+      @include flexCenterX;
+      @import './objects/specialButton';
+      & > .specialButton {
+        margin: 5px;
+      }
+      @include breakpoint(laptop) {
+        display: none;
+      }
+    }
+    .previousBarButtonContainer {
+      position: relative;
+      @include flexCenterX;
+      @import './objects/specialButton';
+      & > .specialButton {
+        margin: 5px;
+      }
+      @include breakpoint(laptop) {
+        display: none;
+      }
+    }
+  }
+}
+
+.searchTitle {
+  font-size: 22px;
+  text-shadow: #333 1px 1px 10px;
+  margin-bottom: 10px;
+  @include breakpoint(tablet) {
+    font-size: 24px;
+  }
+  @include breakpoint(laptop) {
+    font-size: 26px;
   }
 }

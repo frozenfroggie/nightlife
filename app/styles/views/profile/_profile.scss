@@ -5,13 +5,13 @@
   height: 100vh;
   z-index: 5;
   background: {
-    image: url('../images/bgProfile.jpeg');
+    image: url('../assets/bgProfile.jpeg');
     size: cover;
     repeat: no-repeat;
     attachment: fixed;
     position: center;
   }
   @include breakpoint(laptop) {
-    background-image: url('../images/bgProfile.jpeg');
+    background-image: url('../assets/bgProfile.jpeg');
   }
 }
