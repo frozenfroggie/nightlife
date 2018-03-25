@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
       message: '{VALUE} is not a valid email'
     }
   },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
   password: {
     type: String,
     required: true,
@@ -122,6 +126,9 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
   return User.findOne({$or: [{username: credentials}, {email: credentials}]}).then(user => {
     if(!user) {
       return Promise.reject();
+    }
+    if(!user.isVerified) {
+      return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
     }
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, res) => {

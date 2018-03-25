@@ -20,7 +20,7 @@ const TheNavigation = props => {
       <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/bars">BARS</NavLink></div>
       <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/about">ABOUT</NavLink></div>
       <div><NavLink onClick={props.toogleMenuOnMobile} className="menuLabel" activeClassName="selected" to="/profile">PROFILE</NavLink></div>
-      <div onClick={props.toogleMenuOnMobile} className="menuLabel"><a href="#" onClick={props.logout}>LOG OUT</a></div>
+      <div><NavLink onClick={props.logout} className="menuLabel" to="/">LOG OUT</NavLink></div>
       <div className="spaceHolderDesktop"></div>
     </div>
   )

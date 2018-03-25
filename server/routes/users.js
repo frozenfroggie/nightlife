@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/authenticate');
 const User = require('../models/user');
+const VerificationToken = require('../models/verificationToken');
 const pick = require('lodash/pick');
 const moment = require('moment');
+const jwt = require('jsonwebtoken');
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -17,11 +19,55 @@ router.post('/', function(req, res) {
   const body = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
   const user = new User(body);
   user.save()
-      .then(() => user.generateAndSaveTokens())
-      .then(tokens => {
-        res.header('Authorization', `Bearer ${tokens.authToken}`).send({user, refreshToken: tokens.refreshToken});
+      .then(() => {
+        var verificationToken = new VerificationToken({_userId: user._id});
+        return verificationToken.generate(user._id);
       })
-      .catch(err => res.status(400).send(err));
+      .then(verificationToken => {
+           const url = `http://localhost:8080/users/confirmation/${verificationToken}`;
+           const sgMail = require('@sendgrid/mail');
+           sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+           const msg = {
+             to: user.email,
+             from: 'no-reply@example.com',
+             subject: 'Confirm email',
+             html:  `
+             <table style="width: 100%;">
+             <tr>
+              <td style="text-align: center;">
+                <img width="50px" src="https://image.ibb.co/fCdOVS/apple_icon_57x57.png" alt="apple_icon_57x57" border="0">
+              </td>
+             </tr>
+              <tr>
+                <td style="text-align: center; font-family: 'Open Sans','Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;
+                           font-weight: 300; color: #294661!important;">
+                  <h2>You're on your way! Let's confirm your email address.</h2>
+                  <p>By clicking on the following link, you are confirming your email address.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">
+                <a style="box-sizing: border-box; border-color: #348eda; font-weight: 400; text-decoration: none;
+                          display: inline-block; margin: 0; color: #ffffff; background-color: rgb(107, 44, 163);
+                          border-radius: 2px; font-size: 14px; padding: 12px 45px;"
+                          href="${url}">Confirm Email Address</a>
+                </td>
+              </tr>
+            </table>`
+           };
+           sgMail.send(msg);
+      })
+      .catch(err => res.status(500).send(err));
+});
+
+router.get('/confirmation/:token', async (req, res) => {
+  try {
+    const { id } = jwt.verify(req.params.token, process.env.JWT_SECRET_3);
+    await User.findByIdAndUpdate(id, { $set: {isVerified: true }});
+  } catch (e) {
+    res.send('error');
+  }
+  res.redirect('/');
 });
 
 //login

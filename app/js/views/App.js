@@ -21,9 +21,8 @@ import setAuthorizationToken from './shared/utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {
-    const timer = JSON.parse(localStorage.getItem('timer'));
-    console.log(timer - Date.now());
-
+    // const timer = JSON.parse(localStorage.getItem('timer'));
+    // console.log(timer - Date.now());
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
     window.addEventListener('resize', this.handleResizing);
   }
@@ -34,9 +33,11 @@ class App extends React.Component {
   toogleMenuOnMobile = () => {
     window.innerWidth < 1024 && this.props.toogleExpandMenu();
   }
-  logout = e => {
-    e.preventDefault();
-    this.props.logout();
+  logout = () => {
+    this.toogleMenuOnMobile();
+    setTimeout(() => {
+      this.props.logout();
+    }, 400);
   }
   render() {
     return (
@@ -45,14 +46,14 @@ class App extends React.Component {
           <TheNavigation toogleMenuOnMobile={this.toogleMenuOnMobile} logout={this.logout} isAuthenticated={this.props.authState.isAuthenticated} expandMenu={this.props.menuState.expandMenu} hamburgerClick={this.props.toogleExpandMenu} />
           <Route render={({ location, history }) => (
             <ReactCSSTransitionGroup transitionName="routes" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
-              <Switch key={history.location.pathname.split('/')[1] || '/'} pathname={history.location.pathname} location={history.location}>
-                <Route exact path="/" component={HomePage} />
-                <Route path="/bars" component={BarsPage} />
-                <Route path="/about" component={AboutPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/signup" component={SignupPage} />
-                <Route path="/profile" component={requireAuth(ProfilePage)} />
-              </Switch >
+            <Switch key={history.location.pathname.split('/')[1] || '/'} pathname={history.location.pathname} location={history.location}>
+             <Route exact path="/" component={HomePage} />
+             <Route path="/bars" component={BarsPage} />
+             <Route path="/about" component={AboutPage} />
+             <Route path="/login" component={LoginPage} />
+             <Route path="/signup" component={SignupPage} />
+             <Route path="/profile" component={requireAuth(ProfilePage)} />
+           </Switch >
             </ReactCSSTransitionGroup >
           )}/>
         </div>

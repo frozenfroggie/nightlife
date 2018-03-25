@@ -13,6 +13,7 @@
   color: white;
   text-align: center;
   .login {
+    @include flexCenterX;
     .description {
       display: flex;
       flex-direction: row;
@@ -22,7 +23,7 @@
     .dividor {
       @include flexCenter;
       flex-direction: row;
-      width: 100%;
+      width: 94%;
       margin: 12px;
       color: $contrastColor;
       text-shadow: none;

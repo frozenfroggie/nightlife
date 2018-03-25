@@ -10,6 +10,12 @@ import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
          changeBarsPosition, setBarsContainerHeight } from '../shared/actions/scrollActions';
 
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSettings: false
+    }
+  }
   componentDidMount() {
      this.props.setBarsContainerHeight(240);
      this.props.resetScrollSettings();
@@ -39,15 +45,15 @@ class ProfilePage extends React.Component {
       }
     }
   }
+  handleClick = (bool) => {
+    this.setState({showSettings: bool});
+  }
   render() {
-    if (!this.props.authState.isAuthenticated) {
-      return <Redirect to={'/'} />;
-    }
     return (
       <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)}>
         <div className="wrapper">
         <TheBackground backgroundName='bgProfile'/>
-          <Content user={this.props.authState.user} scroll={this.scroll} barsContainerHeight={this.props.scrollState.barsContainerHeight} barsPosition={this.props.scrollState.barsPosition} />
+          <Content handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
         </div>
       </div>
      )

@@ -24,13 +24,12 @@ export function signup(data) {
                   console.log(authToken);
                   try {
                     sessionStorage.setItem('authToken', authToken);
-                    //setAuthorizationToken(authToken);
 
                     const refreshToken = res.data.refreshToken;
                     localStorage.setItem('refreshToken', refreshToken);
 
-                    const time_to_logout = Date.now() + 60000;
-                    localStorage.setItem('timer', JSON.stringify(time_to_logout));
+                    // const time_to_logout = Date.now() + 60000;
+                    // localStorage.setItem('timer', JSON.stringify(time_to_logout));
                   } catch(err) {
                     console.log(err);
                   }
@@ -51,17 +50,14 @@ export function login(data) {
     return axios.post('/users/login', data)
                 .then(res => {
 
-                  console.log('res', res);
-
                   const authToken = res.headers.authorization.split(' ')[1];
                   sessionStorage.setItem('authToken', authToken);
-                  //setAuthorizationToken(authToken);
 
                   const refreshToken = res.data.refreshToken;
                   localStorage.setItem('refreshToken', refreshToken);
 
-                  const time_to_logout = Date.now() + 60000;
-                  localStorage.setItem('timer', JSON.stringify(time_to_logout));
+                  // const time_to_logout = Date.now() + 60000;
+                  // localStorage.setItem('timer', JSON.stringify(time_to_logout));
 
                   dispatch(saveUser(res.data.user));
                   return res;

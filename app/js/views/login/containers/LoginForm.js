@@ -50,12 +50,16 @@ class LoginForm extends React.Component {
                   this.props.history.push(`/`);
                 })
                 .catch(err => {
-                  this.setState({ loginAttempt: this.state.loginAttempt + 1, errors: {password: {message: 'Username and/or Password Invalid'}}, isLoading: false }, () => {
-                    if(this.state.loginAttempt >= 3) {
-                      this.setState({ recaptchaVerified: false });
-                      resetRecaptcha();
-                    }
-                  });
+                  if(err.data.type === 'not-verified') {
+                    this.setState({ errors: {password: {message: err.data.msg}}, isLoading: false });
+                  } else {
+                    this.setState({ loginAttempt: this.state.loginAttempt + 1, errors: {password: {message: 'Username and/or Password Invalid'}}, isLoading: false }, () => {
+                      if(this.state.loginAttempt >= 3) {
+                        this.setState({ recaptchaVerified: false });
+                        resetRecaptcha();
+                      }
+                    });
+                  }
                 });
     }
   }
