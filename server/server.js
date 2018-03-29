@@ -9,6 +9,12 @@ require('isomorphic-fetch');
 
 const searchRoutes = require('./routes/search');
 const usersRoutes = require('./routes/users');
+const socialAuthRoutes = require('./routes/socialAuth');
+
+const auth = require('./passport/auth.js');
+const githubAuth = require('./passport/strategies/githubAuth.js');
+const googleAuth = require('./passport/strategies/googleAuth.js');
+const facebookAuth = require('./passport/strategies/facebookAuth.js');
 
 const app = express();
 app.use(helmet());
@@ -24,8 +30,14 @@ app.get('/', (req, res) => {
  res.sendFile(__dirname + '/dist/index.html');
 });
 
+auth(app);
+githubAuth();
+facebookAuth();
+//googleAuth();
+
 app.use('/search', searchRoutes);
 app.use('/users', usersRoutes);
+app.use('/auth', socialAuthRoutes);
 
 app.use( (req,res,next) => {
   const error = new Error('Not found');

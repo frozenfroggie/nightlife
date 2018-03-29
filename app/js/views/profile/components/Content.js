@@ -1,6 +1,7 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import classnames from 'classnames';
 import Activities from '../containers/Activities';
 import Settings from '../components/Settings';
 
@@ -11,15 +12,24 @@ const Content = (props) => {
       <h2 className="profileUsername"> { props.user.username } </h2>
       <h4 className="profileEmail"> { props.user.email } </h4>
       <div className="profileButtonsContainer">
-        <div className="profileButton" onClick={() => props.handleClick(false)}> ACTIVITIES </div>
-        <div className='profileButton' onClick={() => props.handleClick(true)}> SETTINGS </div>
+        <div className={classnames(['profileButton',{'profileButtonActive': !props.showSettings}])} onClick={() => props.handleClick(false)}> ACTIVITIES </div>
+        <div className={classnames(['profileButton',{'profileButtonActive': props.showSettings}])} onClick={() => props.handleClick(true)}> SETTINGS </div>
       </div>
-      {
-        !props.showSettings ?
-          <Activities scroll={props.scroll} authState/>
-          :
-          <Settings />
-      }
+      <div className='showSettingsContainer'>
+        <ReactCSSTransitionGroup
+          transitionName="settings"
+          transitionEnterTimeout={250}
+          transitionLeaveTimeout={150}>
+            <div className="absoluteWrapper" key={props.showSettings}>
+              {
+                !props.showSettings ?
+                  <Activities scroll={props.scroll} />
+                  :
+                  <Settings />
+              }
+            </div>
+        </ReactCSSTransitionGroup>
+      </div>
     </div>
   )
 }

@@ -27,8 +27,9 @@
     height: 30px;
     text-align: left;
     font-size: 1.5em;
-    transition: top .3s;
-    transition: font-size .5s;
+    opacity: 0.8;
+    transition: top .2s;
+    transition: font-size .2s;
     color: $contrastColor;
   }
   .floatSearchLabel {

@@ -1,0 +1,17 @@
+.bars-enter {
+  opacity: 0.01;
+}
+
+.bars-enter.bars-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms ease-in;
+}
+
+.bars-exit {
+  opacity: 1;
+}
+
+.bars-exit.bars-exit-active {
+  opacity: 0.01;
+  transition: opacity 1000ms ease-in;
+}

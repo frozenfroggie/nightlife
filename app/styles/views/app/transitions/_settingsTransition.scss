@@ -1,0 +1,17 @@
+.settings-enter {
+  opacity: 0.01;
+}
+
+.settings-enter.settings-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.settings-leave {
+  opacity: 1;
+}
+
+.settings-leave.settings-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

@@ -97,7 +97,7 @@ UserSchema.methods.generateAndSaveTokens = function() {
     expiresIn: authTokenExpirationTime
   });
 
-  const refreshTokenExpirationTime = 120;
+  const refreshTokenExpirationTime = '5d';
   const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_SECRET_2, {
     expiresIn: refreshTokenExpirationTime
   });

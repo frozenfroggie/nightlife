@@ -9,7 +9,7 @@ import { login } from '../../shared/actions/authActions';
 import validateInput from '../utils/clientValidation';
 import TextInputField from '../components/TextInputField';
 import SubmitInputField from '../components/SubmitInputField';
-import SocialLoginButton from '../components/SocialLoginButton';
+import SocialButtonLogin from '../components/SocialButtonLogin';
 import LoginDescription from '../components/LoginDescription';
 import Dividor from '../components/Dividor';
 
@@ -86,9 +86,9 @@ class LoginForm extends React.Component {
         </div>
         <Dividor />
         <div className="socialBtns">
-          <SocialLoginButton name="facebook"/>
-          <SocialLoginButton name="github"/>
-          <SocialLoginButton name="google-plus"/>
+          <a href='/auth/facebook'><SocialButtonLogin name="facebook"/></a>
+          <a href='/auth/github'><SocialButtonLogin name="github"/></a>
+          <a href='/auth/google'><SocialButtonLogin name="google-plus"/></a>
         </div>
         <br/>
         <LoginDescription />

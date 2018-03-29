@@ -10,14 +10,17 @@ class SearchInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shouldFloat: false
+      isFocused: false
     }
+  }
+  handleFocus = () => {
+    this.setState({isFocused: true});
+  }
+  handleBlur = () => {
+    this.setState({isFocused: false});
   }
   componentDidUpdate() {
     this.props.searchState.searchData.length > 0 && this.props.history.push(`${this.props.match.url}/${this.props.searchState.inputValue}`);
-  }
-  toogleFloat = () => {
-    this.props.searchState.inputValue === '' && this.setState({shouldFloat: !this.state.shouldFloat});
   }
   render() {
     const searchIfEnter = event => event.key === "Enter" ? this.props.search(this.props.searchState.inputValue) : '';
@@ -27,8 +30,8 @@ class SearchInput extends React.Component {
           <div className="searchContainerSimple" key="1">
             <div className="search">
               <div className="hint"> Please enter your city </div>
-              <label className={classNames('searchLabel', {'floatSearchLabel': this.state.shouldFloat})} htmlFor="search" > City i.e. New York </label>
-              <input autoFocus={window.innerWidth < 1024} onBlur={this.toogleFloat} onFocus={this.toogleFloat} id="search" className="searchInput" type="text" value={this.props.searchState.inputValue} onChange={this.props.handleInputChange} onKeyDown={searchIfEnter}/>
+              <label className={classNames('searchLabel', {'floatSearchLabel': this.props.searchState.inputValue !== '' || this.state.isFocused})} htmlFor="search" > City i.e. New York </label>
+              <input autoFocus={window.innerWidth < 1024} onBlur={this.handleBlur} onFocus={this.handleFocus} id="search" className="searchInput" type="text" value={this.props.searchState.inputValue} onChange={this.props.handleInputChange} onKeyDown={searchIfEnter}/>
               <div className="backContainer">
                 <div className="specialButton" onClick={() => this.props.history.push('/')}>
                   <FontAwesome name='chevron-left'/>
