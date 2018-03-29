@@ -8,7 +8,7 @@ module.exports = function() {
     passport.use(new GitHubStrategy({
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: "http://192.168.0.234:8080/auth/github/callback"
+            callbackURL: "https://vast-everglades-58513.herokuapp.com/auth/github/callback"
         },
         function(accessToken, refreshToken, profile, cb) {
             console.log(profile.displayName);
