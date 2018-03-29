@@ -4,9 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const webpack = require('webpack');
+require("babel-polyfill");
 
 module.exports = {
-    entry: './app/js/index.js',
+    entry: ['babel-polyfill', './app/js/index.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
