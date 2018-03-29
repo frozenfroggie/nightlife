@@ -10,7 +10,8 @@
     "build:prod": "webpack -p --config webpack.prod.config.js",
     "build:dev:watch": "webpack --config webpack.dev.config.js --progress --colors --watch",
     "server:watch": "nodemon ./server/server.js",
-    "dev": "concurrently --kill-others \"npm run build:dev:watch\" \"npm run server:watch\""
+    "dev": "concurrently --kill-others \"npm run build:dev:watch\" \"npm run server:watch\"",
+    "postinstall": "webpack --config webpack.prod.config.js -p --progress --colors"
   },
   "author": "frozenfroggie",
   "license": "ISC",
