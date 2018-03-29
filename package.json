@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "9.3.0"
+  },
   "scripts": {
     "lint": "esw app/js/**/*.js --watch",
     "test": "export NODE_ENV=test && export MONGODB_URI=mongodb://localhost:27017/NightlifeTest && mocha --require babel-register \"server/__tests__/**/*@(.spec.js)\"",

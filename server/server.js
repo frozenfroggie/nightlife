@@ -19,7 +19,7 @@ const facebookAuth = require('./passport/strategies/facebookAuth.js');
 const app = express();
 app.use(helmet());
 
-console.log('MongoDB URI:', process.env.MONGODB_URI);
+console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
 
 app.use(bodyParser.json())
