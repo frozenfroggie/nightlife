@@ -1,7 +1,7 @@
 require('./config/config');
 
 const express = require('express');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
@@ -31,7 +31,7 @@ console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
 
 app.use(bodyParser.json())
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 
 app.use('/', express.static('./dist'));
 app.get('/', (req, res) => {
