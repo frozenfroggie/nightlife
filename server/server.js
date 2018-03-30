@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 require('isomorphic-fetch');
 
 const searchRoutes = require('./routes/search');
@@ -20,15 +21,15 @@ const facebookAuth = require('./passport/strategies/facebookAuth.js');
 const app = express();
 app.use(helmet());
 
-
-  app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
-  }));
-
 console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
+
+app.use(session({
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.use(bodyParser.json())
 //app.use(morgan('dev'));
