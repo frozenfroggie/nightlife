@@ -9,11 +9,7 @@ module.exports = function() {
     passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-<<<<<<< HEAD
     callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/facebook/callback"
-=======
-    callbackURL: `${process.env.DOMAIN}/socialAuth/facebook/callback`
->>>>>>> 3c8b33c973b93e53ba4a8e930c4cc15d1bdd1757
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
