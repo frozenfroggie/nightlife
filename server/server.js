@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
+const session = require('express-session');
 require('isomorphic-fetch');
 
 const searchRoutes = require('./routes/search');
@@ -18,6 +19,13 @@ const facebookAuth = require('./passport/strategies/facebookAuth.js');
 
 const app = express();
 app.use(helmet());
+
+
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+  }));
 
 console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
@@ -37,7 +45,7 @@ facebookAuth();
 
 app.use('/search', searchRoutes);
 app.use('/users', usersRoutes);
-app.use('/auth', socialAuthRoutes);
+app.use('/socialAuth', socialAuthRoutes);
 
 app.use( (req,res,next) => {
   const error = new Error('Not found');

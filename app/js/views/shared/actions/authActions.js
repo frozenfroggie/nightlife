@@ -44,6 +44,19 @@ export function signup(data) {
   }
 }
 
+export function socialAuth(type) {
+  return dispatch => {
+    return axios.get(`/auth/${type}`)
+                .then(res => {
+                  dispatch(saveUser(res.data.user));
+                  return res;
+                })
+                .catch(err => {
+                  console.log('catch', err.response);
+                  throw err.response;
+                });
+  }
+}
 
 export function login(data) {
   return dispatch => {

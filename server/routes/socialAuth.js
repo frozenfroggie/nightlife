@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const User = require('../models/user');
+const GithubAuthModel = require('../models/githubAuth');
 
 const axios = require('axios');
 // router.get('/github', function(req,res) {
@@ -27,5 +29,13 @@ router.get('/facebook/callback', passport.authenticate('facebook', { successRedi
 
 router.get('/github', passport.authenticate('github'));
 router.get('/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/', failureFlash: true }));
+
+router.get('/', function(req,res) {
+  if(req.isAuthenticated()) {
+    res.send({isAuthenticated: true, user: req.user});
+  } else {
+    res.send({isAuthenticated: false});
+  }
+});
 
 module.exports = router;

@@ -86,9 +86,9 @@ class LoginForm extends React.Component {
         </div>
         <Dividor />
         <div className="socialBtns">
-          <a href='/auth/facebook'><SocialButtonLogin name="facebook"/></a>
-          <a href='/auth/github'><SocialButtonLogin name="github"/></a>
-          <a href='/auth/google'><SocialButtonLogin name="google-plus"/></a>
+          <a href='/socialAuth/facebook'><SocialButtonLogin name="facebook"/></a>
+          <a href='/socialAuth/github'><SocialButtonLogin name="github"/></a>
+          <a href='/socialAuth/google'><SocialButtonLogin name="google-plus"/></a>
         </div>
         <br/>
         <LoginDescription />

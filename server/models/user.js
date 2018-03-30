@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const pick = require('lodash/pick');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const randtoken = require('rand-token');
+const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -38,7 +39,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minlength: 6,
   },
   tokens: {
@@ -52,6 +53,7 @@ const UserSchema = new mongoose.Schema({
   bars: []
 });
 
+UserSchema.plugin(findOrCreate);
 UserSchema.plugin(beautifyUnique);
 
 UserSchema.statics.findByToken = function(authToken) {

@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import axios from 'axios';
 
 import { toogleExpandMenu } from './shared/actions/menuActions';
-import { logout, refreshToken } from './shared/actions/authActions';
+import { logout, refreshToken, saveUser } from './shared/actions/authActions';
 
 import TheNavigation from './shared/components/TheNavigation';
 import TheFooter from './shared/components/TheFooter';
@@ -21,8 +22,11 @@ import setAuthorizationToken from './shared/utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {
-    // const timer = JSON.parse(localStorage.getItem('timer'));
-    // console.log(timer - Date.now());
+    if(!this.props.authState.isAuthenticated) {
+      axios('/socialAuth').then(res => {
+        res.data.isAuthenticated && this.props.saveUser(res.data.user);
+      });
+    }
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
     window.addEventListener('resize', this.handleResizing);
   }
@@ -67,4 +71,4 @@ class App extends React.Component {
      authState: store.authReducer
  });
 
- export default connect(mapStateToProps, {toogleExpandMenu, logout, refreshToken})(App);
+ export default connect(mapStateToProps, {saveUser, toogleExpandMenu, logout, refreshToken})(App);
