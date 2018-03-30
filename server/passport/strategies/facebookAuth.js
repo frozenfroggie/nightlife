@@ -10,7 +10,7 @@ module.exports = function() {
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/facebook/callback",
-    profileFields: ['id', 'emails', 'name']
+    profileFields: ['id', 'emails', 'displayName', 'name']
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log('fb', profile);
