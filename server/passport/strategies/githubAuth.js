@@ -2,7 +2,6 @@
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const GithubAuthModel = require('../../models/githubAuth.js');
-const User = require('../../models/user');
 const pick = require('lodash/pick');
 
 module.exports = function() {
@@ -13,6 +12,7 @@ module.exports = function() {
             callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/github/callback"
         },
         function(accessToken, refreshToken, profile, cb) {
+            console.log(profile);
             const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
             GithubAuthModel.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
                 console.log("logged in");
