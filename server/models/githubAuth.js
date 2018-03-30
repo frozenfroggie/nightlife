@@ -6,6 +6,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 var GithubAuthSchema = new Schema({
   id: String,
+  displayName: String,
   username: String,
   email: String,
   isVerified: Boolean,

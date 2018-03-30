@@ -5,6 +5,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 var facebookAuthSchema = new Schema({
   id: String,
+  displayName: String,
   username: String,
   email: String,
   isVerified: Boolean,
