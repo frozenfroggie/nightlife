@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-var GithubAuthModel = require('../models/githubAuth.js');
-var FacebookAuthModel = require('../models/facebookAuth.js');
-var User = require('../models/user.js');
-//var GoogleAuthModel = require('../models/googleAuth.js');
+const GithubAuthModel = require('../models/githubAuth.js');
+const FacebookAuthModel = require('../models/facebookAuth.js');
+const GoogleAuthModel = require('../models/googleAuth.js');
+const User = require('../models/user.js');
 const passport = require('passport');
 
 module.exports = function(app) {
