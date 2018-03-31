@@ -24,14 +24,6 @@ app.use(helmet());
 console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
 
-// mongoose.connect(process.env.MONGO_URI);
-// app.use(session({
-//     store: new MongoStore({mongooseConnection: mongoose.connection}),
-//     saveUninitialized: false,
-//     resave: false,
-//     secret: process.env.SESSION_SECRET
-// }));
-
 app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection}),
   secret: 'keyboard cat',
@@ -50,7 +42,7 @@ app.get('/', (req, res) => {
 auth(app);
 githubAuth();
 facebookAuth();
-//googleAuth();
+googleAuth();
 
 app.use('/search', searchRoutes);
 app.use('/users', usersRoutes);
