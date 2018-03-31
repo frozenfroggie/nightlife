@@ -30,6 +30,7 @@ router.get('/github/callback', passport.authenticate('github', { successRedirect
 
 router.get('/', function(req,res) {
   if(req.isAuthenticated()) {
+    console.log(req.user);
     res.send({isAuthenticated: true, user: req.user});
   } else {
     res.send({isAuthenticated: false});

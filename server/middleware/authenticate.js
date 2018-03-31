@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 const authenticate = (req, res, next) => {
   if(req.isAuthenticated()) {
-    console.log('social auth');
+    console.log('social auth', req.user);
     next();
   } else {
     let authToken;
