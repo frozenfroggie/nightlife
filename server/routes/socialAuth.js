@@ -19,7 +19,7 @@ const axios = require('axios');
 //        });
 // });
 
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/' }));
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
