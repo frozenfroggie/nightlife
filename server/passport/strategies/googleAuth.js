@@ -3,6 +3,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GoogleAuthModel = require('../../models/googleAuth.js');
 const pick = require('lodash/pick');
+const User = require('../../models/user.js');
 
 module.exports = function() {
 

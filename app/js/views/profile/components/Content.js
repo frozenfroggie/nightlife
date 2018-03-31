@@ -9,7 +9,7 @@ const Content = (props) => {
   return (
     <div className="profileContent">
       <div className="profileAvatar"><FontAwesome name='user' size='3x'/></div>
-      <h2 className="profileUsername"> { props.user.username || props.user.displayName } </h2>
+      <h2 className="profileUsername"> { JSON.parse(props.user) } </h2>
       <h4 className="profileEmail"> { props.user.email } </h4>
       <div className="profileButtonsContainer">
         <div className={classnames(['profileButton',{'profileButtonActive': !props.showSettings}])} onClick={() => props.handleClick(false)}> ACTIVITIES </div>
