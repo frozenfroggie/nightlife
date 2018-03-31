@@ -24,6 +24,7 @@ class App extends React.Component {
   componentDidMount() {
     if(!this.props.authState.isAuthenticated) {
       axios('/socialAuth').then(res => {
+        console.log('buuuuuu', res);
         res.data.isAuthenticated && this.props.saveUser(res.data.user);
       });
     }
