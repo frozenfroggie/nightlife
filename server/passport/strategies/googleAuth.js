@@ -16,7 +16,6 @@ module.exports = function() {
       console.log(profile);
       const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
       User.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
-        if(err) return cb(err);
         console.log("logged in");
         return cb(err,user);
       });

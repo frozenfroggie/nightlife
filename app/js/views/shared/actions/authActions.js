@@ -48,6 +48,7 @@ export function socialAuth(type) {
   return dispatch => {
     return axios.get(`/auth/${type}`)
                 .then(res => {
+                  console.log('social', res.data);
                   dispatch(saveUser(res.data.user));
                   return res;
                 })
