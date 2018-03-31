@@ -8,49 +8,55 @@ const randtoken = require('rand-token');
 const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 4,
-    unique: true
-  },
-  firstName: {
-    type: String,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    unique: true,
-    validate: {
-      validator: validator.isEmail,
-      message: '{VALUE} is not a valid email'
-    }
-  },
-  isVerified: {
-    type: Boolean,
-    default: false
-  },
-  password: {
-    type: String,
-    required: false,
-    minlength: 6,
-  },
-  tokens: {
-    authToken: {
-      type: String
-    },
-    refreshToken: {
-      type: String
-    }
-  },
+  id: String,
+  displayName: String,
+  username: String,
+  email: String,
+  isVerified: Boolean,
   bars: []
+  // username: {
+  //   type: String,
+  //   required: true,
+  //   trim: true,
+  //   minlength: 4,
+  //   unique: true
+  // },
+  // firstName: {
+  //   type: String,
+  //   trim: true
+  // },
+  // lastName: {
+  //   type: String,
+  //   trim: true
+  // },
+  // email: {
+  //   type: String,
+  //   required: true,
+  //   trim: true,
+  //   unique: true,
+  //   validate: {
+  //     validator: validator.isEmail,
+  //     message: '{VALUE} is not a valid email'
+  //   }
+  // },
+  // isVerified: {
+  //   type: Boolean,
+  //   default: false
+  // },
+  // password: {
+  //   type: String,
+  //   required: false,
+  //   minlength: 6,
+  // },
+  // tokens: {
+  //   authToken: {
+  //     type: String
+  //   },
+  //   refreshToken: {
+  //     type: String
+  //   }
+  // },
+  // bars: []
 });
 
 UserSchema.plugin(findOrCreate);

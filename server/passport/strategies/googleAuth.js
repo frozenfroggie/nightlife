@@ -14,7 +14,7 @@ module.exports = function() {
     function(accessToken, refreshToken, profile, cb) {
       console.log(profile);
       const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
-      GoogleAuthModel.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
+      User.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
         if(err) return cb(err);
         console.log("logged in");
         return cb(err,user);

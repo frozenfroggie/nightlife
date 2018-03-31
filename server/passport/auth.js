@@ -15,26 +15,26 @@ module.exports = function(app) {
     });
 
     passport.deserializeUser((id, done) => {
-        GoogleAuthModel.findById({_id: new mongoose.mongo.ObjectId(id)}, function(err, user) {
-            if(err) return done(err);
-            if(user) {
-                done(null, user);
-            } else {
-            FacebookAuthModel.findById({_id: new mongoose.mongo.ObjectId(id)}, function(err, user) {
-                if(err) return done(err);
-                if(user) {
-                  done(null, user);
-                } else {
-                    GithubAuthModel.findById({_id: new mongoose.mongo.ObjectId(id)}, function(err, user) {
+    //     GoogleAuthModel.findById({_id: new mongoose.mongo.ObjectId(id)}, function(err, user) {
+    //         if(err) return done(err);
+    //         if(user) {
+    //             done(null, user);
+    //         } else {
+    //         FacebookAuthModel.findById({_id: new mongoose.mongo.ObjectId(id)}, function(err, user) {
+    //             if(err) return done(err);
+    //             if(user) {
+    //               done(null, user);
+    //             } else {
+                    User.findById({_id: new mongoose.mongo.ObjectId(id)}, function(err, user) {
                         if(err) return done(err);
                         if(user) {
                           done(null, user);
                         }
                     });//end of git
-                }
-            });//end of fb
-            }
-        });//end of google+
+        //         }
+        //     });//end of fb
+        //     }
+        // });//end of google+
     });//end of deserializeUser
 
 };

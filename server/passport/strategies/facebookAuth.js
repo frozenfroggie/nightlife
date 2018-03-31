@@ -2,6 +2,7 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const FacebookAuthModel = require('../../models/facebookAuth.js');
+const User = require('../../models/user.js');
 const pick = require('lodash/pick');
 
 module.exports = function() {
@@ -15,7 +16,7 @@ module.exports = function() {
     function(accessToken, refreshToken, profile, cb) {
       console.log('fb', profile);
       const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
-      FacebookAuthModel.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
+      User.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
         console.log("logged in");
         return cb(err, user);
       });
