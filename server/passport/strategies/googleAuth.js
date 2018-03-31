@@ -9,7 +9,7 @@ module.exports = function() {
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://vast-everglades-58513.herokuapp.com/auth/github/callback"
+      callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/google/callback"
     },
     function(accessToken, refreshToken, profile, cb) {
       console.log(profile);

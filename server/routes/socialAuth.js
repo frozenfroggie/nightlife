@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const User = require('../models/user');
-const GithubAuthModel = require('../models/githubAuth');
-
 const axios = require('axios');
+
 // router.get('/github', function(req,res) {
 //   res.redirect(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.CLIENT_ID}&redirect_uri=https://vast-everglades-58513.herokuapp.com/auth/github/callback`);
 // });
@@ -21,8 +19,8 @@ const axios = require('axios');
 //        });
 // });
 
-// router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
-// router.get('/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/' }));
+router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/' }));
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/', failureFlash: true }));
