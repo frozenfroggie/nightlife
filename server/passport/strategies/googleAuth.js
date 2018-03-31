@@ -1,7 +1,8 @@
 //facebook authentication
 const passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GoogleAuthModel = require('../../models/googleAuth.js');
+const pick = require('lodash/pick');
 
 module.exports = function() {
 
@@ -11,7 +12,9 @@ module.exports = function() {
       callbackURL: "https://vast-everglades-58513.herokuapp.com/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, cb) {
-      GoogleAuthModel.findOrCreate({ googleId: profile.id, profile: profile.displayName }, function (err, user) {
+      console.log(profile);
+      const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
+      GoogleAuthModel.findOrCreate({ id, displayName, username, email: emails[0].value, isVerified: true }, function (err, user) {
         if(err) return cb(err);
         console.log("logged in");
         return cb(err,user);

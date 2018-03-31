@@ -4,8 +4,12 @@ var Schema = mongoose.Schema;
 const findOrCreate = require('mongoose-findorcreate');
 
 var googleAuthSchema = new Schema({
-  facebookId: String,
-  profile: String
+  id: String,
+  displayName: String,
+  username: String,
+  email: String,
+  isVerified: Boolean,
+  bars: []
 }, {
   collection : 'googleAuth'
 });
