@@ -87,6 +87,7 @@ export function logout() {
     dispatch(saveUser({}));
     sessionStorage.removeItem('authToken');
     localStorage.removeItem('refreshToken');
+    return axios.delete('/socialAuth/logout');
   }
 }
 

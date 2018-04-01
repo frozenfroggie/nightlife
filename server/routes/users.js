@@ -129,5 +129,8 @@ router.delete('/:id', authenticate, function(req,res) {
 //       })
 //       .catch(err => res.status(400).send(err));
 // });
+// router.delete('/logout', authenticate, function(req,res) {
+//
+// });
 
 module.exports = router;
