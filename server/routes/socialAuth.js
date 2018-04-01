@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const axios = require('axios');
-
+const pick = require('lodash/pick');
 // router.get('/github', function(req,res) {
 //   res.redirect(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.CLIENT_ID}&redirect_uri=https://vast-everglades-58513.herokuapp.com/auth/github/callback`);
 // });
@@ -30,8 +30,8 @@ router.get('/github/callback', passport.authenticate('github', { successRedirect
 
 router.get('/', function(req,res) {
   if(req.isAuthenticated()) {
-    console.log(req.user);
-    res.send({isAuthenticated: true, user: req.user});
+    const { displayName, username, email, isVerified, bars } = pick(req.user, ['displayName', 'username', 'email', 'isVerified', 'bars']);
+    res.send({isAuthenticated: true, user: {displayName, username, email, isVerified, bars});
   } else {
     res.send({isAuthenticated: false});
   }
