@@ -90,6 +90,7 @@
         top: 0px;
       }
       .bars {
+        @include flexCenter;
         position: relative;
         width: 420px;
         .bar {
@@ -217,9 +218,4 @@
       }
     }
   }
-}
-.noRecentActivities {
-  width: 100%;
-  margin: auto;
-  text-align: center;
 }
