@@ -92,10 +92,10 @@ UserSchema.statics.findByRefreshToken = function(refreshToken) {
   }).catch(err => Promise.reject(err));
 }
 
-UserSchema.methods.toJSON = function() {
-  const user = this;
-  return pick(user, ['_id', 'email', 'username', 'bars']);
-};
+// UserSchema.methods.toJSON = function() {
+//   const user = this;
+//   return pick(user, ['_id', 'email', 'username', 'bars']);
+// };
 
 UserSchema.methods.generateAndSaveTokens = function() {
   const user = this;

@@ -32,7 +32,7 @@ const Bars = (props) => {
         transitionName="bars"
         transitionEnterTimeout={2000}
         transitionLeaveTimeout={2000}>
-        { props.bars[0] ? items : <div> No recent activities </div> }
+        { props.bars[0] ? items : <div className='noRecentActivities'> No recent activities </div> }
       </ReactCSSTransitionGroup>
     </div>
   )
