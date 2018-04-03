@@ -1,7 +1,12 @@
-import { HANDLE_INPUT_CHANGE, SAVE_SEARCH_DATA, START_SEARCHING, DELETE_SEARCH_DATA } from '../../../constants/actionTypes';
+import { HANDLE_CITY_INPUT_CHANGE, HANDLE_BARS_INPUT_CHANGE, SAVE_SEARCH_DATA, SAVE_FILTERED_SEARCH_DATA, START_SEARCHING, DELETE_SEARCH_DATA } from '../../../constants/actionTypes';
 
-export const handleInputChange = event => ({
-  type: HANDLE_INPUT_CHANGE,
+export const handleCityInputChange = event => ({
+  type: HANDLE_CITY_INPUT_CHANGE,
+  payload: event.target.value
+});
+
+export const handleBarsInputChange = event => ({
+  type: HANDLE_BARS_INPUT_CHANGE,
   payload: event.target.value
 });
 
@@ -11,6 +16,11 @@ const startSearching = () => ({
 
 const saveSearchData = data => ({
   type: SAVE_SEARCH_DATA,
+  payload: data
+});
+
+export const saveFilteredSearchData = data => ({
+  type: SAVE_FILTERED_SEARCH_DATA,
   payload: data
 });
 

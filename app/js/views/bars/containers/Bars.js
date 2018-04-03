@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 //containers
-import BarsSearchButtons from '../containers/BarsSearchButtons';
+import BarsSearchInput from '../containers/BarsSearchInput';
 import BarsSearchResults from '../containers/BarsSearchResults';
 import TheGoogleMap from '../../shared/components/TheGoogleMap';
 
@@ -22,7 +22,7 @@ class Bars extends React.Component {
       <div className="wrapper">
         <div className="searchContainerComplex">
           <div className="searchResults">
-            { window.innerWidth >= 1024 ? <BarsSearchButtons /> : '' }
+            { window.innerWidth >= 1024 ? <BarsSearchInput /> : '' }
             <BarsSearchResults />
           </div>
           <div className="backButtonContainer">

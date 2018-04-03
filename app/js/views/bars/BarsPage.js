@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 //actions
-import { handleInputChange, search } from './actions/searchActions';
+import { handleCityInputChange, search } from './actions/searchActions';
 import { toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
          setScrollbarPositionY } from '../shared/actions/scrollActions';//components
-import SearchInput from './containers/SearchInput';
+import CitySearchInput from './containers/CitySearchInput';
 import Bars from './containers/Bars';
 import TheBackground from '../shared/components/TheBackground';
 
@@ -41,7 +41,7 @@ class BarsPage extends React.Component {
             <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
               <Switch key={this.props.history.location.pathname} pathname={this.props.history.location.pathname} location={this.props.history.location}>
                 <Route exact path={this.props.match.url} key="searchPanel" render={() =>
-                  ( <SearchInput searchData={this.props.searchState.searchData} /> )}
+                  ( <CitySearchInput searchData={this.props.searchState.searchData} /> )}
                 />
                 <Route path={`${this.props.match.url}/:city`}
                        key="bars"
@@ -58,4 +58,4 @@ class BarsPage extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default withRouter(connect(mapStateToProps, {handleInputChange, search, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition})(BarsPage));
+ export default withRouter(connect(mapStateToProps, {handleCityInputChange, search, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition})(BarsPage));

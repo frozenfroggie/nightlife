@@ -26,15 +26,22 @@
       border-radius: 0px;
       @include breakpoint(laptop) {
         border-radius: 5px;
+        background-color: rgba(0,0,0,0.9);
         border: 1px solid $contrastColor;
       }
       .bars {
         @include flexColumn;
-        @include breakpoint(laptop) {
-          background-color: rgba(0,0,0,0.9);
-        }
         position: relative;
         transition: top .2s;
+        .noResultsContainer {
+          @include flexCenterX;
+          position: absolute;
+          top: 210px;
+          bottom: 0px;
+          left: 0px;
+          right: 0px;
+          color: $danger;
+        }
         .bar {
           @include flexRow;
           @include flexCenter;

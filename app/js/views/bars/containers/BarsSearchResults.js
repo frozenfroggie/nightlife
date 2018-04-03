@@ -53,7 +53,7 @@ class BarsSearchResults extends React.Component {
   }
   onClick = (barIdx) => {
     this.props.setActiveBar(barIdx);
-    const barUrl =  this.props.searchState.searchData[barIdx].url;
+    const barUrl =  this.props.searchState.filteredSearchData[barIdx].url;
     window.open(barUrl, '_blank');
   }
   onHover = (barIdx) => {
@@ -69,8 +69,9 @@ class BarsSearchResults extends React.Component {
     return isLoved;
   }
   render() {
-    const { searchData } = this.props.searchState;
-    const bars = Array.isArray(searchData) && searchData.map( (bar, idx) => {
+    const { filteredSearchData } = this.props.searchState;
+    const noResults = (<div className='noResultsContainer'><div><h3>No results for {this.props.searchState.barsInputValue}</h3></div></div>);
+    const bars = Array.isArray(filteredSearchData) && filteredSearchData.map( (bar, idx) => {
       let stars = [];
       for(let i = 0; i < Math.floor(bar.rating); i++) {
         stars.push(<span key={i}><FontAwesome name='star' /></span>);
@@ -114,7 +115,7 @@ class BarsSearchResults extends React.Component {
             </div>
           </div>
           {
-            idx !== searchData.length - 1 ?
+            idx !== filteredSearchData.length - 1 ?
             <hr style={{height: horizontalLineHeight}} />
             : ''
           }
@@ -129,7 +130,7 @@ class BarsSearchResults extends React.Component {
             <div className="bars" id="bars"
                  style={{top: this.props.scrollState.barsPosition}}
                  ref={ barsRef => !this.state.barsEl && this.setState({ barsEl: barsRef }) } >
-              { bars }
+              { this.props.searchState.filteredSearchData.length !== 0 ? bars : noResults }
             </div>
             {
               this.state.barsEl ?
