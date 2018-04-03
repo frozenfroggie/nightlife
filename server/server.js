@@ -1,7 +1,8 @@
 require('./config/config');
 
+const path = require('path');
 const express = require('express');
-//const morgan = require('morgan');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
@@ -18,6 +19,8 @@ const githubAuth = require('./passport/strategies/githubAuth.js');
 const googleAuth = require('./passport/strategies/googleAuth.js');
 const facebookAuth = require('./passport/strategies/facebookAuth.js');
 
+const publicPath = path.join(__dirname, '../dist');
+
 const app = express();
 app.use(helmet());
 
@@ -32,12 +35,9 @@ app.use(session({
 }));
 
 app.use(bodyParser.json())
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 
-app.use('/', express.static('./dist'));
-app.get('/', (req, res) => {
- res.sendFile(__dirname + '/dist/index.html');
-});
+app.use('/', express.static(publicPath));
 
 auth(app);
 githubAuth();
