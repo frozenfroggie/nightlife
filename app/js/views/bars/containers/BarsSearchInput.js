@@ -4,6 +4,7 @@ import { handleBarsInputChange, search, deleteSearchData, saveFilteredSearchData
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import trim from 'lodash/trim';
+import classnames from 'classnames';
 
 class BarsSearchInput extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class BarsSearchInput extends React.Component {
         </div>
         <div className="hiddenSearchbarContainer" ref="hiddenSearchbarContainer" onMouseOver={() => this.expandSearchbar()} onMouseOut={() => this.expandSearchbar()}>
           <div className="hiddenSearchbar" ref="hiddenSearchbar">
-            <input autoFocus className="searchInput" placeholder="Bar i.e. Spiz" type="text" value={this.props.searchState.barsInputValue} onChange={this.filterSearchData} />
+            <input ref='input' autoFocus className={classnames(['searchInput'])} placeholder="Bar i.e. Spiz" type="text" value={this.props.searchState.barsInputValue} onChange={this.filterSearchData} />
           </div>
           <div className="specialButton" ref="searchButton" >
             <FontAwesome name='search' />

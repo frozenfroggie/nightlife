@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import { withRouter } from "react-router-dom";
+import classnames from 'classnames';
 
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition, changeBarsPosition,
          setScrollbarPositionY, setBarsContainerHeight } from '../../shared/actions/scrollActions';
@@ -19,14 +20,17 @@ class BarsSearchResults extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      barsEl: null
+      barsEl: null,
+      barsContainerShow: false
     }
   }
   componentDidMount() {
     this.props.setBarsContainerHeight(467);
     this.props.resetScrollSettings();
+    this.setState({barsContainerShow: true});
   }
   componentWillUnmount() {
+    this.setState({barsContainerShow: false});
     this.props.deleteSearchData();
   }
   scroll = event => {
@@ -125,7 +129,7 @@ class BarsSearchResults extends React.Component {
     return (
       <div className="searchedDataContainer">
         <div className="barsWrapper">
-          <div className="barsContainer" style={{height: this.props.scrollState.barsContainerHeight}}
+          <div className={classnames(['barsContainer', {'barsContainerShow': this.state.barsContainerShow}])} style={{height: this.props.scrollState.barsContainerHeight}}
                                          onWheel={this.scroll}>
             <div className="bars" id="bars"
                  style={{top: this.props.scrollState.barsPosition}}

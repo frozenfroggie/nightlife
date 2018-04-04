@@ -51,7 +51,7 @@ module.exports = {
         new BrowserSyncPlugin({
           host: 'localhost',
           port: 8080,
-          proxy: 'http://localhost:3000/',
+          proxy: 'http://localhost:3030/',
           reloadDelay: 1000
          },
          {

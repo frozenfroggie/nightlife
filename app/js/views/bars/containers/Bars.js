@@ -7,6 +7,7 @@ import BarsSearchResults from '../containers/BarsSearchResults';
 import TheGoogleMap from '../../shared/components/TheGoogleMap';
 
 import { changeBarsPosition } from '../../shared/actions/scrollActions';
+import classnames from 'classnames';
 
 class Bars extends React.Component {
   showNextBar = () => {
@@ -19,7 +20,7 @@ class Bars extends React.Component {
   }
   render() {
       return (
-      <div className="wrapper">
+      <div className={classnames(['wrapper', 'wrapper2'])}>
         <div className="searchContainerComplex">
           <div className="searchResults">
             { window.innerWidth >= 1024 ? <BarsSearchInput /> : '' }

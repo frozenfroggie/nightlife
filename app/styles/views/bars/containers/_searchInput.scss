@@ -21,9 +21,47 @@
       left: 14px;
     }
   }
+  .inputContainer {
+    .location {
+      position: relative;
+      top: -36px;
+      left: -20px;
+      height: 30px;
+      width: 30px;
+      text-align: center;
+      font-size: 1.7em;
+      opacity: 0.8;
+      transition: top .2s;
+      transition: font-size .2s;
+      color: $contrastColor;
+      z-index: 100;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .searchInput {
+      position: relative;
+      top: -30px;
+      z-index: 5;
+      height: 35px;
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid $contrastColor;
+      color: $contrastColor;
+      font-weight: 400;
+      font-size: 22px;
+      @include breakpoint(tablet) {
+        font-size: 24px;
+      }
+      @include breakpoint(laptop) {
+        font-size: 26px;
+      }
+    }
+  }
   .searchLabel {
     position: relative;
-    top: 0px;
+    top: 6px;
     height: 30px;
     text-align: left;
     font-size: 1.5em;
@@ -64,25 +102,6 @@
       position: absolute;
       bottom: 14px;
       right: 14px;
-    }
-  }
-  .searchInput {
-    position: relative;
-    top: -30px;
-    z-index: 5;
-    height: 35px;
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid $contrastColor;
-    color: $contrastColor;
-    font-weight: 400;
-    font-size: 22px;
-    @include breakpoint(tablet) {
-      font-size: 24px;
-    }
-    @include breakpoint(laptop) {
-      font-size: 26px;
     }
   }
 }

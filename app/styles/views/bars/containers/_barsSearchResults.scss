@@ -22,6 +22,8 @@
       padding: 5px 20px 10px 5px;
     }
     .barsContainer {
+      opacity: 0;
+      transition: top .2s, opacity .7s;
       overflow: hidden;
       border-radius: 0px;
       @include breakpoint(laptop) {
@@ -32,7 +34,6 @@
       .bars {
         @include flexColumn;
         position: relative;
-        transition: top .2s;
         .noResultsContainer {
           @include flexCenterX;
           position: absolute;
@@ -114,6 +115,9 @@
           }
         }
       }
+    }
+    .barsContainerShow {
+      opacity: 1;
     }
   }
 }

@@ -1,16 +1,21 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import { handleCityInputChange, search } from '../actions/searchActions';
+import { forceCityInputChange, handleCityInputChange, search } from '../actions/searchActions';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { Redirect } from 'react-router'
 import classNames from 'classnames';
+import axios from 'axios';
 
 class CitySearchInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFocused: false
+      isFocused: false,
+      location: {
+        lat: undefined,
+        lng: undefined
+      }
     }
   }
   handleFocus = () => {
@@ -20,10 +25,46 @@ class CitySearchInput extends React.Component {
     this.setState({isFocused: false});
   }
   componentDidUpdate() {
-    this.props.searchState.searchData.length > 0 && this.props.history.push(`${this.props.match.url}/${this.props.searchState.inputValue}`);
+    if(this.props.searchState.searchData.length > 0) {
+      this.props.history.push(`${this.props.match.url}/${this.props.searchState.cityInputValue}`);
+    }
+  }
+  getLocation = () => {
+    if(navigator.geolocation) {
+      const geo_options = {
+        enableHighAccuracy: true,
+        maximumAge        : 30000,
+        timeout           : 27000
+      };
+      navigator.geolocation.getCurrentPosition( position => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+        console.log(pos)
+        this.setState({location: pos});
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.lat},${pos.lng}&key=AIzaSyDJWknmaOWpg2xv4tD0tdRGTJ4xG067iHY`)
+            .then(res => {
+              this.props.forceCityInputChange(res.data.results[1].formatted_address);
+            }).catch(err => {
+              console.log(err);
+            });
+      }, (err) => {
+        console.log(err)
+      }, geo_options);
+    }
+  }
+  onChange = event => {
+    if(event.target.value.length <= 15) {
+      this.props.handleCityInputChange(event);
+    }
+  }
+  startSearching = () => {
+    let cityInputValue = this.props.searchState.cityInputValue;
+    this.props.search(cityInputValue);
   }
   render() {
-    const searchIfEnter = event => event.key === "Enter" ? this.props.search(this.props.searchState.inputValue) : '';
+    const searchIfEnter = event => event.key === "Enter" ? this.startSearching() : '';
     return (
       <div className="wrapper">
         <div className="content">
@@ -31,14 +72,19 @@ class CitySearchInput extends React.Component {
             <div className="search">
               <div className="hint"> Please enter your city </div>
               <label className={classNames('searchLabel', {'floatSearchLabel': this.props.searchState.cityInputValue !== '' || this.state.isFocused})} htmlFor="search" > City i.e. New York </label>
-              <input autoFocus={window.innerWidth < 1024} onBlur={this.handleBlur} onFocus={this.handleFocus} id="search" className="searchInput" type="text" value={this.props.searchState.cityInputValue} onChange={this.props.handleCityInputChange} onKeyDown={searchIfEnter}/>
+              <div className='inputContainer'>
+                <input autoFocus={window.innerWidth < 1024} onBlur={this.handleBlur} onFocus={this.handleFocus} id="search" className="searchInput" type="text" value={this.props.searchState.cityInputValue} onChange={this.onChange} onKeyDown={searchIfEnter}/>
+                <div className='location' onClick={this.getLocation}>
+                  <FontAwesome name='map-marker'/>
+                </div>
+              </div>
               <div className="backContainer">
                 <div className="specialButton" onClick={() => this.props.history.push('/')}>
                   <FontAwesome name='chevron-left'/>
                 </div>
               </div>
               <div className="magnifierContainer">
-                <div className="specialButton" onClick={() => this.props.search(this.props.searchState.cityInputValue)}>
+                <div className="specialButton" onClick={this.startSearching}>
                 {
                   this.props.searchState.isSearching ?
                   <FontAwesome name='spinner' pulse />
@@ -60,4 +106,4 @@ class CitySearchInput extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default connect(mapStateToProps, {handleCityInputChange, search})(withRouter(CitySearchInput));
+ export default connect(mapStateToProps, {forceCityInputChange, handleCityInputChange, search})(withRouter(CitySearchInput));

@@ -1,8 +1,14 @@
 import { HANDLE_CITY_INPUT_CHANGE, HANDLE_BARS_INPUT_CHANGE, SAVE_SEARCH_DATA, SAVE_FILTERED_SEARCH_DATA, START_SEARCHING, DELETE_SEARCH_DATA } from '../../../constants/actionTypes';
+import axios from 'axios';
 
 export const handleCityInputChange = event => ({
   type: HANDLE_CITY_INPUT_CHANGE,
   payload: event.target.value
+});
+
+export const forceCityInputChange = city => ({
+  type: HANDLE_CITY_INPUT_CHANGE,
+  payload: city
 });
 
 export const handleBarsInputChange = event => ({
@@ -27,11 +33,8 @@ export const saveFilteredSearchData = data => ({
 export function search(city) {
   return function(dispatch) {
     dispatch(startSearching());
-    return fetch('/search/' + city)
-      .then( res => res.json())
-      .then( json => {
-        dispatch(saveSearchData(json.businesses));
-      });
+    return axios.get(`/search/${city}`)
+      .then(res => dispatch(saveSearchData(res.data.businesses)));
   }
 }
 
