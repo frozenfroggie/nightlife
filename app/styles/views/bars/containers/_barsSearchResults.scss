@@ -89,6 +89,9 @@
             }
           }
           .wantToGo {
+            position: absolute;
+            top: 5px;
+            left: 5px;
             @include flexCenter;
             color: $contrastColor;
             border: 1px solid $contrastColor;
@@ -98,6 +101,9 @@
             border-radius: 5px;
             .heart {
               padding: 5px;
+            }
+            .heart::after {
+              content: 'Love it!'
             }
             &:hover {
               cursor: pointer;

@@ -112,7 +112,6 @@ class BarsSearchResults extends React.Component {
                   :
                   <div key={idx} className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
                     <div className='heart'><FontAwesome name="heart" /></div>
-                    Love it!
                   </div>
                 : ''
             }
