@@ -81,7 +81,7 @@ class CitySearchInput extends React.Component {
             <div className="search">
               <div className="hint"> Please enter your city </div>
               <label className={classNames('searchLabel', {'searchError': searchState.searchError}, {'floatSearchLabel': searchState.cityInputValue !== '' || this.state.isFocused})} htmlFor="search" >
-                { searchState.searchError ? 'Sorry, no results found - try a different search selection' : 'City i.e. New York' }
+                { searchState.searchError ? 'Sorry, no results found' : 'City i.e. New York' }
               </label>
               <div className='inputContainer'>
                 <input autoFocus={window.innerWidth < 1024} onBlur={this.handleBlur} onFocus={this.handleFocus} id="search" className="searchInput" type="text" value={this.props.searchState.cityInputValue} onChange={this.onChange} onKeyDown={searchIfEnter}/>
