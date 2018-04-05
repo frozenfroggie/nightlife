@@ -73,13 +73,16 @@ class CitySearchInput extends React.Component {
   }
   render() {
     const searchIfEnter = event => event.key === "Enter" ? this.startSearching() : '';
+    const { searchState, history } = this.props;
     return (
       <div className="wrapper">
         <div className="content">
           <div className={classNames(["searchContainerSimple", {"citySearchShow": this.state.citySearchShow}])} key="1">
             <div className="search">
               <div className="hint"> Please enter your city </div>
-              <label className={classNames('searchLabel', {'floatSearchLabel': this.props.searchState.cityInputValue !== '' || this.state.isFocused})} htmlFor="search" > City i.e. New York </label>
+              <label className={classNames('searchLabel', {'searchError': searchState.searchError}, {'floatSearchLabel': searchState.cityInputValue !== '' || this.state.isFocused})} htmlFor="search" >
+                { searchState.searchError ? 'Sorry, no results found - try a different search selection' : 'City i.e. New York' }
+              </label>
               <div className='inputContainer'>
                 <input autoFocus={window.innerWidth < 1024} onBlur={this.handleBlur} onFocus={this.handleFocus} id="search" className="searchInput" type="text" value={this.props.searchState.cityInputValue} onChange={this.onChange} onKeyDown={searchIfEnter}/>
                 <div className='location' onClick={this.getLocation}>
@@ -87,14 +90,14 @@ class CitySearchInput extends React.Component {
                 </div>
               </div>
               <div className="backContainer">
-                <div className="specialButton" onClick={() => this.props.history.push('/')}>
+                <div className="specialButton" onClick={() => history.push('/')}>
                   <FontAwesome name='chevron-left'/>
                 </div>
               </div>
               <div className="magnifierContainer">
                 <div className="specialButton" onClick={this.startSearching}>
                 {
-                  this.props.searchState.isSearching ?
+                  searchState.isSearching ?
                   <FontAwesome name='spinner' pulse />
                   :
                   <FontAwesome name='search' />

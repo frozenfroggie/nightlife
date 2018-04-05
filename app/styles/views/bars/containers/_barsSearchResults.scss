@@ -54,8 +54,8 @@
           }
           .barImage {
             object-fit: cover;
-            height: 110px;
-            width: 110px;
+            height: 130px;
+            width: 130px;
             margin: 5px;
             @include breakpoint(tablet) {
               margin: 8px;
@@ -66,7 +66,7 @@
             border-radius: 3px;
           }
           .barInfo {
-            width: 280px;
+            width: 300px;
             font-size: 0.9em;
             @include breakpoint(laptop) {
               font-size: 1em;
@@ -98,7 +98,7 @@
             right: 5px;
             padding: 4px 8px;
             @include breakpoint(tablet) {
-              padding: 5px 10px;
+              padding: 6px 10px;
               width: 80px;
               position: relative;
               top: 0px;
