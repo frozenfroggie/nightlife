@@ -92,6 +92,11 @@
             position: absolute;
             top: 5px;
             left: 5px;
+            @include breakpoint(tablet) {
+              position: relative;
+              top: 0px;
+              left: 0px;
+            }
             @include flexCenter;
             color: $contrastColor;
             border: 1px solid $contrastColor;
@@ -101,9 +106,11 @@
             border-radius: 5px;
             .heart {
               padding: 5px;
-            }
-            .heart::after {
-              content: 'Love it!'
+              @include breakpoint(tablet) {
+                &::after {
+                  content: 'Love it!'
+                }
+              }
             }
             &:hover {
               cursor: pointer;
