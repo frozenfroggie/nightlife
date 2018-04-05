@@ -14,9 +14,14 @@ class CitySearchInput extends React.Component {
       isFocused: false,
       location: {
         lat: undefined,
-        lng: undefined
+        lng: undefined,
+        citySearchShow: false
       }
     }
+  }
+  componentDidMount() {
+    console.log('!!!');
+    this.setState({citySearchShow: true});
   }
   handleFocus = () => {
     this.setState({isFocused: true});
@@ -28,6 +33,9 @@ class CitySearchInput extends React.Component {
     if(this.props.searchState.searchData.length > 0) {
       this.props.history.push(`${this.props.match.url}/${this.props.searchState.cityInputValue}`);
     }
+  }
+  componentWillUnmount() {
+    this.setState({citySearchShow: false});
   }
   getLocation = () => {
     if(navigator.geolocation) {
@@ -68,7 +76,7 @@ class CitySearchInput extends React.Component {
     return (
       <div className="wrapper">
         <div className="content">
-          <div className="searchContainerSimple" key="1">
+          <div className={classNames(["searchContainerSimple", {"citySearchShow": this.state.citySearchShow}])} key="1">
             <div className="search">
               <div className="hint"> Please enter your city </div>
               <label className={classNames('searchLabel', {'floatSearchLabel': this.props.searchState.cityInputValue !== '' || this.state.isFocused})} htmlFor="search" > City i.e. New York </label>

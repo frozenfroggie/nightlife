@@ -27,12 +27,24 @@
 .searchContainerSimple {
   border: 1px solid $contrastColor;
   position: relative;
-  width: auto;
+  height: 60vh;
+  @include breakpoint(tablet) {
+    height: 55vh;
+  }
+  @include breakpoint(tablet) {
+    height: 50vh;
+  }
+  width: 100%;
   background-color: rgba(0,0,0,0.9);
-  padding: 26% 20%;
   box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.75);
   border-radius: 5px;
   @include flexColumn;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.citySearchShow {
+  opacity: 1;
 }
 
 .searchContainerComplex {

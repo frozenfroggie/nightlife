@@ -21,7 +21,6 @@
 
 * {
   margin: 0px;
-  user-select: none;
 }
 
 *:focus {
@@ -51,7 +50,7 @@ body {
       top: 5px;
       @include flexCenter;
       @include flexColumn;
-      width: 90%;
+      width: 80%;
       @include breakpoint(phoneHorizontal) {
         width: 60%;
       }
