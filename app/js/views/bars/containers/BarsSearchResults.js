@@ -107,7 +107,6 @@ class BarsSearchResults extends React.Component {
                 this.isLoved(bar.id) ?
                   <div key={idx} className="wantToGo loved" onClick={() => this.props.removeBarFromUser(favoriteBar.id).catch(err => console.log(err))}>
                     <div className='heart heartLoved'><FontAwesome name="heart" /></div>
-                    Loved
                   </div>
                   :
                   <div key={idx} className="wantToGo" onClick={() => this.props.wantToGo(favoriteBar).catch(err => console.log(err))}>
