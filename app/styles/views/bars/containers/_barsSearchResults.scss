@@ -64,10 +64,11 @@
             border-radius: 3px;
           }
           .barInfo {
-            width: 300px;
+            width: 280px;
             font-size: 0.9em;
             @include breakpoint(laptop) {
               font-size: 1em;
+              width: 300px;
             }
             .barName:hover {
               cursor: pointer;
@@ -89,7 +90,7 @@
             }
           }
           .wantToGo {
-            width: 30px;
+            width: 20px;
             position: absolute;
             top: 5px;
             right: 5px;
@@ -106,10 +107,18 @@
             padding: 5px 10px;
             border-radius: 5px;
             .heart {
-              padding: 5px;
               @include breakpoint(tablet) {
                 &::after {
-                  content: 'Love it!'
+                  content: 'Love it!',
+                  padding: 5px
+                }
+              }
+            }
+            .heartLoved {
+              @include breakpoint(tablet) {
+                &::after {
+                  content: 'Loved',
+                  padding: 5px
                 }
               }
             }

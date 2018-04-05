@@ -106,7 +106,7 @@ class BarsSearchResults extends React.Component {
               this.props.authState.isAuthenticated ?
                 this.isLoved(bar.id) ?
                   <div key={idx} className="wantToGo loved" onClick={() => this.props.removeBarFromUser(favoriteBar.id).catch(err => console.log(err))}>
-                    <div className='heart'><FontAwesome name="heart" /></div>
+                    <div className='heart heartLoved'><FontAwesome name="heart" /></div>
                     Loved
                   </div>
                   :
