@@ -109,16 +109,16 @@
             .heart {
               @include breakpoint(tablet) {
                 &::after {
-                  content: 'Love it!',
-                  padding: 5px
+                  content: 'Love it!';
+                  padding: 5px;
                 }
               }
             }
             .heartLoved {
               @include breakpoint(tablet) {
                 &::after {
-                  content: 'Loved',
-                  padding: 5px
+                  content: 'Loved';
+                  padding: 5px;
                 }
               }
             }
