@@ -49,7 +49,6 @@
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.30.1",
     "mocha": "^4.1.0",
-    "morgan": "^1.9.0",
     "node-sass": "^4.8.3",
     "nodemon": "^1.17.3",
     "postcss-loader": "^2.1.3",

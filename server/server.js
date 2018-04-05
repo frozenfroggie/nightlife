@@ -2,7 +2,7 @@ require('./config/config');
 
 const path = require('path');
 const express = require('express');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
@@ -35,7 +35,7 @@ app.use(session({
 }));
 
 app.use(bodyParser.json())
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 app.use('/', express.static(publicPath));
 
