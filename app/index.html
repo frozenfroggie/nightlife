@@ -12,10 +12,53 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#6b2ca3">
     <!-- <base href="http://localhost:8080/"> -->
     <title> Nightlife </title>
+    <script async defer type="text/javascript" src="https://use.fontawesome.com/087900f152.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="text/javascript" src="https://use.fontawesome.com/087900f152.js"></script>
+    <style>
+      :root {
+        --contrastColor: rgb(138, 61, 206);
+        --contrastColorDarker: rgb(107, 44, 163);
+      }
+      body {
+        margin: 0px;
+      }
+      .loadingContainer {
+        flex-direction: column;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+      }
+      .loadingCircle {
+        position: relative;
+        border-radius: 100%;
+        border-top: 1px solid var(--contrastColor);
+        border-right: 1px solid var(--contrastColor);
+        border-bottom: 1px solid var(--contrastColor);
+        width: 50px;
+        height: 50px;
+        margin: 20px;
+        animation: spine 1s infinite linear;
+      }
+      .loadingText {
+        color: var(--contrastColor);
+      }
+      @keyframes spine {
+        from {
+          transform: rotate(0deg);
+        } to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <div id="root">
+      <div class="loadingContainer">
+        <div class="loadingCircle"></div>
+        <h4><span class="loadingText">Loading Nightlife App</span></h4>
+      </div>
+    </div>
   </body>
 </html>

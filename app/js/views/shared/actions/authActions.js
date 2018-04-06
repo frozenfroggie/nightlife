@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { SAVE_USER, SAVE_ERRORS } from '../../../constants/actionTypes';
-//import setAuthorizationToken from './utils/setAuthorizationToken';
 
 export const saveUser = user => ({
   type: SAVE_USER,
@@ -18,18 +17,11 @@ export function signup(data) {
     return axios.post('/users', data)
                 .then(res => {
 
-                  console.log('res', res);
-
                   const authToken = res.headers.authorization.split(' ')[1];
-                  console.log(authToken);
+                  const refreshToken = res.data.refreshToken;
                   try {
                     sessionStorage.setItem('authToken', authToken);
-
-                    const refreshToken = res.data.refreshToken;
                     localStorage.setItem('refreshToken', refreshToken);
-
-                    // const time_to_logout = Date.now() + 60000;
-                    // localStorage.setItem('timer', JSON.stringify(time_to_logout));
                   } catch(err) {
                     console.log(err);
                   }
@@ -38,7 +30,6 @@ export function signup(data) {
                 })
                 .catch(err => {
                   console.log('catch', err.response);
-                  console.log('catch', err.response.data.errors);
                   throw err.response.data.errors;
                 });
   }
@@ -69,9 +60,6 @@ export function login(data) {
 
                   const refreshToken = res.data.refreshToken;
                   localStorage.setItem('refreshToken', refreshToken);
-
-                  // const time_to_logout = Date.now() + 60000;
-                  // localStorage.setItem('timer', JSON.stringify(time_to_logout));
 
                   dispatch(saveUser(res.data.user));
                   return res;

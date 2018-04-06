@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var myInterceptor = axios.interceptors.response.use(function (response) {
+var myInterceptor = axios.interceptors.response.use( response => {
     // Do something with response data
     return response;
   }, function (error) {
