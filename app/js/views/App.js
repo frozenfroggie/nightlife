@@ -17,14 +17,13 @@ import AboutPage from './about/AboutPage';
 import BarsPage from './bars/BarsPage';
 import ProfilePage from './profile/ProfilePage';
 
-import requireAuth from './shared/utils/requireAuth';
-import setAuthorizationToken from './shared/utils/setAuthorizationToken';
+import requireAuth from '../utils/requireAuth';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {
     if(!this.props.authState.isAuthenticated) {
       axios('/socialAuth').then(res => {
-        console.log('buuuuuu', res);
         res.data.isAuthenticated && this.props.saveUser(res.data.user);
       });
     }

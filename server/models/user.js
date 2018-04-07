@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pick = require('lodash/pick');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
-const randtoken = require('rand-token');
 const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
@@ -66,7 +65,7 @@ UserSchema.statics.findByToken = function(authToken) {
   const User = this;
   let decoded;
   try {
-    decoded = jwt.verify(authToken, process.env.JWT_SECRET_1);
+    decoded = jwt.verify(authToken, process.env.JWT_AUTHENTICATION_SECRET);
   } catch(err) {
     return Promise.reject(err);
   }
@@ -80,7 +79,7 @@ UserSchema.statics.findByRefreshToken = function(refreshToken) {
   const User = this;
   let decoded;
   try {
-    decoded = jwt.verify(refreshToken, process.env.JWT_SECRET_2);
+    decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
   } catch(err) {
     return Promise.reject(err);
   }
@@ -101,12 +100,12 @@ UserSchema.methods.generateAndSaveTokens = function() {
   const user = this;
 
   const authTokenExpirationTime = 60;
-  const authToken = jwt.sign({_id: user._id.toHexString(), email: user.email, username: user.username, access: 'auth'}, process.env.JWT_SECRET_1, {
+  const authToken = jwt.sign({_id: user._id.toHexString(), email: user.email, username: user.username, access: 'auth'}, process.env.JWT_AUTHENTICATION_SECRET, {
     expiresIn: authTokenExpirationTime
   });
 
   const refreshTokenExpirationTime = '5d';
-  const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_SECRET_2, {
+  const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_REFRESH_SECRET, {
     expiresIn: refreshTokenExpirationTime
   });
 

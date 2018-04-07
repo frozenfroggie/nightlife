@@ -35,7 +35,11 @@ const Settings = props => {
           </div>
         </div>
         <hr style={{height: 1}} />
-        <div className='logout'><div className='logoutButton'>Logout from other devices</div></div>
+        <div className='logout'>
+          <div className='logoutButton'>
+            Logout from other devices
+          </div>
+        </div>
       </div>
     </div>
   )

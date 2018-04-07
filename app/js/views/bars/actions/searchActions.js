@@ -34,7 +34,15 @@ const searchError = () => ({
     type: SEARCH_ERROR
 });
 
-export function search(city) {
+export function search(city, coordinates) {
+  if(!city) {
+    return function(dispatch) {
+      dispatch(startSearching());
+      return axios.get(`/search/coordinates?lat=${coordinates.lat}&lng=${coordinates.lng}`)
+        .then(res => dispatch(saveSearchData(res.data.businesses)))
+        .catch(err => dispatch(searchError()));
+    }
+  }
   let cityAfterReplace = city.replace(/ą/g, 'a').replace(/Ą/g, 'A')
       .replace(/ć/g, 'c').replace(/Ć/g, 'C')
       .replace(/ę/g, 'e').replace(/Ę/g, 'E')

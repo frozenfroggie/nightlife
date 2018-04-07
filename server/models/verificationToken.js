@@ -9,7 +9,7 @@ const VerificationTokenSchema = new mongoose.Schema({
 
 VerificationTokenSchema.methods.generate = function(userID) {
     const verificationToken = this;
-    const token = jwt.sign({id: userID}, process.env.JWT_SECRET_3, {expiresIn: '1d'});
+    const token = jwt.sign({id: userID}, process.env.JWT_VERIFICATION_SECRET, {expiresIn: '1d'});
     verificationToken.token = token;
     return verificationToken.save().then(() => token);
 };

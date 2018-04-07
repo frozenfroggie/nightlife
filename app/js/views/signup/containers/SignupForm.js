@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import { withRouter } from "react-router-dom";
 
 import { signup, isUserExists } from '../../shared/actions/authActions';
-import validateInput from '../../shared/utils/clientValidation';
+import validateInput from '../../../utils/clientValidation';
 import TextInputField from '../components/TextInputField';
 import SubmitInputField from '../components/SubmitInputField';
 

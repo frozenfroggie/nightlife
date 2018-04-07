@@ -52,6 +52,7 @@ class CitySearchInput extends React.Component {
         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.lat},${pos.lng}&key=AIzaSyDJWknmaOWpg2xv4tD0tdRGTJ4xG067iHY`)
             .then(res => {
               this.props.forceCityInputChange(res.data.results[1].formatted_address);
+              this.startSearching({lat: pos.lat, lng: pos.lng});
             }).catch(err => {
               console.log(err);
             });
@@ -63,7 +64,10 @@ class CitySearchInput extends React.Component {
   onChange = event => {
     this.props.handleCityInputChange(event);
   }
-  startSearching = () => {
+  startSearching = (coordinates) => {
+    if(coordinates) {
+      this.props.search(false, coordinates);
+    }
     let cityInputValue = this.props.searchState.cityInputValue;
     this.props.search(cityInputValue);
   }

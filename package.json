@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "esw app/js/**/*.js --watch",
-    "test": "export NODE_ENV=test && export MONGODB_URI=mongodb://localhost:27017/NightlifeTest && mocha --require babel-register \"server/__tests__/**/*@(.spec.js)\"",
+    "test": "export NODE_ENV=test && export MONGODB_URI=mongodb://localhost:27017/NightlifeTest && mocha --require babel-register \"__tests__/**/*@(.spec.js)\"",
     "test-watch": "nodemon --exec 'npm test'",
     "build:prod": "webpack -p --config webpack.prod.config.js",
     "build:dev:watch": "webpack --config webpack.dev.config.js --progress --colors --watch",
@@ -84,7 +84,6 @@
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^1.0.0",
-    "rand-token": "^0.4.0",
     "react": "^15.6.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^15.6.2",
