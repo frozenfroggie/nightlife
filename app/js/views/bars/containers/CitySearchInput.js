@@ -21,6 +21,9 @@ class CitySearchInput extends React.Component {
   }
   componentDidMount() {
     this.setState({citySearchShow: true});
+    if(this.props.searchState.cityInputValue !== '') {
+      this.props.forceCityInputChange('');
+    }
   }
   handleFocus = () => {
     this.setState({isFocused: true});
