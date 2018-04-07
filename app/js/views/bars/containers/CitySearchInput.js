@@ -70,9 +70,10 @@ class CitySearchInput extends React.Component {
   startSearching = (coordinates) => {
     if(coordinates) {
       this.props.search(false, coordinates);
+    } else {
+      let cityInputValue = this.props.searchState.cityInputValue;
+      this.props.search(cityInputValue);
     }
-    let cityInputValue = this.props.searchState.cityInputValue;
-    this.props.search(cityInputValue);
   }
   render() {
     const searchIfEnter = event => event.key === "Enter" ? this.startSearching() : '';
