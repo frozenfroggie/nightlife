@@ -11,8 +11,9 @@ const UserSchema = new mongoose.Schema({
   displayName: String,
   username: String,
   email: String,
+  password: String
   isVerified: Boolean,
-  bars: []
+  bars: [],
   // username: {
   //   type: String,
   //   required: true,
@@ -130,15 +131,21 @@ UserSchema.statics.checkUserExists = function(identifier) {
 
 UserSchema.statics.findByCredentials = function(credentials, password) {
   const User = this;
+  console.log('buu');
   return User.findOne({$or: [{username: credentials}, {email: credentials}]}).then(user => {
     if(!user) {
+      console.log('no user');
       return Promise.reject();
     }
     if(!user.isVerified) {
+      console.log('not verified');
       return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
     }
     return new Promise((resolve, reject) => {
+      console.log(user);
+      console.log('what?', password, user.password);
       bcrypt.compare(password, user.password, (err, res) => {
+        console.log('res', res);
         if(res) {
           resolve(user);
         } else {
