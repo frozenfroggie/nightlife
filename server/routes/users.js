@@ -29,8 +29,8 @@ router.post('/', function(req, res) {
            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
            const msg = {
              to: user.email,
-             from: 'no-reply@example.com',
-             subject: 'Confirm email',
+             from: 'no-reply@nightlife.com',
+             subject: 'Welcome to Nightlife! Confirm Your Email',
              html:  `
              <table style="width: 100%;">
              <tr>
@@ -73,8 +73,10 @@ router.get('/confirmation/:token', async (req, res) => {
 //login
 router.post('/login', function(req, res) {
   const body = pick(req.body, ['password', 'credentials']);
+  console.log('login', body);
   User.findByCredentials(body.credentials, body.password)
       .then(user => {
+        console.log('user', user);
         return user.generateAndSaveTokens().then(tokens => {
           res.header('Authorization', `Bearer ${tokens.authToken}`).send({user, refreshToken: tokens.refreshToken});
         });
