@@ -11,9 +11,9 @@ const UserSchema = new mongoose.Schema({
   displayName: String,
   username: String,
   email: String,
-  password: String
+  password: String,
   isVerified: Boolean,
-  bars: [],
+  bars: []
   // username: {
   //   type: String,
   //   required: true,
