@@ -16,8 +16,9 @@ router.get('/search/:identifier', function(req, res) {
 
 //signup
 router.post('/', function(req, res) {
-  const body = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
-  const user = new User(body);
+  const {username, email, firstName, lastName, password} = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
+  const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': password});
+  console.log(user);
   user.save()
       .then(() => {
         var verificationToken = new VerificationToken({_userId: user._id});
@@ -28,7 +29,7 @@ router.post('/', function(req, res) {
            const sgMail = require('@sendgrid/mail');
            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
            const msg = {
-             to: user.email,
+             to: user.local.email,
              from: 'no-reply@nightlife.com',
              subject: 'Welcome to Nightlife! Confirm Your Email',
              html:  `
