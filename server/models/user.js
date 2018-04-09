@@ -14,7 +14,15 @@ const UserSchema = new mongoose.Schema({
     email: String,
     password: String,
     isVerified: Boolean,
-    bars: []
+    bars: [],
+    tokens: {
+      authToken: {
+        type: String
+      },
+      refreshToken: {
+        type: String
+      }
+    }
   },
   facebook: {
     id: String,
@@ -126,17 +134,17 @@ UserSchema.methods.generateAndSaveTokens = function() {
   const user = this;
 
   const authTokenExpirationTime = 60;
-  const authToken = jwt.sign({_id: user._id.toHexString(), email: user.email, username: user.username, access: 'auth'}, process.env.JWT_AUTHENTICATION_SECRET, {
+  const authToken = jwt.sign({_id: user.local._id.toHexString(), email: user.local.email, username: user.local.username, access: 'auth'}, process.env.JWT_AUTHENTICATION_SECRET, {
     expiresIn: authTokenExpirationTime
   });
 
   const refreshTokenExpirationTime = '5d';
-  const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_REFRESH_SECRET, {
+  const refreshToken = jwt.sign({_id: user.local._id.toHexString(), access: 'refresh'}, process.env.JWT_REFRESH_SECRET, {
     expiresIn: refreshTokenExpirationTime
   });
 
-  user.tokens = {authToken, refreshToken};
-  return user.save().then(() => user.tokens);
+  user.local.tokens = {authToken, refreshToken};
+  return user.save().then(() => user.local.tokens);
 };
 
 // UserSchema.methods.removeToken = function(authToken, refreshToken) {
@@ -183,6 +191,8 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
 
 UserSchema.pre('save', function (next) {
   const user = this;
+  console.log(user.local);
+  console.log(user.local.isModified('password'));
   if (user.local.isModified('password')) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.local.password, salt, (err, hash) => {
