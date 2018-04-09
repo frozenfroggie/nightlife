@@ -162,7 +162,7 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
       console.log('no user');
       return Promise.reject();
     }
-    if(!user.isVerified) {
+    if(!user.local.isVerified) {
       console.log('not verified');
       return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
     }
