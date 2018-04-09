@@ -18,12 +18,9 @@ router.get('/search/:identifier', function(req, res) {
 //signup
 router.post('/', function(req, res) {
   const {username, email, firstName, lastName, password} = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
-  const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': password});
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(user.local.password, salt, (err, hash) => {
-      user.local.password = hash;
-    });
-  });
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
   user.save()
       .then(() => {
         console.log('buuu');
@@ -80,14 +77,10 @@ router.get('/confirmation/:token', async (req, res) => {
 
 //login
 router.post('/login', function(req, res) {
-  const body = pick(req.body, ['password', 'credentials']);
-  console.log('login', body);
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(body.password, salt, (err, hash) => {
-      body.password = hash;
-    });
-  });
-  User.findByCredentials(body.credentials, body.password)
+  const { password, credentials } = pick(req.body, ['password', 'credentials']);
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  User.findByCredentials(credentials, hash)
       .then(user => {
         console.log('user', user);
         return user.generateAndSaveTokens().then(tokens => {
