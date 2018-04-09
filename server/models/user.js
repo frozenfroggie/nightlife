@@ -134,12 +134,12 @@ UserSchema.methods.generateAndSaveTokens = function() {
   const user = this;
 
   const authTokenExpirationTime = 60;
-  const authToken = jwt.sign({_id: user.local._id.toHexString(), email: user.local.email, username: user.local.username, access: 'auth'}, process.env.JWT_AUTHENTICATION_SECRET, {
+  const authToken = jwt.sign({_id: user._id.toHexString(), email: user.local.email, username: user.local.username, access: 'auth'}, process.env.JWT_AUTHENTICATION_SECRET, {
     expiresIn: authTokenExpirationTime
   });
 
   const refreshTokenExpirationTime = '5d';
-  const refreshToken = jwt.sign({_id: user.local._id.toHexString(), access: 'refresh'}, process.env.JWT_REFRESH_SECRET, {
+  const refreshToken = jwt.sign({_id: user._id.toHexString(), access: 'refresh'}, process.env.JWT_REFRESH_SECRET, {
     expiresIn: refreshTokenExpirationTime
   });
 
