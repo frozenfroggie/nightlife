@@ -21,10 +21,12 @@ router.post('/', function(req, res) {
   console.log(user);
   user.save()
       .then(() => {
-        var verificationToken = new VerificationToken({_userId: user.local._id});
-        return verificationToken.generate(user.local._id);
+        console.log('buuu');
+        var verificationToken = new VerificationToken({_userId: user._id});
+        return verificationToken.generate(user._id);
       })
       .then(verificationToken => {
+          console.log('mail', user.local.email);
            const url = `https://vast-everglades-58513.herokuapp.com/users/confirmation/${verificationToken}`;
            const sgMail = require('@sendgrid/mail');
            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
