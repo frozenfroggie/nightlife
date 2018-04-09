@@ -6,6 +6,7 @@ const VerificationToken = require('../models/verificationToken');
 const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -18,7 +19,11 @@ router.get('/search/:identifier', function(req, res) {
 router.post('/', function(req, res) {
   const {username, email, firstName, lastName, password} = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
   const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': password});
-  console.log(user);
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(user.local.password, salt, (err, hash) => {
+      user.local.password = hash;
+    });
+  });
   user.save()
       .then(() => {
         console.log('buuu');
@@ -77,6 +82,11 @@ router.get('/confirmation/:token', async (req, res) => {
 router.post('/login', function(req, res) {
   const body = pick(req.body, ['password', 'credentials']);
   console.log('login', body);
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(body.password, salt, (err, hash) => {
+      body.password = hash;
+    });
+  });
   User.findByCredentials(body.credentials, body.password)
       .then(user => {
         console.log('user', user);
