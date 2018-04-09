@@ -7,13 +7,42 @@ const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
-  id: String,
-  displayName: String,
-  username: String,
-  email: String,
-  password: String,
-  isVerified: Boolean,
-  bars: []
+  local: {
+    id: String,
+    displayName: String,
+    username: String,
+    email: String,
+    password: String,
+    isVerified: Boolean,
+    bars: []
+  },
+  facebook: {
+    id: String,
+    displayName: String,
+    username: String,
+    email: String,
+    password: String,
+    isVerified: Boolean,
+    bars: []
+  },
+  google: {
+    id: String,
+    displayName: String,
+    username: String,
+    email: String,
+    password: String,
+    isVerified: Boolean,
+    bars: []
+  },
+  github: {
+    id: String,
+    displayName: String,
+    username: String,
+    email: String,
+    password: String,
+    isVerified: Boolean,
+    bars: []
+  }
   // username: {
   //   type: String,
   //   required: true,
@@ -71,8 +100,8 @@ UserSchema.statics.findByToken = function(authToken) {
     return Promise.reject(err);
   }
   return User.findOne({
-    '_id': decoded._id,
-    'tokens.authToken': authToken
+    'local._id': decoded._id,
+    'local.tokens.authToken': authToken
   });
 }
 
@@ -85,8 +114,8 @@ UserSchema.statics.findByRefreshToken = function(refreshToken) {
     return Promise.reject(err);
   }
   return User.findOne({
-    '_id': decoded._id,
-    'tokens.refreshToken': refreshToken
+    'local._id': decoded._id,
+    'local.tokens.refreshToken': refreshToken
   }).then(user => {
     return user;
   }).catch(err => Promise.reject(err));
@@ -125,14 +154,14 @@ UserSchema.methods.generateAndSaveTokens = function() {
 
 UserSchema.statics.checkUserExists = function(identifier) {
   const User = this;
-  return User.findOne({$or: [{username: identifier}, {email: identifier}]})
+  return User.findOne({$or: [{'local.username': identifier}, {'local.email': identifier}]})
              .then(user => user ? true : false);
 }
 
 UserSchema.statics.findByCredentials = function(credentials, password) {
   const User = this;
   console.log('buu');
-  return User.findOne({$or: [{username: credentials}, {email: credentials}]}).then(user => {
+  return User.findOne({$or: [{'local.username': credentials}, {'local.email': credentials}]}).then(user => {
     if(!user) {
       console.log('no user');
       return Promise.reject();

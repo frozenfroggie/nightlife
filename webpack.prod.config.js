@@ -46,6 +46,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('production')}), // This tells the Webpack and Babel for optimization
         new HtmlWebpackPlugin({template: 'app/index.html'}),
+        new HtmlWebpackPlugin({filename: 'error.html', template: 'app/error.html', inject: false}),
         new FaviconsWebpackPlugin('./app/assets/logo.png'),
         new ExtractTextPlugin('index.css'), //to extract css file
         new CleanWebpackPlugin(['dist']), // to clean dist folder before every building

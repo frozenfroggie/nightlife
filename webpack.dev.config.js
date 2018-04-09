@@ -47,6 +47,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
         new HtmlWebpackPlugin({template: 'app/index.html'}),
+        new HtmlWebpackPlugin({filename: 'error.html', template: 'app/error.html', inject: false}),
         new FaviconsWebpackPlugin('./app/assets/logo.png'),
         new BrowserSyncPlugin({
           host: 'localhost',
