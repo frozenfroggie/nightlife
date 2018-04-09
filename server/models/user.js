@@ -19,10 +19,8 @@ const UserSchema = new mongoose.Schema({
   facebook: {
     id: String,
     displayName: String,
-    username: String,
     email: String,
     password: String,
-    isVerified: Boolean,
     bars: []
   },
   google: {
@@ -31,7 +29,6 @@ const UserSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    isVerified: Boolean,
     bars: []
   },
   github: {
@@ -40,7 +37,6 @@ const UserSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
-    isVerified: Boolean,
     bars: []
   }
   // username: {

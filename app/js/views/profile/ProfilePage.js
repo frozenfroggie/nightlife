@@ -8,6 +8,7 @@ import TheBackground from '../shared/components/TheBackground';
 
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
          changeBarsPosition, setBarsContainerHeight } from '../shared/actions/scrollActions';
+import { socialConnect } from '../shared/actions/authActions';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class ProfilePage extends React.Component {
       <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)}>
         <div className="wrapper">
         <TheBackground backgroundName='bgProfile'/>
-          <Content handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
+          <Content connect={(socialName) => this.props.socialConnect(socialName)} handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
         </div>
       </div>
      )
@@ -65,4 +66,4 @@ class ProfilePage extends React.Component {
      scrollState: store.scrollReducer
  });
 
- export default connect(mapStateToProps, {resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, toogleIsGrabbed})(ProfilePage);
+ export default connect(mapStateToProps, {socialConnect, resetScrollSettings, setBarsContainerHeight, changeScrollButtonPosition, changeBarsPosition, toogleIsGrabbed})(ProfilePage);

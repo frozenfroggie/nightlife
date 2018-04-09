@@ -20,17 +20,17 @@ const Settings = props => {
             <div className="socialBtn">
               <Facebook width={style.width} height={style.height} />
               <span> Facebook </span>
-              <div className='connect'> Connect </div>
+              <div onClick={() => props.connect('facebook')} className='connect'> Connect </div>
             </div>
             <div className="socialBtn">
               <Google width={style.width} height={style.height} />
               <span> Google+ </span>
-              <div className='connect'> Connect </div>
+              <div onClick={() => props.connect('google')} className='connect'> Connect </div>
             </div>
             <div className="socialBtn">
               <Github width={style.width} height={style.height} />
               <span> Github </span>
-              <div className='connect'> Connect </div>
+              <div onClick={() => props.connect('github')} className='connect'> Connect </div>
             </div>
           </div>
         </div>

@@ -21,17 +21,20 @@ const pick = require('lodash/pick');
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/' }));
+router.get('/google/connect', passport.authorize('google', { scope: ['profile', 'email'] }));
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/', failureFlash: true }));
+router.get('/facebook/connect', passport.authorize('facebook', { scope: ['email'] }));
 
 router.get('/github', passport.authenticate('github'));
 router.get('/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/', failureFlash: true }));
+router.get('/github/connect', passport.authorize('github'));
 
 router.get('/', function(req,res) {
   if(req.isAuthenticated()) {
-    const { displayName, username, email, isVerified, bars } = pick(req.user, ['displayName', 'username', 'email', 'isVerified', 'bars']);
-    res.send({isAuthenticated: true, user: {displayName, username, email, isVerified, bars}});
+    const { local, facebook, google, github } = pick(req.user, ['local', 'facebook', 'google', 'github']);
+    res.send({isAuthenticated: true, user: {local, facebook, google, github}});
   } else {
     res.send({isAuthenticated: false});
   }
