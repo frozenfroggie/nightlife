@@ -168,8 +168,8 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
     }
     return new Promise((resolve, reject) => {
       console.log(user);
-      console.log('what?', password, user.password);
-      bcrypt.compare(password, user.password, (err, res) => {
+      console.log('what?', password, user.local.password);
+      bcrypt.compare(password, user.local.password, (err, res) => {
         console.log('res', res);
         if(res) {
           resolve(user);
@@ -185,8 +185,8 @@ UserSchema.pre('save', function (next) {
   const user = this;
   if (user.isModified('password')) {
     bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(user.password, salt, (err, hash) => {
-        user.password = hash;
+      bcrypt.hash(user.local.password, salt, (err, hash) => {
+        user.local.password = hash;
         next();
       });
     });
