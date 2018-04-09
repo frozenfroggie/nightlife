@@ -183,7 +183,7 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
 
 UserSchema.pre('save', function (next) {
   const user = this;
-  if (user.isModified('password')) {
+  if (user.local.isModified('password')) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.local.password, salt, (err, hash) => {
         user.local.password = hash;
