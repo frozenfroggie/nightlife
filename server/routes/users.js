@@ -17,18 +17,16 @@ router.get('/search/:identifier', function(req, res) {
 
 //signup
 router.post('/', function(req, res) {
-  const {username, email, firstName, lastName, password} = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
+  const { username, email, firstName, lastName, password } = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
   const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
   user.save()
       .then(() => {
-        console.log('buuu');
         var verificationToken = new VerificationToken({_userId: user._id});
         return verificationToken.generate(user._id);
       })
       .then(verificationToken => {
-          console.log('mail', user.local.email);
            const url = `https://vast-everglades-58513.herokuapp.com/users/confirmation/${verificationToken}`;
            const sgMail = require('@sendgrid/mail');
            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -78,9 +76,7 @@ router.get('/confirmation/:token', async (req, res) => {
 //login
 router.post('/login', function(req, res) {
   const { password, credentials } = pick(req.body, ['password', 'credentials']);
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt);
-  User.findByCredentials(credentials, hash)
+  User.findByCredentials(credentials, password)
       .then(user => {
         console.log('user', user);
         return user.generateAndSaveTokens().then(tokens => {

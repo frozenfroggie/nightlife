@@ -125,11 +125,6 @@ UserSchema.statics.findByRefreshToken = function(refreshToken) {
   }).catch(err => Promise.reject(err));
 }
 
-// UserSchema.methods.toJSON = function() {
-//   const user = this;
-//   return pick(user, ['_id', 'email', 'username', 'bars']);
-// };
-
 UserSchema.methods.generateAndSaveTokens = function() {
   const user = this;
 
@@ -164,7 +159,6 @@ UserSchema.statics.checkUserExists = function(identifier) {
 
 UserSchema.statics.findByCredentials = function(credentials, password) {
   const User = this;
-  console.log('buu');
   return User.findOne({$or: [{'local.username': credentials}, {'local.email': credentials}]}).then(user => {
     if(!user) {
       console.log('no user');
@@ -175,35 +169,10 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
       return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
     }
     return new Promise((resolve, reject) => {
-      console.log(user);
-      console.log('what?', password, user.local.password);
-      bcrypt.compare(password, user.local.password, (err, res) => {
-        console.log('res', res);
-        if(res) {
-          resolve(user);
-        } else {
-          reject(err);
-        }
-      });
+      bcrypt.compare(password, user.local.password).then(res => res ? resolve(user) : reject());
     });
   });
 }
-
-UserSchema.pre('save', function (next) {
-  const user = this;
-  console.log(user.local);
-  console.log(user.local.isModified('password'));
-  if (user.local.isModified('password')) {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(user.local.password, salt, (err, hash) => {
-        user.local.password = hash;
-        next();
-      });
-    });
-  } else {
-    next();
-  }
-});
 
 const User = mongoose.model('User', UserSchema);
 
