@@ -7,6 +7,7 @@ const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
+  bars: [],
   local: {
     id: String,
     displayName: String,
@@ -14,7 +15,6 @@ const UserSchema = new mongoose.Schema({
     email: String,
     password: String,
     isVerified: Boolean,
-    bars: [],
     tokens: {
       authToken: {
         type: String
@@ -28,24 +28,21 @@ const UserSchema = new mongoose.Schema({
     id: String,
     displayName: String,
     email: String,
-    password: String,
-    bars: []
+    password: String
   },
   google: {
     id: String,
     displayName: String,
     username: String,
     email: String,
-    password: String,
-    bars: []
+    password: String
   },
   github: {
     id: String,
     displayName: String,
     username: String,
     email: String,
-    password: String,
-    bars: []
+    password: String
   }
   // username: {
   //   type: String,
