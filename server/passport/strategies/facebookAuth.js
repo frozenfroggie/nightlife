@@ -16,7 +16,7 @@ module.exports = function() {
     function(accessToken, refreshToken, profile, cb) {
       console.log('fb', profile);
       const { id, displayName, emails } = pick(profile, ['id', 'displayName', 'emails']);
-      User.findOrCreate({ 'facebook.id': facebook, 'facebook.displayName': displayName, 'facebook.email': emails[0].value, 'facebook.isVerified': true }, function (err, user) {
+      User.findOrCreate({ 'facebook.id': id, 'facebook.displayName': displayName, 'facebook.email': emails[0].value, 'facebook.isVerified': true }, function (err, user) {
         console.log("logged in", user);
         return cb(err, user);
       });

@@ -9,8 +9,8 @@ const Content = (props) => {
   return (
     <div className="profileContent">
       <div className="profileAvatar"><FontAwesome name='user' size='3x'/></div>
-      <h2 className="profileUsername"> { props.user.username || props.user.displayName } </h2>
-      <h4 className="profileEmail"> { props.user.email } </h4>
+      <h2 className="profileUsername"> { props.user.local.username || props.user.local.displayName || props.user.facebook.displayName || props.user.google.displayName || props.user.github.username || props.user.github.displayName } </h2>
+      <h4 className="profileEmail"> { props.user.local.email || props.user.facebook.email || props.user.google.email || props.user.github.email } </h4>
       <div className="profileButtonsContainer">
         <div className={classnames(['profileButton',{'profileButtonActive': !props.showSettings}])} onClick={() => props.handleClick(false)}> ACTIVITIES </div>
         <div className={classnames(['profileButton',{'profileButtonActive': props.showSettings}])} onClick={() => props.handleClick(true)}> SETTINGS </div>
