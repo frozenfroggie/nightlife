@@ -2,9 +2,10 @@ import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
+import isArray from 'lodash/isArray';
 
 const Bars = (props) => {
-  const items = props.bars.map((bar, i) => {
+  const items = isArray(props.bars.map) && props.bars.map((bar, i) => {
     return (
       <div className={classnames(['bar', {'barFloat': props.barToDelete === bar.id}])} key={bar.name} onMouseOver={() => props.setBarLocationToExpand(i)} onMouseOut={() => props.setBarLocationToExpand(undefined)}>
         <div className="wantToGo"><FontAwesome name="heart" /></div>
