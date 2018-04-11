@@ -33,8 +33,8 @@ router.get('/github/connect', passport.authorize('github'));
 
 router.get('/', function(req,res) {
   if(req.isAuthenticated()) {
-    const { local, facebook, google, github } = pick(req.user, ['local', 'facebook', 'google', 'github']);
-    res.send({isAuthenticated: true, user: {local, facebook, google, github}});
+    const { local, facebook, google, github, bars } = pick(req.user, ['bars', 'local', 'facebook', 'google', 'github']);
+    res.send({isAuthenticated: true, user: {bars, local, facebook, google, github}});
   } else {
     res.send({isAuthenticated: false});
   }
