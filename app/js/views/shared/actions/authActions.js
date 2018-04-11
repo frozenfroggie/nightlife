@@ -18,7 +18,7 @@ export function signup(data) {
                 .then(res => {
 
                   const authToken = res.headers.authorization.split(' ')[1];
-                  const refreshToken = res.data.local.refreshToken;
+                  const refreshToken = res.data.refreshToken;
                   try {
                     sessionStorage.setItem('authToken', authToken);
                     localStorage.setItem('refreshToken', refreshToken);
@@ -58,7 +58,7 @@ export function login(data) {
                   const authToken = res.headers.authorization.split(' ')[1];
                   sessionStorage.setItem('authToken', authToken);
 
-                  const refreshToken = res.data.local.refreshToken;
+                  const refreshToken = res.data.refreshToken;
                   localStorage.setItem('refreshToken', refreshToken);
 
                   dispatch(saveUser(res.data.user));
