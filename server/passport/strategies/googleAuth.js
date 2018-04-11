@@ -24,16 +24,18 @@ module.exports = function() {
         });
         console.log(profile);
       } else {
-        let user = profile;
+        let user = req.user;
         user.google.id = profile.id;
         user.google.displayName = profile.displayName;
         user.google.username = profile.username;
         user.google.email = profile.email;
         console.log('berfore update', user);
-        User.findByIdAndUpdate(req.user._id, {$set: {google: user.google}}, {new: true}).then(user => {
-          console.log('after update', user);
-          res.send({user, refreshToken: req.refreshToken});
-        }).catch(err => res.status(400).send(err));
+        user.save(function(err){
+	    				if(err) {
+                throw err;
+              }
+	    				return done(null, user);
+	    			})
       }
     }
   ));
