@@ -15,7 +15,7 @@ module.exports = function() {
     function(accessToken, refreshToken, profile, cb) {
       console.log(profile);
       const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
-      User.findOrCreate({ 'google.id': id, 'google.displayName': displayName, 'google.username': username, 'google.email': emails[0].value, 'google.isVerified': true }, function (err, user) {
+      User.findOrCreate({ 'google.id': id, 'google.displayName': displayName, 'google.username': username, 'google.email': emails[0].value }, function (err, user) {
         console.log("logged in");
         return cb(err,user);
       });

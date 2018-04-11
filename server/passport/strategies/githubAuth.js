@@ -15,7 +15,7 @@ module.exports = function() {
       function(accessToken, refreshToken, profile, cb) {
         console.log(profile);
         const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
-        User.findOrCreate({ 'github.id': id, 'github.displayName': displayName, 'github.username': username, 'github.email': emails[0].value, 'github.isVerified': true }, function (err, user) {
+        User.findOrCreate({ 'github.id': id, 'github.displayName': displayName, 'github.username': username, 'github.email': emails[0].value }, function (err, user) {
           console.log("logged in");
           return cb(err, user);
         });

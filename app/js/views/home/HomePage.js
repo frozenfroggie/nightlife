@@ -8,7 +8,8 @@ import Content from './components/Content';
 
 class HomePage extends React.Component {
   componentDidMount() {
-    window.innerWidth < 1024 ? this.resetTitleText() : this.lettering();
+    //window.innerWidth < 1024 ? this.resetTitleText() : this.lettering();
+    this.lettering();
     window.addEventListener('resize', this.handleResizing);
   }
   lettering = () => {
@@ -30,7 +31,8 @@ class HomePage extends React.Component {
   }
   handleResizing = () => {
     this.cleaning();
-    window.innerWidth >= 1024 ? this.lettering() : this.resetTitleText();
+    //window.innerWidth >= 1024 ? this.lettering() : this.resetTitleText();
+     this.lettering();
   }
   componentWillUnmount() {
     this.cleaning();
