@@ -8,7 +8,7 @@ import TheBackground from '../shared/components/TheBackground';
 
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
          changeBarsPosition, setBarsContainerHeight } from '../shared/actions/scrollActions';
-         
+
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -53,7 +53,7 @@ class ProfilePage extends React.Component {
       <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)}>
         <div className="wrapper">
         <TheBackground backgroundName='bgProfile'/>
-          <Conten handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
+          <Content handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
         </div>
       </div>
      )
