@@ -90,7 +90,9 @@ router.post('/login', function(req, res) {
 router.post('/refreshTokens', function(req, res) {
   const refreshToken = req.body.refreshToken;
   User.findByRefreshToken(refreshToken).then(user => {
+    console.log('findByRefreshToken', user);
     return user.generateAndSaveTokens().then(newTokens => {
+      console.log('generateAndSaveTokens', newTokens);
       res.header('Authorization', `Bearer ${newTokens.authToken}`).send({refreshToken: newTokens.refreshToken});
     });
   }).catch(err => {
