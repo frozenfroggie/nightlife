@@ -27,7 +27,7 @@ const Settings = props => {
             <div className="socialBtn">
               <Google width={style.width} height={style.height} />
               <span> Google+ </span>
-              <a href='/connect/google'>
+              <a href='/socialAuth/google'>
                 <div className='connect'> Connect </div>
               </a>
             </div>
