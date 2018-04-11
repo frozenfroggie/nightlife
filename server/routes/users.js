@@ -80,6 +80,7 @@ router.post('/login', function(req, res) {
       .then(user => {
         console.log('user', user);
         return user.generateAndSaveTokens().then(tokens => {
+          console.log(tokens);
           res.header('Authorization', `Bearer ${tokens.authToken}`).send({user, refreshToken: tokens.refreshToken});
         });
       }).catch(err => res.status(400).send(err));
