@@ -14,8 +14,8 @@ module.exports = function() {
       passReqToCallback: true
     },
     function(req, accessToken, refreshToken, profile, cb) {
-      console.log('req', req);
       console.log('req.user', req.user);
+      console.log('req.account', req.account);
       if(!req.user) {
         const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
         User.findOrCreate({ 'google.id': id, 'google.displayName': displayName, 'google.username': username, 'google.email': emails[0].value }, function (err, user) {
@@ -30,7 +30,11 @@ module.exports = function() {
         user.google.username = profile.username;
         user.google.email = profile.email;
         console.log('berfore update', user);
-        user.save(err => cb(err, user));
+        User.findByIdAndUpdate(req.user._id, {$set: {google: user.google}}, {new: true})
+            .then(user => {
+              console.log('after update', user);
+              return cb(null,user);
+        }).catch(err => cb(err));
       }
     }
   ));
