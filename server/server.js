@@ -13,6 +13,7 @@ require('isomorphic-fetch');
 const searchRoutes = require('./routes/search');
 const usersRoutes = require('./routes/users');
 const socialAuthRoutes = require('./routes/socialAuth');
+const connectRoutes = require('./routes/connect');
 
 const auth = require('./passport/auth.js');
 const githubAuth = require('./passport/strategies/githubAuth.js');
@@ -47,6 +48,7 @@ googleAuth();
 app.use('/search', searchRoutes);
 app.use('/users', usersRoutes);
 app.use('/socialAuth', socialAuthRoutes);
+app.use('/connect', connectRoutes);
 
 app.use( (req,res,next) => {
   const error = new Error('Not found');

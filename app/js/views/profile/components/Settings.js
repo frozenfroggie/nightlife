@@ -20,21 +20,21 @@ const Settings = props => {
             <div className="socialBtn">
               <Facebook width={style.width} height={style.height} />
               <span> Facebook </span>
-              <a href='/socialAuth/facebook/connect'>
+              <a href='/connect/facebook'>
                 <div className='connect'> Connect </div>
               </a>
             </div>
             <div className="socialBtn">
               <Google width={style.width} height={style.height} />
               <span> Google+ </span>
-              <a href='/socialAuth/google/connect'>
+              <a href='/connect/google'>
                 <div className='connect'> Connect </div>
               </a>
             </div>
             <div className="socialBtn">
               <Github width={style.width} height={style.height} />
               <span> Github </span>
-              <a href='/socialAuth/facebook/github'>
+              <a href='/connect/github'>
                 <div className='connect'> Connect </div>
               </a>
             </div>
