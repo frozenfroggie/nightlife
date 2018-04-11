@@ -5,26 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title> Nightlife </title>
-</head>
-<body>
   <style>
     body {
       margin: 0px;
-      /*background-image: url('../assets/party-small.png');*/
+      color: white;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url('./party-small.png');
+    }
+    a {
+      margin-bottom: 20px;
     }
     h2 {
-      margin: auto;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+    }
+    .module {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 80%;
+      height: 200px;
+      background-color: rgba(0,0,0,0.9);
+      border-radius: 5px;
+      border: 1px solid rgb(107, 44, 163);
+    }
+    @media only screen and (min-width: 767px) {
+      .module {
+        width: 50%;
+      }
+    }
+    @media only screen and (min-width: 1024px) {
+      .module {
+        width: 30%;
+      }
     }
     .back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 150px;
-      margin: 10%;
+      height: 34px;
+      border: 1px solid white;
+      border-radius: 5px;
       background-color: rgb(107, 44, 163);
       color: white;
     }
+    .back:hover {
+      cursor: pointer;
+    }
   </style>
+</head>
+<body>
   <div class='container'>
-    <h2> Sorry, this page is not available </h2>
-    <div class='back'> Back to home </div>
+    <div class='module'>
+      <h2> Sorry, this page is not available </h2>
+      <a href='https://vast-everglades-58513.herokuapp.com/'><div class='back'> Back to home </div></a>
+    </div>
   </div>
 </body>
 </html>
