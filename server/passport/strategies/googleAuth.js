@@ -30,12 +30,7 @@ module.exports = function() {
         user.google.username = profile.username;
         user.google.email = profile.email;
         console.log('berfore update', user);
-        user.save(function(err){
-	    				if(err) {
-                throw err;
-              }
-	    				return done(null, user);
-	    			})
+        user.save(err => cb(err, user));
       }
     }
   ));
