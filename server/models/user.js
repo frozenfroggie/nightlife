@@ -115,7 +115,6 @@ UserSchema.statics.findByRefreshToken = function(refreshToken) {
     return Promise.reject(err);
   }
   return User.findOne({
-    'local._id': decoded._id,
     'local.tokens.refreshToken': refreshToken
   }).then(user => {
     return user;
