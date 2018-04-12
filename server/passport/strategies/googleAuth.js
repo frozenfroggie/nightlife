@@ -32,8 +32,7 @@ module.exports = function() {
       passReqToCallback: true
     },
     function(req, accessToken, refreshToken, profile, cb) {
-      console.log('CONNECT req.user', JSON.stringify(req.user, null, 4));
-      console.log('CONNECT req.account', JSON.stringify(req.account, null, 4));
+      console.log('CONNECT profile', JSON.stringify(profile, null, 4));
       // if(!req.user) {
       //   const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
       //   User.findOrCreate({ 'google.id': id, 'google.displayName': displayName, 'google.username': username, 'google.email': emails[0].value }, function (err, user) {
