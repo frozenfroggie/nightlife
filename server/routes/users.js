@@ -35,26 +35,26 @@ router.post('/', function(req, res) {
         subject: 'Welcome to Nightlife! Confirm Your Email',
         html:  `
         <table style="width: 100%;">
-        <tr>
-        <td style="text-align: center;">
-        <img width="50px" src="https://image.ibb.co/fCdOVS/apple_icon_57x57.png" alt="apple_icon_57x57" border="0">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align: center; font-family: 'Open Sans','Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;
-        font-weight: 300; color: #294661!important;">
-        <h2>You're on your way! Let's confirm your email address.</h2>
-        <p>By clicking on the following link, you are confirming your email address.</p>
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align: center;">
-        <a style="box-sizing: border-box; border-color: #348eda; font-weight: 400; text-decoration: none;
-        display: inline-block; margin: 0; color: #ffffff; background-color: rgb(107, 44, 163);
-        border-radius: 2px; font-size: 14px; padding: 12px 45px;"
-        href="${url}">Confirm Email Address</a>
-        </td>
-        </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img width="50px" src="https://image.ibb.co/fCdOVS/apple_icon_57x57.png" alt="apple_icon_57x57" border="0">
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; font-family: 'Open Sans','Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;
+              font-weight: 300; color: #294661!important;">
+              <h2>You're on your way! Let's confirm your email address.</h2>
+              <p>By clicking on the following link, you are confirming your email address.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <a style="box-sizing: border-box; border-color: #348eda; font-weight: 400; text-decoration: none;
+                display: inline-block; margin: 0; color: #ffffff; background-color: rgb(107, 44, 163);
+                border-radius: 2px; font-size: 14px; padding: 12px 45px;"
+                href="${url}">Confirm Email Address</a>
+            </td>
+          </tr>
         </table>`
       };
       sgMail.send(msg);
@@ -81,7 +81,6 @@ router.post('/login', (req, res) => {
   console.log('buuuu');
   User.findByCredentials(credentials, password)
       .then(user => {
-        console.log('buuuu');
         console.log('user', user);
         return user.generateAndSaveTokens().then(tokens => {
           console.log(tokens);
