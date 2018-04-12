@@ -16,13 +16,13 @@ const authenticate = (req, res, next) => {
       if(!user) {
         return Promise.reject();
       } else {
-        console.log('auth token used');
+        console.log('local auth - auth token used');
         req.user = user;
         req.authToken = authToken;
         next();
       }
     }).catch(err => {
-      console.log('auth token expired');
+      console.log(err);
       res.status(401).send({error: 'auth token expired'});
     });
   }

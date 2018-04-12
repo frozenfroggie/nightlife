@@ -18,55 +18,56 @@ router.get('/search/:identifier', function(req, res) {
 //signup
 router.post('/', function(req, res) {
   const { username, email, firstName, lastName, password } = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt);
-  const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
-  user.save()
-      .then(() => {
-        var verificationToken = new VerificationToken({_userId: user._id});
-        return verificationToken.generate(user._id);
-      })
-      .then(verificationToken => {
-           const url = `https://vast-everglades-58513.herokuapp.com/users/confirmation/${verificationToken}`;
-           const sgMail = require('@sendgrid/mail');
-           sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-           const msg = {
-             to: user.local.email,
-             from: 'no-reply@nightlife.com',
-             subject: 'Welcome to Nightlife! Confirm Your Email',
-             html:  `
-             <table style="width: 100%;">
-             <tr>
-              <td style="text-align: center;">
-                <img width="50px" src="https://image.ibb.co/fCdOVS/apple_icon_57x57.png" alt="apple_icon_57x57" border="0">
-              </td>
-             </tr>
-              <tr>
-                <td style="text-align: center; font-family: 'Open Sans','Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;
-                           font-weight: 300; color: #294661!important;">
-                  <h2>You're on your way! Let's confirm your email address.</h2>
-                  <p>By clicking on the following link, you are confirming your email address.</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="text-align: center;">
-                <a style="box-sizing: border-box; border-color: #348eda; font-weight: 400; text-decoration: none;
-                          display: inline-block; margin: 0; color: #ffffff; background-color: rgb(107, 44, 163);
-                          border-radius: 2px; font-size: 14px; padding: 12px 45px;"
-                          href="${url}">Confirm Email Address</a>
-                </td>
-              </tr>
-            </table>`
-           };
-           sgMail.send(msg);
-      })
-      .catch(err => res.status(500).send(err));
+  bcrypt.hash(password, 10).then(hash => {
+    const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
+    user.save()
+    .then(() => {
+      var verificationToken = new VerificationToken({_userId: user._id});
+      return verificationToken.generate(user._id);
+    })
+    .then(verificationToken => {
+      const url = `https://vast-everglades-58513.herokuapp.com/users/confirmation/${verificationToken}`;
+      const sgMail = require('@sendgrid/mail');
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: user.local.email,
+        from: 'no-reply@nightlife.com',
+        subject: 'Welcome to Nightlife! Confirm Your Email',
+        html:  `
+        <table style="width: 100%;">
+        <tr>
+        <td style="text-align: center;">
+        <img width="50px" src="https://image.ibb.co/fCdOVS/apple_icon_57x57.png" alt="apple_icon_57x57" border="0">
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align: center; font-family: 'Open Sans','Helvetica Neue','Helvetica',Helvetica,Arial,sans-serif;
+        font-weight: 300; color: #294661!important;">
+        <h2>You're on your way! Let's confirm your email address.</h2>
+        <p>By clicking on the following link, you are confirming your email address.</p>
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align: center;">
+        <a style="box-sizing: border-box; border-color: #348eda; font-weight: 400; text-decoration: none;
+        display: inline-block; margin: 0; color: #ffffff; background-color: rgb(107, 44, 163);
+        border-radius: 2px; font-size: 14px; padding: 12px 45px;"
+        href="${url}">Confirm Email Address</a>
+        </td>
+        </tr>
+        </table>`
+      };
+      sgMail.send(msg);
+      res.send({ user });
+    })
+    .catch(err => res.status(500).send(err));
+  });
 });
 
-router.get('/confirmation/:token', async (req, res) => {
+router.get('/confirmation/:token', (req, res) => {
   try {
     const { id } = jwt.verify(req.params.token, process.env.JWT_VERIFICATION_SECRET);
-    await User.findByIdAndUpdate(id, { $set: {'local.isVerified': true }});
+    User.findByIdAndUpdate(id, { $set: {'local.isVerified': true }});
   } catch (e) {
     res.send('error');
   }
@@ -74,10 +75,13 @@ router.get('/confirmation/:token', async (req, res) => {
 });
 
 //login
-router.post('/login', function(req, res) {
+router.post('/login', (req, res) => {
   const { password, credentials } = pick(req.body, ['password', 'credentials']);
+  console.log(password, credentials);
+  console.log('buuuu');
   User.findByCredentials(credentials, password)
       .then(user => {
+        console.log('buuuu');
         console.log('user', user);
         return user.generateAndSaveTokens().then(tokens => {
           console.log(tokens);
@@ -90,9 +94,9 @@ router.post('/login', function(req, res) {
 router.post('/refreshTokens', function(req, res) {
   const refreshToken = req.body.refreshToken;
   User.findByRefreshToken(refreshToken).then(user => {
-    console.log('findByRefreshToken', user);
+    console.log('findByRefreshToken', JSON.stringify(user, null, 4));
     return user.generateAndSaveTokens().then(newTokens => {
-      console.log('generateAndSaveTokens', newTokens);
+      console.log('generateAndSaveTokens', JSON.stringify(newTokens, null, 4));
       res.header('Authorization', `Bearer ${newTokens.authToken}`).send({refreshToken: newTokens.refreshToken});
     });
   }).catch(err => {
@@ -127,17 +131,17 @@ router.delete('/:id', authenticate, function(req,res) {
 });
 
 //logout
-// router.delete('/me', authenticate, function(req, res) {
-//   const user = req.user;
-//   user.removeToken()
-//       .then(tokens => {
-//         console.log(tokens);
-//         res.send({message: 'tokens successfully deleted'})
-//       })
-//       .catch(err => res.status(400).send(err));
-// });
-// router.delete('/logout', authenticate, function(req,res) {
-//
-// });
+router.delete('/me', authenticate, function(req, res) {
+  const user = req.user;
+  user.removeToken()
+      .then(tokens => {
+        console.log(tokens);
+        res.send({message: 'tokens successfully deleted'})
+      })
+      .catch(err => res.status(400).send(err));
+});
+router.delete('/logout', authenticate, function(req,res) {
+
+});
 
 module.exports = router;
