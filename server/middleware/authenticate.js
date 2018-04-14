@@ -4,8 +4,10 @@ const authenticate = (req, res, next) => {
     let authToken;
     try {
       authToken = req.headers['authorization'].split(' ')[1];
+      console.log('authToken in authenticate', authToken);
       User.findByToken(authToken)
       .then(user => {
+        console.log('user in authenticate', user);
         if(!user) {
           return Promise.reject();
         } else {
