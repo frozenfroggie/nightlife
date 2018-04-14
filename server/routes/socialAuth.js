@@ -39,16 +39,17 @@ router.get('/', function(req,res) {
 });
 
 router.get('/getAccounts', authenticate, function(req,res) {
-  console.log('in get accounts!');
-  console.log('localAuth', req.localAuth);
-  console.log('socialAuth', req.isAuthenticated());
   if(req.localUser && req.isAuthenticated()) {
-    console.log('if true!@');
     const localUser = req.localUser;
-    const user  = pick(req.user, ['bars', 'facebook', 'google', 'github']);
-    console.log(localUser);
-    console.log(user);
-    res.send({localUser, user});
+    let bars = req.user.bars;
+    let socials  = pick(req.user, ['facebook', 'google', 'github']);
+    socials = socials.filter( social => social.id );
+    bars = bars.filter( bar => {
+      localUser.bars && bars.forEach( localBar => {
+        return bar.id !== localBar.id
+      });
+    });
+    res.send({localUser, socials, bars});
   }
 });
 
