@@ -64,9 +64,9 @@ app.use( (error,req,res,next) => {
         message: error.message
       }
     });
-  } else {
-    res.sendFile(publicPath + '/error.html');
-  }
+  // } else {
+  //   res.sendFile(publicPath + '/error.html');
+  // }
 });
 
 const port = process.env.PORT || 3030;
