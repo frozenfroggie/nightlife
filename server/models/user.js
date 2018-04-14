@@ -47,7 +47,6 @@ const UserSchema = new mongoose.Schema({
   google: {
     id: String,
     displayName: String,
-    username: String,
     email: String,
     password: String
   },
