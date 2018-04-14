@@ -26,10 +26,10 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/' }));
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
-router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/', failureFlash: true }));
+router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
 
 router.get('/github', passport.authenticate('github'));
-router.get('/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/', failureFlash: true }));
+router.get('/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/' }));
 
 router.get('/', function(req,res) {
   if(req.isAuthenticated()) {
@@ -41,7 +41,6 @@ router.get('/', function(req,res) {
 });
 
 router.get('/getAccounts', authenticate, function(req,res) {
-  try {
     console.log('localUser', req.localUser);
     console.log('socialUser', req.user);
     if(req.localUser && req.isAuthenticated()) {
@@ -60,16 +59,13 @@ router.get('/getAccounts', authenticate, function(req,res) {
       //     return bar.id !== localBar.id
       //   });
       // });
-      req.logout();
       User.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
+        req.logout();
         res.send({user, refreshToken: req.refreshToken});
       }).catch(err => res.status(400).send(err));
-
+    } else {
+      res.send({message: 'no social accounts to connect'});
     }
-  } catch(err) {
-    console.log(err);
-    res.send(err);
-  }
 });
 
 router.delete('/logout', function(req,res) {

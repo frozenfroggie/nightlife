@@ -19,7 +19,6 @@ module.exports = function() {
         console.log("logged in");
         return cb(err,user);
       });
-      console.log('profile', JSON.stringify(profile, null, 4));
     }
   ));
 
