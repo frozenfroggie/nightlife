@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const axios = require('axios');
 const pick = require('lodash/pick');
+const map = require('lodash/map');
 const authenticate = require('../middleware/authenticate');
 // router.get('/github', function(req,res) {
 //   res.redirect(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.CLIENT_ID}&redirect_uri=https://vast-everglades-58513.herokuapp.com/auth/github/callback`);
@@ -43,20 +44,26 @@ router.get('/getAccounts', authenticate, function(req,res) {
     console.log('localUser', req.localUser);
     console.log('socialUser', req.user);
     if(req.localUser && req.isAuthenticated()) {
-      console.log('inside if');
       const localUser = req.localUser;
-      let bars = req.user.bars;
-      let socials  = pick(req.user, ['facebook', 'google', 'github']);
-      socials = socials.filter(social => social.id);
-      console.log('buu');
-      console.log(socials);
+      const socialBars = req.user.bars;
+      let socialAccount;
+      if(req.user.facebook.id) {
+        socialAccount = {account: req.user.facebook, type: 'facebook'};
+      } else if(req.user.github.id) {
+        socialAccount = {accout: req.user.github, type: 'github'};
+      } else if(req.user.google.id) {
+        socialAccount = {accout: req.user.google, type: 'google'};
+      }
       // bars = bars.filter( bar => {
       //   return localUser.bars && bars.forEach( localBar => {
       //     return bar.id !== localBar.id
       //   });
       // });
-      console.log(bars);
-      res.send({localUser, socials, bars});
+      console.log(JSON.stringify(socialAccount, null, 4));
+      localUser.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
+        res.send({user, refreshToken: req.refreshToken});
+      }).catch(err => res.status(400).send(err));
+
     }
   } catch(err) {
     console.log(err);
