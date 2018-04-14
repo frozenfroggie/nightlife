@@ -19,7 +19,7 @@ router.get('/search/:identifier', function(req, res) {
 router.post('/', function(req, res) {
   const { username, email, firstName, lastName, password } = pick(req.body, ['username', 'email', 'firstName', 'lastName', 'password']);
   bcrypt.hash(password, 10).then(hash => {
-    const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
+    const user = new User({'local.isVerified': false, 'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
     user.save()
     .then(() => {
       var verificationToken = new VerificationToken({_userId: user._id});
