@@ -12,13 +12,12 @@ module.exports = function() {
         callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/github/callback"
       },
       function(accessToken, refreshToken, profile, cb) {
-        console.log(profile);
-        const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
-        console.log(id, displayName, username, emails);
-        User.findOrCreate({ 'github.id': id, 'github.displayName': displayName, 'github.username': username, 'github.email': emails[0].value }, function (err, user) {
-          console.log("logged in");
+        console.log('git', profile);
+        const { id, displayName, emails } = pick(profile, ['id', 'displayName', 'emails']);
+        User.findOrCreate({ 'github.id': id, 'github.displayName': displayName, 'github.email': emails[0].value }, function (err, user) {
+          console.log("logged in", user);
           return cb(err, user);
         });
-      }));
-
+      }
+    ));
 };

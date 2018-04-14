@@ -13,11 +13,11 @@ module.exports = function() {
       callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/google/callback"
     },
     function(accessToken, refreshToken, profile, cb) {
+      console.log('google', profile);
       const { id, displayName, emails } = pick(profile, ['id', 'displayName', 'emails']);
-      console.log(id, displayName, emails);
       User.findOrCreate({ 'google.id': id, 'google.displayName': displayName, 'google.email': emails[0].value }, function (err, user) {
-        console.log("logged in");
-        return cb(err,user);
+        console.log("logged in", user);
+        return cb(err, user);
       });
     }
   ));

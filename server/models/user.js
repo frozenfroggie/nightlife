@@ -51,7 +51,6 @@ const UserSchema = new mongoose.Schema({
   github: {
     id: String,
     displayName: String,
-    username: String,
     email: String
   }
   // username: {
