@@ -5,6 +5,7 @@ const axios = require('axios');
 const pick = require('lodash/pick');
 const map = require('lodash/map');
 const authenticate = require('../middleware/authenticate');
+const User = require('../models/user');
 // router.get('/github', function(req,res) {
 //   res.redirect(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.CLIENT_ID}&redirect_uri=https://vast-everglades-58513.herokuapp.com/auth/github/callback`);
 // });
@@ -60,7 +61,7 @@ router.get('/getAccounts', authenticate, function(req,res) {
       //   });
       // });
       console.log(JSON.stringify(socialAccount, null, 4));
-      localUser.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
+      User.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
         res.send({user, refreshToken: req.refreshToken});
       }).catch(err => res.status(400).send(err));
 
