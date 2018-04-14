@@ -22,7 +22,7 @@ router.post('/', function(req, res) {
     const user = new User({'local.username': username, 'local.email': email, 'local.firstName': firstName, 'local.lastName': lastName, 'local.password': hash});
     user.save()
     .then(() => {
-      var verificationToken = new VerificationToken({_userId: user._id});
+      var verificationToken = new VerificationToken({_id: user._id});
       return verificationToken.generate(user._id);
     })
     .then(verificationToken => {
@@ -66,8 +66,8 @@ router.post('/', function(req, res) {
 
 router.get('/confirmation/:token', (req, res) => {
   try {
-    const { id } = jwt.verify(req.params.token, process.env.JWT_VERIFICATION_SECRET);
-    User.findByIdAndUpdate(id, { $set: {'local.isVerified': true }});
+    const { _id } = jwt.verify(req.params.token, process.env.JWT_VERIFICATION_SECRET);
+    User.findByIdAndUpdate(_id, { $set: {'local.isVerified': true }});
   } catch (e) {
     res.send('error');
   }
