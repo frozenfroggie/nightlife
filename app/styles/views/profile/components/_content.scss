@@ -198,6 +198,10 @@
               cursor: pointer;
             }
           }
+          .connected {
+            background-color: $contrastColor;
+            color: white;
+          }
         }
       }
     }

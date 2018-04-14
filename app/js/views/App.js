@@ -28,7 +28,7 @@ class App extends React.Component {
       });
     } else {
       axios('/socialAuth/getAccounts').then(res => {
-        console.log(res.data);
+        this.props.saveUser(res.data.user);
       });
     }
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
