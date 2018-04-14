@@ -47,7 +47,7 @@ router.get('/getAccounts', authenticate, function(req,res) {
       const localUser = req.localUser;
       let bars = req.user.bars;
       let socials  = pick(req.user, ['facebook', 'google', 'github']);
-      // socials = socials.filter(social => social.id !== undefined);
+      socials = socials.filter(social => social.id);
       console.log('buu');
       console.log(socials);
       // bars = bars.filter( bar => {
