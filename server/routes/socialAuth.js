@@ -60,7 +60,7 @@ router.get('/getAccounts', authenticate, function(req,res) {
       //     return bar.id !== localBar.id
       //   });
       // });
-      console.log('socialAccount', JSON.stringify(socialAccount, null, 4));
+      req.logout();
       User.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
         res.send({user, refreshToken: req.refreshToken});
       }).catch(err => res.status(400).send(err));

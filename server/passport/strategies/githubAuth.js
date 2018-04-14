@@ -1,4 +1,3 @@
-//github authentication
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const GithubAuthModel = require('../../models/githubAuth.js');
@@ -15,6 +14,7 @@ module.exports = function() {
       function(accessToken, refreshToken, profile, cb) {
         console.log(profile);
         const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
+        console.log(id, displayName, username, emails);
         User.findOrCreate({ 'github.id': id, 'github.displayName': displayName, 'github.username': username, 'github.email': emails[0].value }, function (err, user) {
           console.log("logged in");
           return cb(err, user);

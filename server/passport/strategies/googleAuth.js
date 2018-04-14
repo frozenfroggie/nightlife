@@ -10,13 +10,11 @@ module.exports = function() {
   passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/google/callback",
-      passReqToCallback: true
+      callbackURL: "https://vast-everglades-58513.herokuapp.com/socialAuth/google/callback"
     },
-    function(req, accessToken, refreshToken, profile, cb) {
-      console.log('AUTH req.user', JSON.stringify(req.user, null, 4));
-      console.log('AUTH req.account', JSON.stringify(req.account, null, 4));
+    function(accessToken, refreshToken, profile, cb) {
       const { id, displayName, username, emails } = pick(profile, ['id', 'displayName', 'username', 'emails']);
+      console.log(id, displayName, username, emails);
       User.findOrCreate({ 'google.id': id, 'google.displayName': displayName, 'google.username': username, 'google.email': emails[0].value }, function (err, user) {
         console.log("logged in");
         return cb(err,user);
@@ -24,7 +22,7 @@ module.exports = function() {
       console.log('profile', JSON.stringify(profile, null, 4));
     }
   ));
-  
+
   //
   // passport.use(new GoogleStrategy({
   //     clientID: process.env.GOOGLE_CLIENT_ID,
