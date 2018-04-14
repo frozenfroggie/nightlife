@@ -66,7 +66,7 @@ app.use( (error,req,res,next) => {
     });
   // } else {
   //   res.sendFile(publicPath + '/error.html');
-  // }
+  }
 });
 
 const port = process.env.PORT || 3030;
