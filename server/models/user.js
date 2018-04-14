@@ -13,16 +13,12 @@ const UserSchema = new mongoose.Schema({
     displayName: String,
     username: {
       type: String,
-      required: true,
       trim: true,
-      minlength: 4,
-      unique: true
+      minlength: 4
     },
     email: {
       type: String,
-      required: true,
       trim: true,
-      unique: true,
       validate: {
         validator: validator.isEmail,
         message: '{VALUE} is not a valid email'
@@ -30,7 +26,6 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
       type: String,
-      required: true,
       minlength: 6,
     },
     isVerified: Boolean,
