@@ -39,6 +39,14 @@ router.get('/', function(req,res) {
   }
 });
 
+router.get('/getAccounts', authenticate, function(req,res) {
+  if(req.localAuth && req.isAuthenticated()) {
+    const localUser = req.localUser;
+    const user  = pick(req.user, ['bars', 'facebook', 'google', 'github']);
+    res.send({localUser, user});
+  }
+});
+
 router.delete('/logout', function(req,res) {
   req.logout();
   res.redirect('/');
