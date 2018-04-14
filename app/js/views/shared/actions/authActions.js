@@ -55,6 +55,7 @@ export function login(data) {
     return axios.post('/users/login', data)
                 .then(res => {
                   console.log(res.data);
+                  console.log(res.headers.authorization);
                   const authToken = res.headers.authorization.split(' ')[1];
                   sessionStorage.setItem('authToken', authToken);
 

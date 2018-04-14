@@ -31,7 +31,7 @@ const Content = (props) => {
                 !props.showSettings ?
                   <Activities scroll={props.scroll} />
                   :
-                  <Settings />
+                  <Settings connect={props.connect}/>
               }
             </div>
         </ReactCSSTransitionGroup>

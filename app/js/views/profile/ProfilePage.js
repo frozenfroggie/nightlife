@@ -8,6 +8,7 @@ import TheBackground from '../shared/components/TheBackground';
 
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
          changeBarsPosition, setBarsContainerHeight } from '../shared/actions/scrollActions';
+import axios from 'axios';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -48,12 +49,17 @@ class ProfilePage extends React.Component {
   handleClick = (bool) => {
     this.setState({showSettings: bool});
   }
+  connect = () => {
+    axios.get('/socialAuth', (req, res) => {
+      console.log(res);
+    });
+  }
   render() {
     return (
       <div onMouseMove={this.scroll} onMouseUp={() => this.props.toogleIsGrabbed(false)}>
         <div className="wrapper">
         <TheBackground backgroundName='bgProfile'/>
-          <Content handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
+          <Content connect={this.connect} handleClick={(bool) => this.handleClick(bool)} showSettings={this.state.showSettings} user={this.props.authState.user} scroll={this.scroll} />
         </div>
       </div>
      )

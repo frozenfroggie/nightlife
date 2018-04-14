@@ -48,7 +48,7 @@ googleAuth();
 app.use('/search', searchRoutes);
 app.use('/users', usersRoutes);
 app.use('/socialAuth', socialAuthRoutes);
-app.use('/connect', connectRoutes);
+//app.use('/connect', connectRoutes);
 
 app.use( (req,res,next) => {
   const error = new Error('Not found');
@@ -69,7 +69,7 @@ app.use( (error,req,res,next) => {
   }
 });
 
-const port = process.env.PORT || 3033;
+const port = process.env.PORT || 3030;
 app.listen(port);
 
 module.exports = app;

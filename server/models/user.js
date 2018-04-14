@@ -184,7 +184,7 @@ UserSchema.statics.findByCredentials = function(credentials, password) {
       return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
     }
     return new Promise((resolve, reject) => {
-      console.log(password, user.local.password);
+      console.log('compare', password, user.local.password);
       bcrypt.compare(password, user.local.password).then(res => {
         console.log(res);
         return res ? resolve(user) : reject();

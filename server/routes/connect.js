@@ -6,7 +6,7 @@ const authenticate = require('../middleware/authenticate');
 router.get('/google', passport.authorize('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback',
-  passport.authorize('google', { failureRedirect: '/' }),
+  passport.authorize('google', { failureRedirect: '/', successRedirect: '/connect' }),
   function(req, res) {
     var user = req.user;
     var account = req.account;
@@ -21,6 +21,11 @@ router.get('/google/callback',
     // });
   }
 );
+
+router.get('/', function(req, res) {
+  console.log('into connect!');
+  console.log(req);
+});
 
 router.get('/facebook', authenticate, passport.authorize('facebook', { scope: ['email'] }));
 

@@ -8,7 +8,9 @@ const authenticate = (req, res, next) => {
     let authToken;
     try {
       authToken = req.headers['authorization'].split(' ')[1];
+      console.log(authToken);
     } catch(err) {
+      console.log(err);
       //ignore if token occurs undefined and split can't work
     }
     User.findByToken(authToken)
@@ -22,7 +24,6 @@ const authenticate = (req, res, next) => {
         next();
       }
     }).catch(err => {
-      console.log(err);
       res.status(401).send({error: 'auth token expired'});
     });
   }

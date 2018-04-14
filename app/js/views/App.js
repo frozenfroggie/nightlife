@@ -22,11 +22,13 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 class App extends React.Component {
   componentDidMount() {
-    if(!this.props.authState.isAuthenticated) {
-      axios('/socialAuth').then(res => {
+    axios('/socialAuth').then(res => {
+      if(!this.props.authState.isAuthenticated) {
         res.data.isAuthenticated && this.props.saveUser(res.data.user);
-      });
-    }
+      } else {
+        console.log('social data, authenticated', res.data.user);
+      }
+    });
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
     window.addEventListener('resize', this.handleResizing);
   }
