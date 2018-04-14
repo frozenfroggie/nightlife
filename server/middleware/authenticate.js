@@ -13,11 +13,7 @@ const authenticate = (req, res, next) => {
         return Promise.reject();
       } else {
         console.log('local auth - auth token used');
-        if(req.user) {
-          req.localUser = user;
-        } else {
-          req.user = user;
-        }
+        req.localUser = user;
         req.authToken = authToken;
         next();
       }
