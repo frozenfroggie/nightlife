@@ -44,12 +44,13 @@ router.get('/getAccounts', authenticate, function(req,res) {
     let bars = req.user.bars;
     let socials  = pick(req.user, ['facebook', 'google', 'github']);
     socials = socials.filter( social => social.id );
+    console.log('buu');
     console.log(socials);
-    bars = bars.filter( bar => {
-      return localUser.bars && bars.forEach( localBar => {
-        return bar.id !== localBar.id
-      });
-    });
+    // bars = bars.filter( bar => {
+    //   return localUser.bars && bars.forEach( localBar => {
+    //     return bar.id !== localBar.id
+    //   });
+    // });
     console.log(bars);
     res.send({localUser, socials, bars});
   }
