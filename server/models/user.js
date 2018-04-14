@@ -41,21 +41,18 @@ const UserSchema = new mongoose.Schema({
   facebook: {
     id: String,
     displayName: String,
-    email: String,
-    password: String
+    email: String
   },
   google: {
     id: String,
     displayName: String,
-    email: String,
-    password: String
+    email: String
   },
   github: {
     id: String,
     displayName: String,
     username: String,
-    email: String,
-    password: String
+    email: String
   }
   // username: {
   //   type: String,
