@@ -42,7 +42,7 @@ router.get('/getAccounts', authenticate, function(req,res) {
   console.log('in get accounts!');
   console.log('localAuth', req.localAuth);
   console.log('socialAuth', req.isAuthenticated());
-  if(req.localAuth && req.isAuthenticated()) {
+  if(req.localUser && req.isAuthenticated()) {
     console.log('if true!@');
     const localUser = req.localUser;
     const user  = pick(req.user, ['bars', 'facebook', 'google', 'github']);
