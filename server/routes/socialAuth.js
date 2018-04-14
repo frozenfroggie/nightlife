@@ -4,7 +4,6 @@ const passport = require('passport');
 const axios = require('axios');
 const pick = require('lodash/pick');
 const authenticate = require('../middleware/authenticate');
-
 // router.get('/github', function(req,res) {
 //   res.redirect(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.CLIENT_ID}&redirect_uri=https://vast-everglades-58513.herokuapp.com/auth/github/callback`);
 // });
