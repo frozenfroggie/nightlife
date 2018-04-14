@@ -36,7 +36,7 @@ const Settings = props => {
               <Github width={style.width} height={style.height} />
               <span> Github </span>
               <a href='/socialAuth/github'>
-                <div className={classnames(['connect', {'connected': props.user.github && props.user.github.id}])}> { props.user.github.id && props.user.github ? 'Connected' : 'Connect'} </div>
+                <div className={classnames(['connect', {'connected': props.user.github && props.user.github.id}])}> { props.user.github && props.user.github ? 'Connected' : 'Connect'} </div>
               </a>
             </div>
           </div>
