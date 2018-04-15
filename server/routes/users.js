@@ -67,7 +67,13 @@ router.post('/', function(req, res) {
 router.get('/confirmation/:token', (req, res) => {
   try {
     const { id } = jwt.verify(req.params.token, process.env.JWT_VERIFICATION_SECRET);
-    User.findByIdAndUpdate(id, { $set: {'local.isVerified': true }});
+    console.log('confirmation', id);
+    User.findByIdAndUpdate(id, { $set: {'local.isVerified': true }, {new: true}}).then(user => {
+      console.log('user after verification' user);
+    }).catch(err => {
+      console.log(error);
+      throw error;
+    });
   } catch (e) {
     res.send('error');
   }
