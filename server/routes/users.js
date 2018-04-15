@@ -71,11 +71,10 @@ router.get('/confirmation/:token', (req, res) => {
     User.findByIdAndUpdate(id, {$set: {'local.isVerified': true }}, {new: true}).then(user => {
       console.log('user after verification', user);
     }).catch(err => {
-      console.log(error);
       throw error;
     });
-  } catch (e) {
-    res.send('error');
+  } catch(err) {
+    res.send(err);
   }
   res.redirect('/');
 });
@@ -83,8 +82,6 @@ router.get('/confirmation/:token', (req, res) => {
 //login
 router.post('/login', (req, res) => {
   const { password, credentials } = pick(req.body, ['password', 'credentials']);
-  console.log(password, credentials);
-  console.log('buuuu');
   User.findByCredentials(credentials, password)
       .then(user => {
         console.log('user', user);
