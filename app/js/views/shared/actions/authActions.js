@@ -17,6 +17,7 @@ export function disconnect(socialName) {
     return axios.delete(`/socialAuth/disconnect/${socialName}`)
                 .then(res => {
                   console.log(res);
+                  dispatch(saveUser(res.data.user));
                 })
                 .catch(err => {
                   console.log(err);
