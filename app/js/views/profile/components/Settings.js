@@ -22,17 +22,23 @@ const Settings = props => {
             <div className="socialBtn">
               <Facebook width={style.width} height={style.height} />
               <span> Facebook </span>
-              <SettingsConnection isConnected={props.user.facebook && props.user.facebook.id} socialName='facebook' />
+              <SettingsConnection disconnect={(socialName) => props.disconnect(socialName)}
+                                  isConnected={props.user.facebook && props.user.facebook.id}
+                                  socialName='facebook' />
             </div>
             <div className="socialBtn">
               <Google width={style.width} height={style.height} />
               <span> Google+ </span>
-              <SettingsConnection isConnected={props.user.google && props.user.google.id} socialName='google' />
+              <SettingsConnection disconnect={(socialName) => props.disconnect(socialName)}
+                                  isConnected={props.user.google && props.user.google.id}
+                                  socialName='google' />
             </div>
             <div className="socialBtn">
               <Github width={style.width} height={style.height} />
               <span> Github </span>
-              <SettingsConnection isConnected={props.user.github && props.user.github.id} socialName='github' />
+              <SettingsConnection disconnect={(socialName) => props.disconnect(socialName)} 
+                                  isConnected={props.user.github && props.user.github.id}
+                                  socialName='github' />
             </div>
           </div>
         </div>
