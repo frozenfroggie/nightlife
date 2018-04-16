@@ -72,8 +72,12 @@ router.get('/getAccounts', authenticate, function(req,res) {
     }
 });
 
-router.delete('/disconnect/:socialName', function(req, res) {
-  console.log('disconnect!!!', req.params.socialName);
+router.delete('/disconnect/:socialName', authenticate, function(req, res) {
+  const socialName = req.params.socialName;
+  User.findByIdAndUpdate(req.user._id, {$set: {[socialName]: {}}}, {new: true}).then(user => {
+    console.log(user);
+    res.send({user, refreshToken: req.refreshToken});
+  });
 });
 
 router.delete('/logout', function(req,res) {
