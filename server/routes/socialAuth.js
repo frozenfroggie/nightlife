@@ -72,6 +72,10 @@ router.get('/getAccounts', authenticate, function(req,res) {
     }
 });
 
+router.delete('/disconnect/:socialName', function(req, res) {
+  console.log('disconnect!!!', req.params.socialName);
+});
+
 router.delete('/logout', function(req,res) {
   req.logout();
   res.redirect('/');

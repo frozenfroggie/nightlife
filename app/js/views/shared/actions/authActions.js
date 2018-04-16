@@ -12,6 +12,18 @@ export const saveErrors = errors => ({
   errors
 });
 
+export function disconnect(socialName) {
+  return dispatch => {
+    return axios.delete(`/disconnect/${socialName}`)
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+  }
+}
+
 export function signup(data) {
   return dispatch => {
     return axios.post('/users', data)
