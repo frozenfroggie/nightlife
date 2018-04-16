@@ -14,7 +14,7 @@ export const saveErrors = errors => ({
 
 export function disconnect(socialName) {
   return dispatch => {
-    return axios.delete(`/disconnect/${socialName}`)
+    return axios.delete(`/socialAuth/disconnect/${socialName}`)
                 .then(res => {
                   console.log(res);
                 })
