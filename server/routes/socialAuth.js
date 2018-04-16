@@ -42,29 +42,31 @@ router.get('/', function(req,res) {
 });
 
 router.get('/getAccounts', authenticate, function(req,res) {
-    console.log('localUser', req.localUser);
-    console.log('socialUser', req.user);
     if(req.localUser && req.isAuthenticated()) {
-      console.log('inside if!');
       const localUser = req.localUser;
-      const socialBars = req.user.bars;
+      const socialUser = req.user;
       let socialAccount;
-      if(req.user.facebook.id) {
-        socialAccount = {account: req.user.facebook, type: 'facebook'};
-      } else if(req.user.github.id) {
-        socialAccount = {account: req.user.github, type: 'github'};
-      } else if(req.user.google.id) {
-        socialAccount = {account: req.user.google, type: 'google'};
+      if(socialUser.facebook.id) {
+        socialAccount = {account: socialUser.facebook, type: 'facebook'};
+      } else if(socialUser.github.id) {
+        socialAccount = {account: socialUser.github, type: 'github'};
+      } else if(socialUser.google.id) {
+        socialAccount = {account: socialUser.google, type: 'google'};
       }
       // bars = bars.filter( bar => {
       //   return localUser.bars && bars.forEach( localBar => {
       //     return bar.id !== localBar.id
       //   });
       // });
+      User.findByIdAndRemove(socialUser._id).then(user => {
+        console.log('Removed:', user);
+      }).catch(err => res.status(400).send(err));
+
       User.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
         req.logout();
         res.send({user, refreshToken: req.refreshToken});
       }).catch(err => res.status(400).send(err));
+
     } else {
       res.send({message: 'no social accounts to connect'});
     }
