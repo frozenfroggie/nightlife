@@ -5,8 +5,8 @@ const axiosNightlife = axios.create({
 });
 
 try {
-  const authToken = window.sessionStorage.getItem('authToken');
-  const refreshToken = window.localStorage.getItem('refreshToken');
+  var authToken = window.sessionStorage.getItem('authToken');
+  var refreshToken = window.localStorage.getItem('refreshToken');
 } catch(err) {
   console.log(err);
 }
