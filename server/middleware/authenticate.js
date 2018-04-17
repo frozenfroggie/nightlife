@@ -9,6 +9,7 @@ const authenticate = (req, res, next) => {
     }
     User.findByAuthToken(authToken)
     .then(user => {
+      console.log('authenticate', user);
       if(!user) {
         return Promise.reject();
       } else {

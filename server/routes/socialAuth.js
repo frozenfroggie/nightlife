@@ -64,7 +64,7 @@ router.get('/getAccounts', authenticate, function(req,res) {
 
       User.findByIdAndUpdate(localUser._id, {$set: {[socialAccount.type]: socialAccount.account}}, {new: true}).then(user => {
         req.logout();
-        res.send({user, refreshToken: req.refreshToken});
+        res.send({ user });
       }).catch(err => res.status(400).send(err));
 
     } else {
@@ -76,7 +76,7 @@ router.delete('/disconnect/:socialName', authenticate, function(req, res) {
   const socialName = req.params.socialName;
   User.findByIdAndUpdate(req.user._id, {$set: {[socialName]: {}}}, {new: true}).then(user => {
     console.log(user);
-    res.send({user, refreshToken: req.refreshToken});
+    res.send({ user });
   });
 });
 

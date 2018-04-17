@@ -104,7 +104,34 @@ const UserSchema = new mongoose.Schema({
 UserSchema.plugin(findOrCreate);
 UserSchema.plugin(beautifyUnique);
 
-UserSchema.statics.findByToken = function(authToken) {
+UserSchema.statics.findByCredentials = function(credentials, password) {
+  const User = this;
+  return User.findOne({$or: [{'local.username': credentials}, {'local.email': credentials}]}).then(user => {
+    if(!user) {
+      console.log('no user');
+      return Promise.reject();
+    }
+    if(!user.local.isVerified) {
+      console.log('not verified');
+      return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
+    }
+    return new Promise((resolve, reject) => {
+      console.log('compare', password, user.local.password);
+      bcrypt.compare(password, user.local.password).then(res => {
+        console.log(res);
+        return res ? resolve(user) : reject();
+      });
+    });
+  });
+}
+
+UserSchema.statics.checkUserExists = function(identifier) {
+  const User = this;
+  return User.findOne({$or: [{'local.username': identifier}, {'local.email': identifier}]})
+             .then(user => user ? true : false);
+}
+
+UserSchema.statics.findByAuthToken = function(authToken) {
   const User = this;
   let decoded;
   console.log('authToken', authToken);
@@ -160,33 +187,6 @@ UserSchema.methods.generateAndSaveTokens = function() {
 //     }
 //   });
 // };
-
-UserSchema.statics.checkUserExists = function(identifier) {
-  const User = this;
-  return User.findOne({$or: [{'local.username': identifier}, {'local.email': identifier}]})
-             .then(user => user ? true : false);
-}
-
-UserSchema.statics.findByCredentials = function(credentials, password) {
-  const User = this;
-  return User.findOne({$or: [{'local.username': credentials}, {'local.email': credentials}]}).then(user => {
-    if(!user) {
-      console.log('no user');
-      return Promise.reject();
-    }
-    if(!user.local.isVerified) {
-      console.log('not verified');
-      return Promise.reject({ type: 'not-verified', msg: 'Please confirm your email address first' });
-    }
-    return new Promise((resolve, reject) => {
-      console.log('compare', password, user.local.password);
-      bcrypt.compare(password, user.local.password).then(res => {
-        console.log(res);
-        return res ? resolve(user) : reject();
-      });
-    });
-  });
-}
 
 const User = mongoose.model('User', UserSchema);
 
