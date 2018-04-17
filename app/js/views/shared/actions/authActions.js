@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosNightlife from '../../../utils/axiosNightlife';
 
 import { SAVE_USER, SAVE_ERRORS } from '../../../constants/actionTypes';
 
@@ -14,7 +14,7 @@ export const saveErrors = errors => ({
 
 export function disconnect(socialName) {
   return dispatch => {
-    return axios.delete(`/socialAuth/disconnect/${socialName}`)
+    return axiosNightlife.delete(`/socialAuth/disconnect/${socialName}`)
                 .then(res => {
                   console.log(res);
                   dispatch(saveUser(res.data.user));
@@ -27,7 +27,7 @@ export function disconnect(socialName) {
 
 export function signup(data) {
   return dispatch => {
-    return axios.post('/users', data)
+    return axiosNightlife.post('/users', data)
                 .then(res => {
 
                   const authToken = res.headers.authorization.split(' ')[1];
@@ -50,7 +50,7 @@ export function signup(data) {
 
 export function socialAuth(type) {
   return dispatch => {
-    return axios.get(`/auth/${type}`)
+    return axiosNightlife.get(`/auth/${type}`)
                 .then(res => {
                   console.log('social', res.data);
                   dispatch(saveUser(res.data.user));
@@ -65,7 +65,7 @@ export function socialAuth(type) {
 
 export function login(data) {
   return dispatch => {
-    return axios.post('/users/login', data)
+    return axiosNightlife.post('/users/login', data)
                 .then(res => {
                   console.log(res.data);
                   console.log(res.headers.authorization);
@@ -89,12 +89,12 @@ export function logout() {
     dispatch(saveUser({}));
     sessionStorage.removeItem('authToken');
     localStorage.removeItem('refreshToken');
-    return axios.delete('/socialAuth/logout');
+    return axiosNightlife.delete('/socialAuth/logout');
   }
 }
 
 export function isUserExists(identifier) {
   return dispatch => {
-    return axios.get(`/users/search/${identifier}`);
+    return axiosNightlife.get(`/users/search/${identifier}`);
   }
 }

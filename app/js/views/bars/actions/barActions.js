@@ -1,6 +1,6 @@
 import { SET_ACTIVE_BAR, SAVE_USER } from '../../../constants/actionTypes';
 import { logout } from '../../shared/actions/authActions';
-import axios from 'axios';
+import axiosNightlife from '../../../utils/axiosNightlife';
 
 export const setActiveBar = barIdx => ({
   type: SET_ACTIVE_BAR,
@@ -14,7 +14,7 @@ export const saveUser = user => ({
 
 export function wantToGo(bar) {
   return dispatch => {
-    return axios.patch('/users', {bar})
+    return axiosNightlife.patch('/users', {bar})
                 .then(res => {
                   dispatch(saveUser(res.data.user));
                 })
@@ -26,7 +26,7 @@ export function wantToGo(bar) {
 
 export function removeBarFromUser(id) {
   return dispatch => {
-    return axios.delete(`/users/${id}`)
+    return axiosNightlife.delete(`/users/${id}`)
                 .then(res => {
                   console.log(res);
                   dispatch(saveUser(res.data.user));

@@ -1,23 +1,33 @@
 import axios from 'axios';
 
-var myInterceptor = axios.interceptors.response.use( response => {
+const axiosNightlife = axios.create({
+  baseURL: 'https://vast-everglades-58513.herokuapp.com'
+});
+
+try {
+  const authToken = window.sessionStorage.getItem('authToken');
+  const refreshToken = window.localStorage.getItem('refreshToken');
+} catch(err) {
+  console.log(err);
+}
+
+axiosNightlife.defaults.headers.common['Authorization'] = authToken;
+
+var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     // Do something with response data
     return response;
   }, function (error) {
     // Do something with response error
     const originalRequest = error.config;
     if(error.response.status === 401 /*&& !error.config._retry*/) {
-      axios.interceptors.response.eject(myInterceptor);
-      const refreshToken = window.localStorage.getItem('refreshToken');
-      console.log('interceptor', refreshToken);
-      return axios.post('/users/refreshTokens', {refreshToken})
+      axiosNightlife.interceptors.response.eject(myInterceptor);
+      return axiosNightlife.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
-                    console.log('interceptor', res);
                     const authToken = res.headers.authorization.split(' ')[1];
                     const refreshToken = res.data.refreshToken;
                     window.sessionStorage.setItem('authToken', authToken);
                     window.localStorage.setItem('refreshToken', refreshToken);
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
+                    axiosNightlife.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
                     originalRequest.headers['Authorization'] = 'Bearer ' + authToken;
                     return axios(originalRequest);
                   })
@@ -28,7 +38,7 @@ var myInterceptor = axios.interceptors.response.use( response => {
     return Promise.reject(error);
   });
 
-
+export default axiosNightlife;
 
 
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import axios from 'axios';
 
 import { toogleExpandMenu } from './shared/actions/menuActions';
 import { logout, refreshToken, saveUser } from './shared/actions/authActions';
@@ -18,18 +17,17 @@ import BarsPage from './bars/BarsPage';
 import ProfilePage from './profile/ProfilePage';
 
 import requireAuth from '../utils/requireAuth';
-import setAuthorizationToken from '../utils/setAuthorizationToken';
+import axiosNightlife from '../utils/axiosNightlife';
 
 class App extends React.Component {
   componentDidMount() {
     if(!this.props.authState.isAuthenticated) {
-      axios('/socialAuth').then(res => {
+      axiosNightlife('/socialAuth').then(res => {
         res.data.isAuthenticated && this.props.saveUser(res.data.user);
       });
     } else {
-      axios('/socialAuth/getAccounts').then(res => {
+      axiosNightlife('/socialAuth/getAccounts').then(res => {
         this.props.saveUser(res.data.user);
-        this.props.history.push(`/profile`);
       });
     }
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
