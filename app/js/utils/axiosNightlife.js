@@ -5,8 +5,8 @@ const axiosNightlife = axios.create({
 });
 
 try {
-  var authToken = window.sessionStorage.getItem('authToken');
-  var refreshToken = window.localStorage.getItem('refreshToken');
+  const authToken = window.sessionStorage.getItem('authToken');
+  axiosNightlife.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
 } catch(err) {
   console.log(err);
 }
@@ -19,7 +19,8 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     const originalRequest = error.config;
     if(error.response.status === 401 /*&& !error.config._retry*/) {
       axiosNightlife.interceptors.response.eject(myInterceptor);
-      return axios.post('/users/refreshTokens', {refreshToken})
+      const refreshToken = window.localStorage.getItem('refreshToken');
+      return axiosNightlife.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
                     const authToken = res.headers.authorization.split(' ')[1];
                     const refreshToken = res.data.refreshToken;
