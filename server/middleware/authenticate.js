@@ -7,7 +7,7 @@ const authenticate = (req, res, next) => {
     } catch(err) {
       //ignore if token occurs undefined and split can't work
     }
-    User.findByToken(authToken)
+    User.findByAuthToken(authToken)
     .then(user => {
       if(!user) {
         return Promise.reject();
@@ -18,7 +18,6 @@ const authenticate = (req, res, next) => {
         } else {
           req.user = user;
         }
-        req.authToken = authToken;
         next();
       }
     }).catch(err => {

@@ -115,7 +115,9 @@ UserSchema.statics.findByToken = function(authToken) {
   }
   return User.findOne({
     'local.tokens.authToken': authToken
-  });
+  }).then(user => {
+    return user;
+  }).catch(err => Promise.reject(err));
 }
 
 UserSchema.statics.findByRefreshToken = function(refreshToken) {
