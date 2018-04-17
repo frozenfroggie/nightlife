@@ -11,8 +11,6 @@ try {
   console.log(err);
 }
 
-axiosNightlife.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
-
 var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     // Do something with response data
     return response;
