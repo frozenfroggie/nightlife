@@ -29,6 +29,7 @@ class App extends React.Component {
     } else {
       axios('/socialAuth/getAccounts').then(res => {
         this.props.saveUser(res.data.user);
+        this.props.history.push(`/profile`);
       });
     }
     window.innerWidth >= 1024 && !this.props.menuState.expandMenu ? this.props.toogleExpandMenu() : '';
