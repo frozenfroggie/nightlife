@@ -11,7 +11,7 @@ try {
   console.log(err);
 }
 
-axiosNightlife.defaults.headers.common['Authorization'] = authToken;
+axiosNightlife.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
 
 var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     // Do something with response data
@@ -21,7 +21,7 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     const originalRequest = error.config;
     if(error.response.status === 401 /*&& !error.config._retry*/) {
       axiosNightlife.interceptors.response.eject(myInterceptor);
-      return axiosNightlife.post('/users/refreshTokens', {refreshToken})
+      return axios.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
                     const authToken = res.headers.authorization.split(' ')[1];
                     const refreshToken = res.data.refreshToken;
