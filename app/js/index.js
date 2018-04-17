@@ -8,8 +8,6 @@ import App from './views/App';
 
 const store = configureStore();
 
-import './utils/setAuthorizationToken';
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
