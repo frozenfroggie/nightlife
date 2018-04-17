@@ -6,13 +6,13 @@ var myInterceptor = axios.interceptors.response.use( response => {
   }, function (error) {
     // Do something with response error
     const originalRequest = error.config;
-    if(error.response.status === 401 && !error.config._retry) {
+    if(error.response.status === 401 /*&& !error.config._retry*/) {
       axios.interceptors.response.eject(myInterceptor);
       const refreshToken = window.localStorage.getItem('refreshToken');
-      console.log(refreshToken);
+      console.log('interceptor', refreshToken);
       return axios.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
-                    console.log(res);
+                    console.log('interceptor', res);
                     const authToken = res.headers.authorization.split(' ')[1];
                     const refreshToken = res.data.refreshToken;
                     window.sessionStorage.setItem('authToken', authToken);
