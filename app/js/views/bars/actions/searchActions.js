@@ -1,5 +1,5 @@
 import { SEARCH_ERROR, HANDLE_CITY_INPUT_CHANGE, HANDLE_BARS_INPUT_CHANGE, SAVE_SEARCH_DATA, SAVE_FILTERED_SEARCH_DATA, START_SEARCHING, DELETE_SEARCH_DATA } from '../../../constants/actionTypes';
-import axios from 'axios';
+import axiosNightlife from '../../../utils/axiosNightlife';
 
 export const handleCityInputChange = event => ({
   type: HANDLE_CITY_INPUT_CHANGE,
@@ -38,7 +38,7 @@ export function search(city, coordinates) {
   if(!city) {
     return function(dispatch) {
       dispatch(startSearching());
-      return axios.get(`/search/coordinates?lat=${coordinates.lat}&lng=${coordinates.lng}`)
+      return axiosNightlife.get(`/search/coordinates?lat=${coordinates.lat}&lng=${coordinates.lng}`)
         .then(res => dispatch(saveSearchData(res.data.businesses)))
         .catch(err => dispatch(searchError()));
     }
@@ -54,7 +54,7 @@ export function search(city, coordinates) {
       .replace(/ź/g, 'z').replace(/Ź/g, 'Z');
   return function(dispatch) {
     dispatch(startSearching());
-    return axios.get(`/search/${cityAfterReplace}`)
+    return axiosNightlife.get(`/search/${cityAfterReplace}`)
       .then(res => dispatch(saveSearchData(res.data.businesses)))
       .catch(err => dispatch(searchError()));
   }
