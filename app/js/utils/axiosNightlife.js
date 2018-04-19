@@ -14,11 +14,13 @@ try {
 var myInterceptor = axiosNightlife.interceptors.response.use(response => response, error => {
     // Do something with response error
     const originalRequest = error.config;
-    if(error.response.status === 401 /*&& !error.config._retry*/) {
+    if(error.response.status === 401 && !error.config._retry) {
+      console.log('401! Unautorized!!!');
       axiosNightlife.interceptors.response.eject(myInterceptor);
       const refreshToken = window.localStorage.getItem('refreshToken');
       return axiosNightlife.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
+                    console.log('Refresh!');
                     const authToken = res.headers.authorization.split(' ')[1];
                     const refreshToken = res.data.refreshToken;
                     window.sessionStorage.setItem('authToken', authToken);
