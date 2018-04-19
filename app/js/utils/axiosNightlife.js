@@ -13,6 +13,7 @@ try {
 
 var myInterceptor = axiosNightlife.interceptors.response.use(response => response, error => {
     // Do something with response error
+    console.log('Interceptor!!!');
     const originalRequest = error.config;
     if(error.response.status === 401 && !error.config._retry) {
       console.log('401! Unautorized!!!');
