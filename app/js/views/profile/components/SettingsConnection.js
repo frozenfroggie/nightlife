@@ -3,11 +3,11 @@ import classnames from 'classnames';
 
 const SettingsConnection = props => {
   return (
-    <div>
+    <div className="connect">
       {
         props.isConnected ?
           <div onClick={() => props.disconnect(props.socialName)}>
-            <div className={classnames(['connect', 'connected'])}> Connected </div>
+            <div className='connected'> Connected </div>
           </div>
           :
           <a href={`/socialAuth/${props.socialName}`}>

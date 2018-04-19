@@ -11,10 +11,7 @@ try {
   console.log(err);
 }
 
-var myInterceptor = axiosNightlife.interceptors.response.use(response => {
-    // Do something with response data
-    return response;
-  }, function (error) {
+var myInterceptor = axiosNightlife.interceptors.response.use(response => response, error => {
     // Do something with response error
     const originalRequest = error.config;
     if(error.response.status === 401 /*&& !error.config._retry*/) {
