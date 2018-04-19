@@ -1,12 +1,16 @@
 import axios from 'axios';
+import cloneDeep from 'lodash/cloneDeep';
 
 const axiosNightlife = axios.create({
   baseURL: 'https://vast-everglades-58513.herokuapp.com'
 });
 
+const headers = cloneDeep(axiosNightlife.defaults.headers);
+
 try {
   const authToken = window.sessionStorage.getItem('authToken');
-  axiosNightlife.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
+  headers.common['Authorization'] = 'Bearer ' + authToken;
+  axiosNightlife.defaults.headers = headers;
 } catch(err) {
   console.log(err);
 }
@@ -26,7 +30,8 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => respons
                     const refreshToken = res.data.refreshToken;
                     window.sessionStorage.setItem('authToken', authToken);
                     window.localStorage.setItem('refreshToken', refreshToken);
-                    axiosNightlife.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
+                    headers.common['Authorization'] = 'Bearer ' + authToken;
+                    axiosNightlife.defaults.headers = headers;
                     originalRequest.headers['Authorization'] = 'Bearer ' + authToken;
                     return axios(originalRequest);
                   })
