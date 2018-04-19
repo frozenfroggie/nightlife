@@ -181,7 +181,6 @@
       }
       .socialBtns {
         .socialBtn {
-          border: 1px solid red;
           @include flexCenterY;
           position: relative;
           width: 100%;
@@ -190,7 +189,6 @@
             margin-left: 12px;
           }
           .connect {
-            border: 1px solid blue;
             position: absolute;
             right: 10px;
             border-radius: 15px;
