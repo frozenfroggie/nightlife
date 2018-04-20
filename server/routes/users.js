@@ -133,7 +133,7 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
+router.post('/uploadAvatar', function (req, res) {
   console.log(req.files.avatar);
   res.send(req.files.avatar);
 });
