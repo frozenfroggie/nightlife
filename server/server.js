@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const fileUpload = require('expres-filepload');
+const fileUpload = require('express-fileupload');
 require('isomorphic-fetch');
 
 const searchRoutes = require('./routes/search');
