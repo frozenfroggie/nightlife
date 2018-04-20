@@ -7,11 +7,12 @@ export const saveUser = user => ({
   user
 });
 
-export function uploadAvatar(avatar) {
+export function uploadAvatar(formData) {
   return dispatch => {
-    return axiosNightlife.post('/users/uploadAvatar', { avatar })
+    console.log('before send', formData);
+    return axiosNightlife.post('/users/uploadAvatar', formData)
                 .then(res => {
-                  console.log(req.data);
+                  console.log('after send', req.data);
                 })
                 .catch(err => {
                   throw err;

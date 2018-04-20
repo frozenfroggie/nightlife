@@ -135,6 +135,7 @@ router.patch('/', authenticate, function(req, res) {
 
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
   console.log(req.file);
+  res.send(req.file);
 });
 
 // const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }]);
