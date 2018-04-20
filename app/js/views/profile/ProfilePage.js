@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { Switch, Redirect } from 'react-router-dom'
 //components
 import Background from './components/Background';
-import Content from './components/Content';
+import Content from './containers/Content';
 import TheBackground from '../shared/components/TheBackground';
 //actions
 import { resetScrollSettings, toogleIsGrabbed, changeScrollButtonPosition,
@@ -58,7 +58,6 @@ class ProfilePage extends React.Component {
           <Content disconnect={(socialName) => this.props.disconnect(socialName)}
                    handleClick={(bool) => this.handleClick(bool)}
                    showSettings={this.state.showSettings}
-                   user={this.props.authState.user}
                    scroll={this.scroll} />
         </div>
       </div>
