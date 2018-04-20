@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Activities from './Activities';
 import Settings from '../components/Settings';
 import { connect } from 'react-redux'
-import { disconnect } from '../shared/actions/authActions';
+import { disconnect } from '../../shared/actions/authActions';
 
 class Content extends React.Component {
   constructor(props) {
