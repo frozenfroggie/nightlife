@@ -6,6 +6,7 @@ import Activities from './Activities';
 import Settings from '../components/Settings';
 import { connect } from 'react-redux'
 import { disconnect } from '../../shared/actions/authActions';
+import { uploadAvatar } from '../actions/profileActions';
 
 class Content extends React.Component {
   constructor(props) {
@@ -14,8 +15,9 @@ class Content extends React.Component {
       selectedFile: null
     }
   }
-  fileSelected = event => {
-    console.log(event.target.files);
+  fileSelected = () => {
+    const avatar = this.state.selectedFile;
+    this.props.uploadAvatar(avatar);
   }
   render() {
     const { showSettings, authState: { user } } = this.props;
@@ -96,4 +98,4 @@ const mapStateToProps = store => ({
   //   }
   // }
 
-export default connect(mapStateToProps, { disconnect })(Content);
+export default connect(mapStateToProps, { disconnect, uploadAvatar })(Content);

@@ -8,6 +8,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
   bars: [],
+  avatarUrl: String, 
   local: {
     id: String,
     displayName: String,

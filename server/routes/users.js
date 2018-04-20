@@ -7,6 +7,8 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -121,6 +123,32 @@ router.patch('/', authenticate, function(req, res) {
     res.send({user, refreshToken: req.refreshToken});
   }).catch(err => res.status(400).send(err));
 });
+
+//add avatar to user account
+// router.patch('/uploadAvatar', authenticate, function(req, res) {
+//   const user = req.user;
+//   const avatar = req.body.avatar;
+//   User.findByIdAndUpdate(user._id, {$set: { avatar }}, {new: true}).then(user => {
+//     res.send({user, refreshToken: req.refreshToken});
+//   }).catch(err => res.status(400).send(err));
+// });
+
+router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
+  console.log(req.file);
+});
+
+// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }]);
+//
+// app.post('/cool-profile', cpUpload, function (req, res, next) {
+//   res.send(req.files['avatar'][0]);
+  // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
+  //
+  // e.g.
+  //  req.files['avatar'][0] -> File
+  //  req.files['gallery'] -> Array
+  //
+  // req.body will contain the text fields, if there were any
+// });
 
 //delete bar from user account
 router.delete('/:id', authenticate, function(req,res) {
