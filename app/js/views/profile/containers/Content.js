@@ -24,7 +24,7 @@ class Content extends React.Component {
           <input style={{display: 'none'}}
             type='file'
             onChange={this.fileSelected}
-            ref={ fileInput => this.fileInput = fileInput}
+            ref={ fileInput => this.fileInput = fileInput} />
           <FontAwesome onClick={() => this.fileInput.click()} name='plus' size='1x'/>
         </div>
         <h2 className="profileUsername">
