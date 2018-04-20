@@ -18,14 +18,14 @@ class Content extends React.Component {
     console.log(event.target.files);
   }
   render() {
-    const { user } = this.props.authState;
+    const { showSettings, authState: { user } } = this.props;
     return (
       <div className="profileContent">
         <div className="profileAvatar">
           <FontAwesome name='user' size='3x'/>
           <input style={{display: 'none'}}
             type='file'
-            onChange={this.fileSelected}
+            onChange={ this.fileSelected }
             ref={ fileInput => this.fileInput = fileInput} />
           <FontAwesome onClick={() => this.fileInput.click()} name='plus' size='1x'/>
         </div>
@@ -46,18 +46,22 @@ class Content extends React.Component {
         }
         </h4>
         <div className="profileButtonsContainer">
-          <div className={classnames(['profileButton',{'profileButtonActive': !props.showSettings}])} onClick={() => props.handleClick(false)}> ACTIVITIES </div>
-          <div className={classnames(['profileButton',{'profileButtonActive': props.showSettings}])} onClick={() => props.handleClick(true)}> SETTINGS </div>
+          <div className={classnames(['profileButton',{'profileButtonActive': !showSettings}])} onClick={() => this.props.handleClick(false)}>
+            ACTIVITIES
+          </div>
+          <div className={classnames(['profileButton',{'profileButtonActive': showSettings}])} onClick={() => this.props.handleClick(true)}>
+            SETTINGS
+          </div>
         </div>
         <div className='showSettingsContainer'>
           <ReactCSSTransitionGroup
             transitionName="settings"
             transitionEnterTimeout={250}
             transitionLeaveTimeout={150}>
-            <div className="absoluteWrapper" key={props.showSettings}>
+            <div className="absoluteWrapper" key={showSettings}>
             {
-              !props.showSettings ?
-              <Activities scroll={props.scroll} />
+              !showSettings ?
+              <Activities scroll={this.props.scroll} />
               :
               <Settings disconnect={(socialName) => this.props.disconnect(socialName)} user={user} />
             }
