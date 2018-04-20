@@ -18,8 +18,9 @@ class Content extends React.Component {
   fileSelected = event => {
     const avatar = event.target.files[0];
     const formData = new FormData();
+    console.log(avatar);
     formData.append('image', avatar, avatar.name);
-    this.props.uploadAvatar(formData);
+    this.props.uploadAvatar(avatar);
   }
   render() {
     const { showSettings, authState: { user } } = this.props;
