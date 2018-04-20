@@ -7,8 +7,8 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' });
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -134,8 +134,8 @@ router.patch('/', authenticate, function(req, res) {
 // });
 
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
-  console.log(req.file);
-  res.send(req.file);
+  console.log(req.files.avatar);
+  res.send(req.files.avatar);
 });
 
 // const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }]);

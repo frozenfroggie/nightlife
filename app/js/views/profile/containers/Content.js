@@ -30,6 +30,7 @@ class Content extends React.Component {
           <FontAwesome name='user' size='3x'/>
           <input style={{display: 'none'}}
             type='file'
+            name='avatar'
             onChange={ this.fileSelected }
             ref={ fileInput => this.fileInput = fileInput} />
           <FontAwesome onClick={() => this.fileInput.click()} name='plus' size='1x'/>

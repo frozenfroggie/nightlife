@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const fileUpload = require('expres-filepload');
 require('isomorphic-fetch');
 
 const searchRoutes = require('./routes/search');
@@ -24,6 +25,7 @@ const publicPath = path.join(__dirname, '../dist');
 
 const app = express();
 app.use(helmet());
+app.use(fileUpload());
 
 console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
