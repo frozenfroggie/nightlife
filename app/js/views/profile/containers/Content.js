@@ -4,6 +4,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
 import Activities from './Activities';
 import Settings from '../components/Settings';
+import { connect } from 'react-redux'
+import { disconnect } from '../shared/actions/authActions';
 
 class Content extends React.Component {
   constructor(props) {
@@ -57,7 +59,7 @@ class Content extends React.Component {
               !props.showSettings ?
               <Activities scroll={props.scroll} />
               :
-              <Settings disconnect={(socialName) => props.disconnect(socialName)} user={user} />
+              <Settings disconnect={(socialName) => this.props.disconnect(socialName)} user={user} />
             }
             </div>
           </ReactCSSTransitionGroup>
@@ -90,4 +92,4 @@ const mapStateToProps = store => ({
   //   }
   // }
 
-export default Content;
+export default connect(mapStateToProps, { disconnect })(Content);
