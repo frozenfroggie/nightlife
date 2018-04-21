@@ -19,11 +19,6 @@ class Content extends React.Component {
     const avatar = event.target.files[0];
     const formData = new FormData();
     formData.append('file', avatar);
-    const config = {
-      headers: {
-          'content-type': 'multipart/form-data'
-      }
-    }
     this.props.uploadAvatar(formData);
   }
   render() {
