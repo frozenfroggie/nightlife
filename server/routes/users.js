@@ -134,7 +134,7 @@ router.patch('/', authenticate, function(req, res) {
 // });
 
 router.post('/uploadAvatar', function (req, res) {
-  console.log('files', req.files);
+  console.log('files', req.files.file);
   if (!req.files)
       return res.status(400).send('No files were uploaded.');
 
