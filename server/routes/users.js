@@ -134,6 +134,7 @@ router.patch('/', authenticate, function(req, res) {
 // });
 
 router.post('/uploadAvatar', function (req, res) {
+  console.log('files', req.files);
   if (!req.files)
       return res.status(400).send('No files were uploaded.');
 
@@ -143,6 +144,7 @@ router.post('/uploadAvatar', function (req, res) {
     // Use the mv() method to place the file somewhere on your server
     avatar.mv('/uploads/filename.jpg', function(err) {
       if (err)
+      console.log(err);
         return res.status(500).send(err);
 
       res.send('File uploaded!');
