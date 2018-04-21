@@ -141,7 +141,7 @@ router.post('/uploadAvatar', function (req, res) {
     let avatar = req.files.file;
 
     // Use the mv() method to place the file somewhere on your server
-    avatar.mv(`/uploads/${avatar.name}`, function(err) {
+    avatar.mv(`/server/uploads/${avatar.name}`, function(err) {
       if (err)
       console.log(err);
         return res.status(500).send(err);
