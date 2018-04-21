@@ -138,10 +138,12 @@ router.post('/uploadAvatar', function (req, res) {
       return res.status(400).send('No files were uploaded.');
 
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    console.log('files', req.files);
     let avatar = req.files.file;
+    console.log('avatar', avatar);
 
     // Use the mv() method to place the file somewhere on your server
-    avatar.mv(`/server/uploads/${avatar.name}`, function(err) {
+    avatar.mv(`${avatar.name}`, function(err) {
       if (err)
       console.log(err);
         return res.status(500).send(err);
