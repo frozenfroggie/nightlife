@@ -164,8 +164,8 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.array('up'), function (req, res) {
-  console.log(req.files);
+router.post('/uploadAvatar', upload.single('avatar'), function (req, res) {
+  console.log('avatar', req.files);
   res.send(req.files);
   // if (!req.files)
   //     return res.status(400).send('No files were uploaded.');
