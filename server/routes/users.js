@@ -30,7 +30,7 @@ const upload = multer({
             cb(null, Date.now().toString() + '.png');
         }
     })
-});
+}).array('upload', 1);
 // const s3 = new aws.S3({
 //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 //   secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -164,9 +164,17 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.array('avatar', 1), function (req, res) {
-  console.log('avatar2', req.files.length, req.files);
-  res.send('Successfully uploaded ' + req.files.length + ' files!')
+router.post('/uploadAvatar', function (req, res, next) {
+  upload(req, res, function (error) {
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    console.log('File uploaded successfully.');
+    res.send('ok');
+  });
+  // console.log('avatar2', req.files.length, req.files);
+  // res.send('Successfully uploaded ' + req.files.length + ' files!')
   // res.send(req.files);
   // if (!req.files)
   //     return res.status(400).send('No files were uploaded.');
