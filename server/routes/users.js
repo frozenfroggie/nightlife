@@ -26,6 +26,9 @@ const upload = multer({
         s3: s3,
         acl: 'public-read',
         bucket: process.env.AWS_BUCKET_NAME,
+        metadata: function (req, file, cb) {
+          cb(null, {fieldName: file.fieldname});
+        },
         key: function (req, file, cb) {
             console.log('file', file);
             cb(null, file.originalname);
@@ -209,7 +212,7 @@ router.post('/uploadAvatar', upload.array('avatar', 1), function (req, res, next
   //
   //     res.send('File uploaded!');
   //   });
-});
+// });
 
 // const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }]);
 //
