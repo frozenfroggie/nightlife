@@ -7,6 +7,37 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+
+// aws.config.region = 'us-east-2';
+aws.config.update({
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    region: 'us-east-1'
+});
+
+const s3 = new aws.S3();
+
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_BUCKET_NAME,
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+});
+// const s3 = new aws.S3({
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_KEY,
+//   Bucket: process.env.AWS_BUCKET_NAME,
+//   region: 'us-east-2'
+// });
+
 // const multer = require('multer');
 // const upload = multer({ dest: 'uploads/' });
 
@@ -133,23 +164,46 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', function (req, res) {
-  if (!req.files)
-      return res.status(400).send('No files were uploaded.');
-
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    console.log('files', req.files);
-    let avatar = req.files.file;
-    console.log('avatar', avatar);
-
-    // Use the mv() method to place the file somewhere on your server
-    avatar.mv(`${avatar.name}`, function(err) {
-      if (err)
-      console.log(err);
-        return res.status(500).send(err);
-
-      res.send('File uploaded!');
-    });
+router.post('/uploadAvatar', upload.array('up'), function (req, res) {
+  console.log(req.files);
+  res.send(req.files);
+  // if (!req.files)
+  //     return res.status(400).send('No files were uploaded.');
+  //
+  //   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  //   const s3Params = {
+  //     Bucket: S3_BUCKET,
+  //     Key: fileName,
+  //     Expires: 60,
+  //     ContentType: fileType,
+  //     ACL: 'public-read'
+  //   };
+  //
+  //   s3.getSignedUrl('putObject', s3Params, (err, data) => {
+  //     if(err){
+  //       console.log(err);
+  //       return res.end();
+  //     }
+  //     const returnData = {
+  //       signedRequest: data,
+  //       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+  //     };
+  //     res.write(JSON.stringify(returnData));
+  //     res.end();
+  //   });
+  //
+  //   console.log('files', req.files);
+  //   let avatar = req.files.file;
+  //   console.log('avatar', avatar);
+  //
+  //   // Use the mv() method to place the file somewhere on your server
+  //   avatar.mv(`${avatar.name}`, function(err) {
+  //     if (err)
+  //     console.log(err);
+  //       return res.status(500).send(err);
+  //
+  //     res.send('File uploaded!');
+  //   });
 });
 
 // const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }]);
