@@ -24,13 +24,14 @@ const s3 = new aws.S3();
 const upload = multer({
     storage: multerS3({
         s3: s3,
+        acl: 'public-read',
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
             console.log('file', file);
-            cb(null, Date.now().toString() + '.png');
+            cb(null, file.originalname);
         }
     })
-}).array('upload', 1);
+});
 // const s3 = new aws.S3({
 //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 //   secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -164,15 +165,9 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', function (req, res, next) {
-  upload(req, res, function (error) {
-    if (error) {
-      console.log(error);
-      res.send(error);
-    }
-    console.log('File uploaded successfully.');
-    console.log(req);
-    res.send('ok');
+router.post('/uploadAvatar', upload.array('avatar', 1), function (req, res, next) {
+    console.log(req.files);
+    res.send({message: 'ok', files: req.files});
   });
   // console.log('avatar2', req.files.length, req.files);
   // res.send('Successfully uploaded ' + req.files.length + ' files!')
