@@ -26,8 +26,8 @@ const upload = multer({
         s3: s3,
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
-            console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
+            console.log('file', file);
+            cb(null, Date.now().toString() + '.png');
         }
     })
 });
@@ -165,9 +165,9 @@ router.patch('/', authenticate, function(req, res) {
 // });
 
 router.post('/uploadAvatar', upload.array('avatar', 1), function (req, res) {
+  console.log('avatar2', req.files.length, req.files);
   res.send('Successfully uploaded ' + req.files.length + ' files!')
-  console.log('avatar', req.files);
-  res.send(req.files);
+  // res.send(req.files);
   // if (!req.files)
   //     return res.status(400).send('No files were uploaded.');
   //
