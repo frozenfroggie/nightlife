@@ -171,7 +171,7 @@ router.post('/uploadAvatar', function (req, res, next) {
       res.send(error);
     }
     console.log('File uploaded successfully.');
-    console.log(req.files);
+    console.log(req);
     res.send('ok');
   });
   // console.log('avatar2', req.files.length, req.files);
