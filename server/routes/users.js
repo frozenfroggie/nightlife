@@ -37,20 +37,6 @@ const multerS3 = require('multer-s3');
 
 // const s3 = new aws.S3();
 
-// const upload = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         acl: 'public-read',
-//         bucket: process.env.AWS_BUCKET_NAME,
-//         metadata: function (req, file, cb) {
-//           cb(null, {fieldName: file.fieldname});
-//         },
-//         key: function (req, file, cb) {
-//             console.log('file', file);
-//             cb(null, file.originalname);
-//         }
-//     })
-// });
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -58,9 +44,24 @@ const s3 = new aws.S3({
   region: 'us-east-2'
 });
 
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        acl: 'public-read',
+        bucket: process.env.AWS_BUCKET_NAME,
+        metadata: function (req, file, cb) {
+          cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    })
+});
+
+
 // var upload = multer({
 //   storage: multerS3({
-//     s3: s3,
+//     s3: s3
 //     bucket: process.env.AWS_BUCKET_NAME,
 //     metadata: function (req, file, cb) {
 //       cb(null, {fieldName: file.fieldname});
