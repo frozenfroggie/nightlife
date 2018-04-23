@@ -200,12 +200,19 @@ router.patch('/', authenticate, function(req, res) {
 // });
 
 function uploadToS3(file) {
+  console.log('upload to s3');
+  console.log( '1',process.env.AWS_ACCESS_KEY_ID);
+  console.log( '2', process.env.AWS_SECRET_KEY);
+  console.log( '3', process.env.AWS_BUCKET_NAME);
+  console.log( '4', file.name);
+  console.log( '5' ,file.data);
   let s3bucket = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_KEY,
     Bucket: process.env.AWS_BUCKET_NAME
   });
   s3bucket.createBucket(function () {
+      console.log('in create bucket');
       var params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: file.name,
