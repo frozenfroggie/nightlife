@@ -18,7 +18,7 @@ class Content extends React.Component {
   fileSelected = event => {
     const avatar = event.target.files[0];
     const formData = new FormData();
-    formData.append('file', avatar, avatar.name);
+    formData.append('avatar', avatar, avatar.name);
     this.props.uploadAvatar(formData);
   }
   render() {
@@ -27,17 +27,11 @@ class Content extends React.Component {
       <div className="profileContent">
         <div className="profileAvatar">
           <FontAwesome name='user' size='3x'/>
-          <form ref='uploadForm'
-            id='uploadForm'
-            action='https://vast-everglades-58513.herokuapp.com/user/upload'
-            method='post'
-            encType="multipart/form-data">
-            <input style={{display: 'none'}}
-              type='file'
-              name='avatar'
-              onChange={ this.fileSelected }
-              ref={ fileInput => this.fileInput = fileInput} />
-          </form>
+          <input style={{display: 'none'}}
+            type='file'
+            name='avatar'
+            onChange={ this.fileSelected }
+            ref={ fileInput => this.fileInput = fileInput} />
           <FontAwesome onClick={() => this.fileInput.click()} name='plus' size='1x'/>
         </div>
         <h2 className="profileUsername">
