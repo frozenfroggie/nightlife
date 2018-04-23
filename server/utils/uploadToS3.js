@@ -1,3 +1,5 @@
+const aws = require('aws-sdk');
+
 const uploadToS3 = file => {
   return new Promise((resolve, reject) => {
     let s3bucket = new aws.S3({
