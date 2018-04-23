@@ -10,31 +10,39 @@ const bcrypt = require('bcrypt');
 
 const aws = require('aws-sdk');
 const multer = require('multer');
-const multerS3 = require('multer-s3');
+// const multerS3 = require('multer-s3');
+const S3FS = require('s3fs');
 
 // aws.config.region = 'us-east-2';
-aws.config.update({
-    secretAccessKey: process.env.AWS_SECRET_KEY,
+// aws.config.update({
+//     secretAccessKey: process.env.AWS_SECRET_KEY,
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     region: 'us-east-1'
+// });
+const s3fsImpl = new S3FS(process.env.AWS_BUCKET_NAME, {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    region: 'us-east-1'
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    signatureVersion: 'v4'
 });
 
-const s3 = new aws.S3();
+s3fsImpl.create();
 
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        acl: 'public-read',
-        bucket: process.env.AWS_BUCKET_NAME,
-        metadata: function (req, file, cb) {
-          cb(null, {fieldName: file.fieldname});
-        },
-        key: function (req, file, cb) {
-            console.log('file', file);
-            cb(null, file.originalname);
-        }
-    })
-});
+// const s3 = new aws.S3();
+
+// const upload = multer({
+//     storage: multerS3({
+//         s3: s3,
+//         acl: 'public-read',
+//         bucket: process.env.AWS_BUCKET_NAME,
+//         metadata: function (req, file, cb) {
+//           cb(null, {fieldName: file.fieldname});
+//         },
+//         key: function (req, file, cb) {
+//             console.log('file', file);
+//             cb(null, file.originalname);
+//         }
+//     })
+// });
 // const s3 = new aws.S3({
 //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 //   secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -168,9 +176,19 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.array('avatar', 1), function (req, res, next) {
+router.post('/uploadAvatar', function (req, res) {
     console.log(req.files);
-    res.send({message: 'ok', files: req.files});
+    // res.send({message: 'ok', files: req.files});
+     var file = req.files.file;
+     var stream = fs.createReadStream(file.path);
+     return s3fsImpl.writeFile(file.originalFilename, stream).then(function () {
+         fs.unlink(file.path, function (err) {
+             if (err) {
+                 console.error(err);
+             }
+         });
+         res.status(200).end();
+     });
   });
   // console.log('avatar2', req.files.length, req.files);
   // res.send('Successfully uploaded ' + req.files.length + ' files!')
