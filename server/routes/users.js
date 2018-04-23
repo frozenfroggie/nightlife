@@ -10,16 +10,16 @@ const bcrypt = require('bcrypt');
 
 const aws = require('aws-sdk');
 const multer = require('multer');
-// const multerS3 = require('multer-s3');
-const S3FS = require('s3fs');
-const storage = multer.diskStorage({ // notice you are calling the multer.diskStorage() method here, not multer()
-    destination: function(req, file, cb) {
-        cb(null, 'uploads/')
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-});
+const multerS3 = require('multer-s3');
+// const S3FS = require('s3fs');
+// const storage = multer.diskStorage({ // notice you are calling the multer.diskStorage() method here, not multer()
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads/')
+//     },
+//     filename: function(req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
 const upload = multer({storage});
 // aws.config.region = 'us-east-2';
 // aws.config.update({
@@ -27,13 +27,13 @@ const upload = multer({storage});
 //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 //     region: 'us-east-1'
 // });
-const s3fsImpl = new S3FS(process.env.AWS_BUCKET_NAME, {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    signatureVersion: 'v4'
-});
-
-s3fsImpl.create();
+// const s3fsImpl = new S3FS(process.env.AWS_BUCKET_NAME, {
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_KEY,
+//     signatureVersion: 'v4'
+// });
+//
+// s3fsImpl.create();
 
 // const s3 = new aws.S3();
 
@@ -51,12 +51,25 @@ s3fsImpl.create();
 //         }
 //     })
 // });
-// const s3 = new aws.S3({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_KEY,
-//   Bucket: process.env.AWS_BUCKET_NAME,
-//   region: 'us-east-2'
-// });
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  Bucket: process.env.AWS_BUCKET_NAME,
+  region: 'us-east-2'
+});
+
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  })
+});
 
 // const multer = require('multer');
 // const upload = multer({ dest: 'uploads/' });
@@ -184,19 +197,37 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.single('avatar'), function (req, res) {
-    console.log(req.files);
-    // res.send({message: 'ok', files: req.files});
-     var file = req.files.file;
-     var stream = fs.createReadStream(file.path);
-     return s3fsImpl.writeFile(file.originalFilename, stream).then(function () {
-         fs.unlink(file.path, function (err) {
-             if (err) {
-                 console.error(err);
-             }
-         });
-         res.status(200).end();
-     });
+router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
+  console.log(req.files);
+  res.send('Successfully uploaded ' + req.files.length + ' files!')
+})
+    // console.log(req.files.file);
+    // // // res.send({message: 'ok', files: req.files});
+    // //  var file = req.files.file;
+    // //  var stream = fs.createReadStream(file.path);
+    // //  return s3fsImpl.writeFile(file.originalFilename, stream).then(function () {
+    // //      fs.unlink(file.path, function (err) {
+    // //          if (err) {
+    // //              console.error(err);
+    // //          }
+    // //      });
+    // //      res.status(200).end();
+    // //  });
+    // fs.readFile('del.txt', function (err, data) {
+    //   if (err) { throw err; }
+    //
+    //   // var base64data = new Buffer(data, 'binary');
+    //
+    //   // var s3 = new AWS.S3();
+    //   s3.client.putObject({
+    //     Bucket: process.env.AWS_BUCKET_NAME,
+    //     Key: req.files.file,
+    //     Body: base64data,
+    //     ACL: 'public-read'
+    //   },function (resp) {
+    //     console.log(arguments);
+    //     console.log('Successfully uploaded package.');
+    //   });
   });
   // console.log('avatar2', req.files.length, req.files);
   // res.send('Successfully uploaded ' + req.files.length + ' files!')
