@@ -6,10 +6,14 @@ const uploadToS3 = file => {
       Bucket: process.env.AWS_BUCKET_NAME
     });
     let fileFormat = file.name.split('.');
+    console.log(fileFormat);
     fileFormat = fileFormat[fileFormat.length - 1];
+    console.log(fileFormat);
+    const fileName = Date.now().toString() + '.' + fileFormat;
+    console.log(fileName);
     var params = {
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: Date.now().toString() + '.' + fileFormat,
+      Key: fileName,
       Body: file.data
     };
     s3bucket.upload(params, function (err, data) {
