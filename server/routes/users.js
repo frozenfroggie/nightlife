@@ -69,6 +69,7 @@ router.post('/', function(req, res) {
   });
 });
 
+//verify email address
 router.get('/confirmation/:token', (req, res) => {
   try {
     const { id } = jwt.verify(req.params.token, process.env.JWT_VERIFICATION_SECRET);
@@ -128,7 +129,7 @@ router.patch('/', authenticate, function(req, res) {
 });
 
 //add avatar to user account
-router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
+router.post('/uploadAvatar', upload.single('avatar'), function (req, res) {
   uploadToS3(req.files.avatar).then(data => res.send(data))
                               .catch(err => res.status(400).send(err));
 });
