@@ -7,6 +7,7 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Busboy = require('busboy');
 
 const aws = require('aws-sdk');
 const multer = require('multer');
@@ -198,21 +199,42 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
+function uploadToS3(file) {
+  let s3bucket = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    Bucket: process.env.AWS_BUCKET_NAME
+  });
+  s3bucket.createBucket(function () {
+      var params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: file.name,
+        Body: file.data
+      };
+      s3bucket.upload(params, function (err, data) {
+        if (err) {
+          console.log('error in callback');
+          console.log(err);
+        }
+        console.log('success');
+        console.log(data);
+      });
+  });
+}
+
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
-  console.log('file', req.file);
-  console.log(req.files);
   console.log(req.files.avatar);
-  s3.putObject({
-   Bucket: process.env.AWS_BUCKET_NAME,
-   Key: req.files.avatar.name,
-   Body: req.files.avatar
-   }).done(function (resp) {
-     console.log('Successfully uploaded package.');
-   }).catch(err => {
-     console.log(err);
-     res.send(err);
-   });
-  res.send('Successfully uploaded!')
+   uploadToS3(req.files.avatar);
+  // s3.putObject({
+  //  Bucket: process.env.AWS_BUCKET_NAME,
+  //  Key: req.files.avatar.name,
+  //  Body: req.files.avatar
+  //  }).done(function (resp) {
+  //    console.log('Successfully uploaded package.');
+  //  }).catch(err => {
+  //    console.log(err);
+  //    res.send(err);
+  //  });
 });
     // console.log(req.files.file);
     // // // res.send({message: 'ok', files: req.files});
