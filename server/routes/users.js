@@ -58,18 +58,18 @@ const s3 = new aws.S3({
   region: 'us-east-2'
 });
 
-var upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.AWS_BUCKET_NAME,
-    metadata: function (req, file, cb) {
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString())
-    }
-  })
-});
+// var upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: process.env.AWS_BUCKET_NAME,
+//     metadata: function (req, file, cb) {
+//       cb(null, {fieldName: file.fieldname});
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, Date.now().toString())
+//     }
+//   })
+// });
 
 // const multer = require('multer');
 // const upload = multer({ dest: 'uploads/' });
@@ -197,9 +197,17 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.any(), function (req, res, next) {
+router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
   console.log(req.files);
-  res.send('Successfully uploaded ' + req.files.length + ' files!')
+  console.log(req.files.avatar);
+  // s3.client.putObject({
+  //  Bucket: process.env.AWS_BUCKET_NAME,
+  //  Key: '123.png',
+  //  Body: base64data
+  //  }).done(function (resp) {
+  //    console.log('Successfully uploaded package.');
+  //  });
+  res.send('Successfully uploaded!')
 });
     // console.log(req.files.file);
     // // // res.send({message: 'ok', files: req.files});
