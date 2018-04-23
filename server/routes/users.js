@@ -201,13 +201,13 @@ router.patch('/', authenticate, function(req, res) {
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
   console.log(req.files);
   console.log(req.files.avatar);
-  // s3.client.putObject({
-  //  Bucket: process.env.AWS_BUCKET_NAME,
-  //  Key: '123.png',
-  //  Body: base64data
-  //  }).done(function (resp) {
-  //    console.log('Successfully uploaded package.');
-  //  });
+  s3.client.putObject({
+   Bucket: process.env.AWS_BUCKET_NAME,
+   Key: req.files.avatar.name,
+   Body: req.files.avatar.data
+   }).done(function (resp) {
+     console.log('Successfully uploaded package.');
+   });
   res.send('Successfully uploaded!')
 });
     // console.log(req.files.file);
