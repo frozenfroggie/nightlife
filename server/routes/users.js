@@ -206,7 +206,7 @@ function uploadToS3(file) {
   console.log( '3', process.env.AWS_BUCKET_NAME);
   console.log( '4', file.name);
   console.log( '5' ,file.data);
-  let s3bucket = new AWS.S3({
+  let s3bucket = new aws.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_KEY,
     Bucket: process.env.AWS_BUCKET_NAME
