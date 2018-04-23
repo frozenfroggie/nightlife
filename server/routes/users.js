@@ -47,11 +47,10 @@ function uploadToS3(file) {
   s3bucket.upload(params, function (err, data) {
     if (err) {
       console.log('error in callback');
-      res.status(400).send(err);
+      return null;
       }
     console.log('success');
-    console.log(data);
-    res.send(data);
+    return data;
   });
 }
 
@@ -172,7 +171,11 @@ router.patch('/', authenticate, function(req, res) {
 //add avatar to user account
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
   console.log(req.files.avatar);
-   uploadToS3(req.files.avatar);
+  const data = uploadToS3(req.files.avatar);
+  if(!data) {
+    res.status(400).send('Error in uploading');
+  }
+  res.send(data);
 });
 
 //delete bar from user account
