@@ -184,7 +184,7 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', upload.single('photo'), function (req, res) {
+router.post('/uploadAvatar', upload.single('avatar'), function (req, res) {
     console.log(req.files);
     // res.send({message: 'ok', files: req.files});
      var file = req.files.file;
