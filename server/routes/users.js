@@ -207,6 +207,9 @@ router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) 
    Body: req.files.avatar.data
    }).done(function (resp) {
      console.log('Successfully uploaded package.');
+   }).catch(err => {
+     console.log(err);
+     res.send(err);
    });
   res.send('Successfully uploaded!')
 });
