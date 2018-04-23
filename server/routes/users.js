@@ -20,7 +20,7 @@ const multerS3 = require('multer-s3');
 //         cb(null, file.fieldname + '-' + Date.now())
 //     }
 // });
-const upload = multer({storage});
+// const upload = multer({storage});
 // aws.config.region = 'us-east-2';
 // aws.config.update({
 //     secretAccessKey: process.env.AWS_SECRET_KEY,
