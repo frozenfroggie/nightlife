@@ -5,16 +5,9 @@ const uploadToS3 = file => {
       secretAccessKey: process.env.AWS_SECRET_KEY,
       Bucket: process.env.AWS_BUCKET_NAME
     });
-    console.log(file);
-    let fileFormat = file.name.split('.');
-    console.log(fileFormat);
-    fileFormat = fileFormat[fileFormat.length - 1];
-    console.log(fileFormat);
-    const fileName = Date.now().toString() + '.' + fileFormat;
-    console.log(fileName);
     var params = {
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: fileName,
+      Key: Date.now().toString(),
       Body: file.data
     };
     s3bucket.upload(params, function (err, data) {
