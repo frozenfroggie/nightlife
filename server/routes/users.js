@@ -10,7 +10,6 @@ const bcrypt = require('bcrypt');
 
 const aws = require('aws-sdk');
 const multer = require('multer');
-const multerS3 = require('multer-s3');
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -19,13 +18,7 @@ const s3 = new aws.S3({
   region: 'us-east-2'
 });
 
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        acl: 'public-read',
-        bucket: process.env.AWS_BUCKET_NAME
-    })
-});
+const upload = multer();
 
 function uploadToS3(file) {
   return new Promise((resolve, reject) => {
