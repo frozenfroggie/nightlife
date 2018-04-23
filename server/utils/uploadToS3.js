@@ -3,7 +3,7 @@ const aws = require('aws-sdk');
 const generateRandomFileName = originalFileName => {
   const fileNameSplitted = originalFileName.split('.');
   const fileExt = fileNameSplitted[fileNameSplitted.length - 1];
-  return Date.now().toString() + fileExt;
+  return Date.now().toString() + '.' + fileExt;
 }
 
 const uploadToS3 = file => {

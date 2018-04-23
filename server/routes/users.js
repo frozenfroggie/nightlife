@@ -3,7 +3,6 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const aws = require('aws-sdk');
 const multer = require('multer');
 
 const uploadToS3 = require('../utils/uploadToS3');
@@ -13,13 +12,6 @@ const VerificationToken = require('../models/verificationToken');
 
 const router = express.Router();
 const upload = multer();
-
-const s3 = new aws.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  Bucket: process.env.AWS_BUCKET_NAME,
-  region: 'us-east-2'
-});
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
