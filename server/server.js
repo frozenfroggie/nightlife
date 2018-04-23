@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const fileUpload = require('express-fileupload');
                    require('isomorphic-fetch');
 
 const searchRoutes = require('./routes/search');
@@ -24,6 +25,7 @@ const publicPath = path.join(__dirname, '../dist');
 
 const app = express();
 app.use(helmet());
+app.use(fileUpload());
 
 console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI);
@@ -57,16 +59,16 @@ app.use( (req,res,next) => {
 });
 
 app.use( (error,req,res,next) => {
-  // if(process.env.NODE_ENV === 'dev') {
+  if(process.env.NODE_ENV === 'dev') {
     res.status(error.status || 500);
     res.json({
       error: {
         message: error.message
       }
     });
-  // } else {
-  //   res.sendFile(publicPath + '/error.html');
-  // }
+  } else {
+    res.sendFile(publicPath + '/error.html');
+  }
 });
 
 const port = process.env.PORT || 8000;
