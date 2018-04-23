@@ -12,7 +12,15 @@ const aws = require('aws-sdk');
 const multer = require('multer');
 // const multerS3 = require('multer-s3');
 const S3FS = require('s3fs');
-
+const storage = multer.diskStorage({ // notice you are calling the multer.diskStorage() method here, not multer()
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+const upload = multer({storage});
 // aws.config.region = 'us-east-2';
 // aws.config.update({
 //     secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -176,7 +184,7 @@ router.patch('/', authenticate, function(req, res) {
 //   }).catch(err => res.status(400).send(err));
 // });
 
-router.post('/uploadAvatar', function (req, res) {
+router.post('/uploadAvatar', upload.single('photo'), function (req, res) {
     console.log(req.files);
     // res.send({message: 'ok', files: req.files});
      var file = req.files.file;
