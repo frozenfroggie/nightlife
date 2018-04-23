@@ -127,7 +127,7 @@ router.patch('/', authenticate, function(req, res) {
 });
 
 //add avatar to user account
-router.post('/uploadAvatar', function (req, res, next) {
+router.post('/uploadAvatar', function(req, res) {
   uploadToS3(req.files.avatar).then(data => res.send(data))
                               .catch(err => res.status(400).send(err));
 });

@@ -25,13 +25,15 @@ class Content extends React.Component {
     const { showSettings, authState: { user } } = this.props;
     return (
       <div className="profileContent">
-        <div className="profileAvatar">
-          <FontAwesome name='user' size='3x'/>
-          <input style={{display: 'none'}}
-            type='file'
-            name='avatar'
-            onChange={ this.fileSelected }
-            ref={ fileInput => this.fileInput = fileInput} />
+        <div className="profileAvatarContainer">
+          <div className="profileAvatar">
+            <FontAwesome name='user' size='3x'/>
+            <input style={{display: 'none'}}
+              type='file'
+              name='avatar'
+              onChange={ this.fileSelected }
+              ref={ fileInput => this.fileInput = fileInput} />
+          </div>
           <FontAwesome onClick={() => this.fileInput.click()} name='plus' size='1x'/>
         </div>
         <h2 className="profileUsername">

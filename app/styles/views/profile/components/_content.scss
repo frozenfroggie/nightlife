@@ -21,13 +21,17 @@
       right: 0px;
     }
   }
-  .profileAvatar {
-    @include flexCenter;
-    width: 80px;
-    height: 80px;
-    background-color: grey;
-    border-radius: 50%;
-    margin: 10px auto;
+  .profileAvatarContainer {
+    @include flexCenterY;
+    flex-direction: row;   
+    .profileAvatar {
+      @include flexCenter;
+      width: 80px;
+      height: 80px;
+      background-color: grey;
+      border-radius: 50%;
+      margin: 10px auto;
+    }
   }
   .profileUsername {
     font-weight: normal;
