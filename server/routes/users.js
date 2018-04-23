@@ -211,8 +211,8 @@ function uploadToS3(file) {
     secretAccessKey: process.env.AWS_SECRET_KEY,
     Bucket: process.env.AWS_BUCKET_NAME
   });
-  s3bucket.createBucket(function () {
-      console.log('in create bucket');
+  // s3bucket.createBucket(function () {
+      console.log('?');
       var params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: file.name,
@@ -226,7 +226,7 @@ function uploadToS3(file) {
         console.log('success');
         console.log(data);
       });
-  });
+  // });
 }
 
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
