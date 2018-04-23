@@ -26,9 +26,6 @@ const upload = multer({
         bucket: process.env.AWS_BUCKET_NAME,
         metadata: function (req, file, cb) {
           cb(null, {fieldName: file.fieldname});
-        },
-        key: function (req, file, cb) {
-            cb(null, file.originalname);
         }
     })
 });
@@ -42,7 +39,7 @@ function uploadToS3(file) {
     });
     var params = {
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: file.name,
+      Key: Date.now().toString(),
       Body: file.data
     };
     s3bucket.upload(params, function (err, data) {
