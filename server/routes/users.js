@@ -1,15 +1,18 @@
 const express = require('express');
-const router = express.Router();
-const authenticate = require('../middleware/authenticate');
-const User = require('../models/user');
-const VerificationToken = require('../models/verificationToken');
 const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
 const aws = require('aws-sdk');
 const multer = require('multer');
+
+const uploadToS3 = require('../utils/uploadToS3');
+const authenticate = require('../middleware/authenticate');
+const User = require('../models/user');
+const VerificationToken = require('../models/verificationToken');
+
+const router = express.Router();
+const upload = multer();
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -17,29 +20,6 @@ const s3 = new aws.S3({
   Bucket: process.env.AWS_BUCKET_NAME,
   region: 'us-east-2'
 });
-
-const upload = multer();
-
-function uploadToS3(file) {
-  return new Promise((resolve, reject) => {
-    let s3bucket = new aws.S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_KEY,
-      Bucket: process.env.AWS_BUCKET_NAME
-    });
-    var params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: Date.now().toString(),
-      Body: file.data
-    };
-    s3bucket.upload(params, function (err, data) {
-      if(err) {
-        reject(err);
-      }
-      resolve(data);
-    });
-  });
-}
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -113,7 +93,7 @@ router.get('/confirmation/:token', (req, res) => {
 });
 
 //login
-router.post('/login', (req, res) => {
+router.post('/login', function(req, res) {
   const { password, credentials } = pick(req.body, ['password', 'credentials']);
   User.findByCredentials(credentials, password)
       .then(user => {
@@ -181,8 +161,8 @@ router.delete('/me', authenticate, function(req, res) {
       })
       .catch(err => res.status(400).send(err));
 });
-router.delete('/logout', authenticate, function(req,res) {
 
+router.delete('/logout', authenticate, function(req,res) {
 });
 
 module.exports = router;
