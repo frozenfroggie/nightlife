@@ -3,7 +3,6 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
 
 const uploadToS3 = require('../utils/uploadToS3');
 const authenticate = require('../middleware/authenticate');
@@ -11,7 +10,6 @@ const User = require('../models/user');
 const VerificationToken = require('../models/verificationToken');
 
 const router = express.Router();
-const upload = multer();
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -129,7 +127,7 @@ router.patch('/', authenticate, function(req, res) {
 });
 
 //add avatar to user account
-router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
+router.post('/uploadAvatar', function (req, res, next) {
   uploadToS3(req.files.avatar).then(data => res.send(data))
                               .catch(err => res.status(400).send(err));
 });
