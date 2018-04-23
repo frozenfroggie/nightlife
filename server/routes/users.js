@@ -199,12 +199,13 @@ router.patch('/', authenticate, function(req, res) {
 // });
 
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
+  console.log('file', req.file);
   console.log(req.files);
   console.log(req.files.avatar);
-  s3.client.putObject({
+  s3.putObject({
    Bucket: process.env.AWS_BUCKET_NAME,
    Key: req.files.avatar.name,
-   Body: req.files.avatar.data
+   Body: req.files.avatar
    }).done(function (resp) {
      console.log('Successfully uploaded package.');
    }).catch(err => {
