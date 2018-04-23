@@ -34,23 +34,23 @@ const upload = multer({
 });
 
 function uploadToS3(file) {
-  let s3bucket = new aws.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    Bucket: process.env.AWS_BUCKET_NAME
-  });
-  var params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: file.name,
-    Body: file.data
-  };
-  s3bucket.upload(params, function (err, data) {
-    if (err) {
-      console.log('error in callback');
-      return null;
+  return new Promise((resolve, reject) => {
+    let s3bucket = new aws.S3({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_KEY,
+      Bucket: process.env.AWS_BUCKET_NAME
+    });
+    var params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: file.name,
+      Body: file.data
+    };
+    s3bucket.upload(params, function (err, data) {
+      if(err) {
+        reject(err);
       }
-    console.log('success');
-    return data;
+      resolve(data);
+    });
   });
 }
 
@@ -170,12 +170,8 @@ router.patch('/', authenticate, function(req, res) {
 
 //add avatar to user account
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
-  console.log(req.files.avatar);
-  const data = uploadToS3(req.files.avatar);
-  if(!data) {
-    res.status(400).send('Error in uploading');
-  }
-  res.send(data);
+  uploadToS3(req.files.avatar).then(data => res.send(data))
+                              .catch(err => res.status(400).send(err));
 });
 
 //delete bar from user account
