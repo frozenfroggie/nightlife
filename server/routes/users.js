@@ -7,36 +7,10 @@ const pick = require('lodash/pick');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const Busboy = require('busboy');
 
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-// const S3FS = require('s3fs');
-// const storage = multer.diskStorage({ // notice you are calling the multer.diskStorage() method here, not multer()
-//     destination: function(req, file, cb) {
-//         cb(null, 'uploads/')
-//     },
-//     filename: function(req, file, cb) {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// });
-// const upload = multer({storage});
-// aws.config.region = 'us-east-2';
-// aws.config.update({
-//     secretAccessKey: process.env.AWS_SECRET_KEY,
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     region: 'us-east-1'
-// });
-// const s3fsImpl = new S3FS(process.env.AWS_BUCKET_NAME, {
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_KEY,
-//     signatureVersion: 'v4'
-// });
-//
-// s3fsImpl.create();
-
-// const s3 = new aws.S3();
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -59,22 +33,27 @@ const upload = multer({
     })
 });
 
-
-// var upload = multer({
-//   storage: multerS3({
-//     s3: s3
-//     bucket: process.env.AWS_BUCKET_NAME,
-//     metadata: function (req, file, cb) {
-//       cb(null, {fieldName: file.fieldname});
-//     },
-//     key: function (req, file, cb) {
-//       cb(null, Date.now().toString())
-//     }
-//   })
-// });
-
-// const multer = require('multer');
-// const upload = multer({ dest: 'uploads/' });
+function uploadToS3(file) {
+  let s3bucket = new aws.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    Bucket: process.env.AWS_BUCKET_NAME
+  });
+  var params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: file.name,
+    Body: file.data
+  };
+  s3bucket.upload(params, function (err, data) {
+    if (err) {
+      console.log('error in callback');
+      res.status(400).send(err);
+      }
+    console.log('success');
+    console.log(data);
+    res.send(data);
+  });
+}
 
 //identification if user exists
 router.get('/search/:identifier', function(req, res) {
@@ -191,139 +170,10 @@ router.patch('/', authenticate, function(req, res) {
 });
 
 //add avatar to user account
-// router.patch('/uploadAvatar', authenticate, function(req, res) {
-//   const user = req.user;
-//   const avatar = req.body.avatar;
-//   User.findByIdAndUpdate(user._id, {$set: { avatar }}, {new: true}).then(user => {
-//     res.send({user, refreshToken: req.refreshToken});
-//   }).catch(err => res.status(400).send(err));
-// });
-
-function uploadToS3(file) {
-  console.log('upload to s3');
-  console.log( '1',process.env.AWS_ACCESS_KEY_ID);
-  console.log( '2', process.env.AWS_SECRET_KEY);
-  console.log( '3', process.env.AWS_BUCKET_NAME);
-  console.log( '4', file.name);
-  console.log( '5' ,file.data);
-  let s3bucket = new aws.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    Bucket: process.env.AWS_BUCKET_NAME
-  });
-  // s3bucket.createBucket(function () {
-      console.log('?');
-      var params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: file.name,
-        Body: file.data
-      };
-      s3bucket.upload(params, function (err, data) {
-        if (err) {
-          console.log('error in callback');
-          console.log(err);
-        }
-        console.log('success');
-        console.log(data);
-      });
-  // });
-}
-
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
   console.log(req.files.avatar);
    uploadToS3(req.files.avatar);
-  // s3.putObject({
-  //  Bucket: process.env.AWS_BUCKET_NAME,
-  //  Key: req.files.avatar.name,
-  //  Body: req.files.avatar
-  //  }).done(function (resp) {
-  //    console.log('Successfully uploaded package.');
-  //  }).catch(err => {
-  //    console.log(err);
-  //    res.send(err);
-  //  });
 });
-    // console.log(req.files.file);
-    // // // res.send({message: 'ok', files: req.files});
-    // //  var file = req.files.file;
-    // //  var stream = fs.createReadStream(file.path);
-    // //  return s3fsImpl.writeFile(file.originalFilename, stream).then(function () {
-    // //      fs.unlink(file.path, function (err) {
-    // //          if (err) {
-    // //              console.error(err);
-    // //          }
-    // //      });
-    // //      res.status(200).end();
-    // //  });
-    // fs.readFile('del.txt', function (err, data) {
-    //   if (err) { throw err; }
-    //
-    //   // var base64data = new Buffer(data, 'binary');
-    //
-    //   // var s3 = new AWS.S3();
-    //   s3.client.putObject({
-    //     Bucket: process.env.AWS_BUCKET_NAME,
-    //     Key: req.files.file,
-    //     Body: base64data,
-    //     ACL: 'public-read'
-    //   },function (resp) {
-    //     console.log(arguments);
-    //     console.log('Successfully uploaded package.');
-    //   });
-  // console.log('avatar2', req.files.length, req.files);
-  // res.send('Successfully uploaded ' + req.files.length + ' files!')
-  // res.send(req.files);
-  // if (!req.files)
-  //     return res.status(400).send('No files were uploaded.');
-  //
-  //   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  //   const s3Params = {
-  //     Bucket: S3_BUCKET,
-  //     Key: fileName,
-  //     Expires: 60,
-  //     ContentType: fileType,
-  //     ACL: 'public-read'
-  //   };
-  //
-  //   s3.getSignedUrl('putObject', s3Params, (err, data) => {
-  //     if(err){
-  //       console.log(err);
-  //       return res.end();
-  //     }
-  //     const returnData = {
-  //       signedRequest: data,
-  //       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-  //     };
-  //     res.write(JSON.stringify(returnData));
-  //     res.end();
-  //   });
-  //
-  //   console.log('files', req.files);
-  //   let avatar = req.files.file;
-  //   console.log('avatar', avatar);
-  //
-  //   // Use the mv() method to place the file somewhere on your server
-  //   avatar.mv(`${avatar.name}`, function(err) {
-  //     if (err)
-  //     console.log(err);
-  //       return res.status(500).send(err);
-  //
-  //     res.send('File uploaded!');
-  //   });
-// });
-
-// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }]);
-//
-// app.post('/cool-profile', cpUpload, function (req, res, next) {
-//   res.send(req.files['avatar'][0]);
-  // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
-  //
-  // e.g.
-  //  req.files['avatar'][0] -> File
-  //  req.files['gallery'] -> Array
-  //
-  // req.body will contain the text fields, if there were any
-// });
 
 //delete bar from user account
 router.delete('/:id', authenticate, function(req,res) {
