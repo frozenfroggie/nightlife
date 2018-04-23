@@ -200,7 +200,7 @@ router.patch('/', authenticate, function(req, res) {
 router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) {
   console.log(req.files);
   res.send('Successfully uploaded ' + req.files.length + ' files!')
-})
+});
     // console.log(req.files.file);
     // // // res.send({message: 'ok', files: req.files});
     // //  var file = req.files.file;
@@ -228,7 +228,6 @@ router.post('/uploadAvatar', upload.single('avatar'), function (req, res, next) 
     //     console.log(arguments);
     //     console.log('Successfully uploaded package.');
     //   });
-  });
   // console.log('avatar2', req.files.length, req.files);
   // res.send('Successfully uploaded ' + req.files.length + ' files!')
   // res.send(req.files);
