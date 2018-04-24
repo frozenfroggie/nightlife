@@ -32,7 +32,7 @@ class Content extends React.Component {
             name='avatar'
             onChange={ this.fileSelected }
             ref={ fileInput => this.fileInput = fileInput} />
-          <FontAwesome className='plus' onClick={() => this.fileInput.click()} name='plus' size='1x'/>
+          <FontAwesome className='plus' onClick={() => this.fileInput.click()} name='plus' size='2x'/>
         </div>
         <h2 className="profileUsername">
         {
