@@ -34,6 +34,9 @@
       top: 40px;
       right: 20px;
     }
+    &:hover {
+      border: 1px solid white;
+    }
   }
   .profileUsername {
     font-weight: normal;
