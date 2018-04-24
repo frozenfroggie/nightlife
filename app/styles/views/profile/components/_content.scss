@@ -29,13 +29,20 @@
     background-color: grey;
     border-radius: 50%;
     margin: 10px auto;
+    box-shadow: 1px 4px 18px 2px rgba(0,0,0,0.9);
     & > .plus {
+      opacity: 0;
       position: absolute;
-      top: 40px;
-      right: 20px;
+      top: 22px;
+      right: 12px;
+      transition: opacity .5s;
     }
     &:hover {
-      border: 1px solid white;
+      cursor: pointer;
+      box-shadow: 1px 4px 18px 3px rgba(0,0,0,0.8);
+    }
+    &:hover > .plus {
+      opacity: 1;
     }
   }
   .profileUsername {
