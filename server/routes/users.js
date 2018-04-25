@@ -127,9 +127,14 @@ router.patch('/', authenticate, function(req, res) {
 });
 
 //add avatar to user account
-router.post('/uploadAvatar', function(req, res) {
-  uploadToS3(req.files.avatar).then(data => res.send(data))
-                              .catch(err => res.status(400).send(err));
+router.post('/uploadAvatar', authenticate, function(req, res) {
+  const user = req.user;
+  uploadToS3(req.files.avatar).then(data => {
+    console.log(data);
+    User.findByIdAndUpdate(user._id, {$set: {avatarUrl: data.url}}, {new: true}).then(user => {
+      res.send({user, refreshToken: req.refreshToken});
+    }).catch(err => res.status(400).send(err));
+  }).catch(err => res.status(400).send(err));
 });
 
 //delete bar from user account
