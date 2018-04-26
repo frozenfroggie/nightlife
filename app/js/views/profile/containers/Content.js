@@ -26,7 +26,12 @@ class Content extends React.Component {
     return (
       <div className="profileContent">
         <div className="profileAvatar" onClick={() => this.fileInput.click()} >
-          <FontAwesome name='user' size='3x'/>
+        {
+          user.avatarUrl ?
+            <img src={user.avatarUrl} alt='avatar' />
+            :
+            <FontAwesome name='user' size='3x' />
+        }
           <input style={{display: 'none'}}
             type='file'
             name='avatar'

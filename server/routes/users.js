@@ -130,8 +130,7 @@ router.patch('/', authenticate, function(req, res) {
 router.post('/uploadAvatar', authenticate, function(req, res) {
   const user = req.user;
   uploadToS3(req.files.avatar).then(data => {
-    console.log(data);
-    User.findByIdAndUpdate(user._id, {$set: {avatarUrl: data.url}}, {new: true}).then(user => {
+    User.findByIdAndUpdate(user._id, {$set: {avatarUrl: data.Location}}, {new: true}).then(user => {
       res.send({user, refreshToken: req.refreshToken});
     }).catch(err => res.status(400).send(err));
   }).catch(err => res.status(400).send(err));
