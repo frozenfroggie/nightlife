@@ -17,7 +17,7 @@ export function uploadAvatar(formData) {
     }
     return axiosNightlife.post('/users/uploadAvatar', formData, config)
                 .then(res => {
-                  console.log('after send', res.data);
+                  dispatch(saveUser(res.data.user));
                 })
                 .catch(err => {
                   throw err;
