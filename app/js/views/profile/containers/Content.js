@@ -25,10 +25,10 @@ class Content extends React.Component {
     const { showSettings, authState: { user } } = this.props;
     return (
       <div className="profileContent">
-        <div className="profileAvatar" onClick={() => this.fileInput.click()} >
+        <div className="profileAvatarContainer" onClick={() => this.fileInput.click()} >
         {
           user.avatarUrl ?
-            <img src={user.avatarUrl} alt='avatar' />
+            <img className="profileAvatar" src={user.avatarUrl} alt='avatar' />
             :
             <FontAwesome name='user' size='3x' />
         }

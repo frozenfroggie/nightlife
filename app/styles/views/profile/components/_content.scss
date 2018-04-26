@@ -21,7 +21,7 @@
       right: 0px;
     }
   }
-  .profileAvatar {
+  .profileAvatarContainer {
     @include flexCenter;
     position: relative;
     width: 80px;
@@ -30,6 +30,7 @@
     border-radius: 50%;
     margin: 10px auto;
     box-shadow: 1px 4px 18px 2px rgba(0,0,0,0.9);
+    overflow: hidden;
     & > .plus {
       opacity: 0;
       position: absolute;
@@ -43,6 +44,10 @@
     }
     &:hover > .plus {
       opacity: 1;
+    }
+    .profileAvatar {
+      width: 80px;
+      height: 80px;
     }
   }
   .profileUsername {
