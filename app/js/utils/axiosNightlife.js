@@ -24,7 +24,6 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     const originalRequest = error.config;
     if(error.response.status === 401 && !error.config._retry) {
       console.log('401! Unautorized!!!');
-      // axiosNightlife.interceptors.response.eject(myInterceptor);
       const refreshToken = window.localStorage.getItem('refreshToken');
       return axiosNightlife.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
@@ -39,6 +38,7 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
                     return axios(originalRequest);
                   })
                   .catch(error => {
+                    axiosNightlife.interceptors.response.eject(myInterceptor);
                     return Promise.reject(error);
                   });
     }

@@ -34,12 +34,12 @@
     & > .plus {
       opacity: 0;
       position: absolute;
-      top: 22px;
-      right: 12px;
-      transition: opacity .5s;
+      top: 24px;
+      right: 14px;
+      transition: opacity .4s;
     }
     & > .plusContrast {
-      color: $contrastColor;
+      color: $contrastColorDarker;
     }
     &:hover {
       cursor: pointer;
@@ -49,9 +49,9 @@
       opacity: 1;
     }
     .profileAvatar {
+      object-fit: cover;
       width: 90px;
       height: 90px;
-      object-fit: cover;
     }
   }
   .profileUsername {
