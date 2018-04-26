@@ -37,7 +37,7 @@ class Content extends React.Component {
             name='avatar'
             onChange={ this.fileSelected }
             ref={ fileInput => this.fileInput = fileInput} />
-          <FontAwesome className='plus' name='plus' />
+          <FontAwesome className={classnames(['plus', {'plusContrast': user.avatarUrl}])} name='plus' />
         </div>
         <h2 className="profileUsername">
         {

@@ -37,6 +37,8 @@
       top: 22px;
       right: 12px;
       transition: opacity .5s;
+    }
+    & > .plusContrast {
       color: $contrastColor;
     }
     &:hover {
