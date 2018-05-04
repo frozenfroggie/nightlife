@@ -67,14 +67,19 @@ export function login(data) {
   return dispatch => {
     return axiosNightlife.post('/users/login', data)
                 .then(res => {
-                  console.log(res.data);
-                  console.log(res.headers.authorization);
-                  const authToken = res.headers.authorization.split(' ')[1];
-                  sessionStorage.setItem('authToken', authToken);
+                  console.log('buu');
+                  console.log('res', res);
+                  console.log('resData', res.data);
+                  console.log('resHeaders', res.headers.authorization);
+                  try {
+                    const authToken = res.headers.authorization.split(' ')[1];
+                    sessionStorage.setItem('authToken', authToken);
 
-                  const refreshToken = res.data.refreshToken;
-                  localStorage.setItem('refreshToken', refreshToken);
-
+                    const refreshToken = res.data.refreshToken;
+                    localStorage.setItem('refreshToken', refreshToken);
+                  } catch(err) {
+                    console.log('err', err);
+                  }
                   dispatch(saveUser(res.data.user));
                   return res;
                 })

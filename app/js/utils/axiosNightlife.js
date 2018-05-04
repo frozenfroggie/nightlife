@@ -2,7 +2,7 @@ import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 
 const axiosNightlife = axios.create({
-  baseURL: 'https://vast-everglades-58513.herokuapp.com'
+  baseURL: 'http://nightlife.us-east-2.elasticbeanstalk.com'
 });
 
 const headers = cloneDeep(axiosNightlife.defaults.headers);
