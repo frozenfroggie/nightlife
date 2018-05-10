@@ -2,7 +2,7 @@ import axios from 'axios';
 import cloneDeep from 'lodash/cloneDeep';
 
 const axiosNightlife = axios.create({
-  baseURL: 'http://nightlife.us-east-2.elasticbeanstalk.com'
+  baseURL: 'https://api.gonightlife.tk'
 });
 
 const headers = cloneDeep(axiosNightlife.defaults.headers);
@@ -25,6 +25,7 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     if(error.response.status === 401 && !error.config._retry) {
       console.log('401! Unautorized!!!');
       const refreshToken = window.localStorage.getItem('refreshToken');
+      console.log('refreshToken', refreshToken);
       return axiosNightlife.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
                     console.log('Refresh!');
@@ -38,6 +39,7 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
                     return axios(originalRequest);
                   })
                   .catch(error => {
+                    console.log('error', error);
                     axiosNightlife.interceptors.response.eject(myInterceptor);
                     return Promise.reject(error);
                   });
