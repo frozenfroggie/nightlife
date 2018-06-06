@@ -65,25 +65,23 @@ export function socialAuth(type) {
 
 export function login(data) {
   return dispatch => {
+    console.log(data);
     return axiosNightlife.post('/users/login', data)
                 .then(res => {
-                  console.log('buu');
                   console.log('res', res);
-                  console.log('resData', res.data);
-                  console.log('resHeaders', res.headers.authorization);
-                  try {
-                    const authToken = res.headers.authorization.split(' ')[1];
-                    sessionStorage.setItem('authToken', authToken);
+                  console.log('resDataAuthorization', res.data.authorization);
 
-                    const refreshToken = res.data.refreshToken;
-                    localStorage.setItem('refreshToken', refreshToken);
-                  } catch(err) {
-                    console.log('err', err);
-                  }
+                  const authToken = res.data.authorization;
+                  sessionStorage.setItem('authToken', authToken);
+
+                  const refreshToken = res.data.refreshToken;
+                  localStorage.setItem('refreshToken', refreshToken);
+
                   dispatch(saveUser(res.data.user));
                   return res;
                 })
                 .catch(err => {
+                  console.log('errS', err);
                   throw err.response
                 });
   }

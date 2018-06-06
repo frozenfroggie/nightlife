@@ -9,7 +9,7 @@ const headers = cloneDeep(axiosNightlife.defaults.headers);
 
 try {
   const authToken = window.sessionStorage.getItem('authToken');
-  headers.common['Authorization'] = 'Bearer ' + authToken;
+  headers.common['authorization'] = 'Bearer ' + authToken;
   axiosNightlife.defaults.headers = headers;
 } catch(err) {
   console.log(err);
@@ -23,23 +23,19 @@ var myInterceptor = axiosNightlife.interceptors.response.use(response => {
     console.log('Interceptor!!!');
     const originalRequest = error.config;
     if(error.response.status === 401 && !error.config._retry) {
-      console.log('401! Unautorized!!! New');
-      try {
-        const refreshToken = window.localStorage.getItem('refreshToken');
-      } catch(err) {
-        console.log('refreshTokenErr', err);
-      }
+      console.log('401! Unautorized!');
+      const refreshToken = window.localStorage.getItem('refreshToken');
       console.log('refreshToken', refreshToken);
       return axiosNightlife.post('/users/refreshTokens', {refreshToken})
                   .then(res => {
                     console.log('Refresh!');
-                    const authToken = res.headers.authorization.split(' ')[1];
+                    const authToken = res.data.authorization;
                     const refreshToken = res.data.refreshToken;
                     window.sessionStorage.setItem('authToken', authToken);
                     window.localStorage.setItem('refreshToken', refreshToken);
-                    headers.common['Authorization'] = 'Bearer ' + authToken;
+                    headers.common['authorization'] = 'Bearer ' + authToken;
                     axiosNightlife.defaults.headers = headers;
-                    originalRequest.headers['Authorization'] = 'Bearer ' + authToken;
+                    originalRequest.headers['authorization'] = 'Bearer ' + authToken;
                     return axios(originalRequest);
                   })
                   .catch(error => {

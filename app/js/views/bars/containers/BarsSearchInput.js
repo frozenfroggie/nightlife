@@ -17,7 +17,7 @@ class BarsSearchInput extends React.Component {
     const nextBarsInputValue = nextProps.searchState.barsInputValue;
     if(nextBarsInputValue !== this.props.searchState.barsInputValue) {
       let searchData = nextProps.searchState.searchData;
-      searchData = searchData.filter( bar => bar.name.match(trim(nextBarsInputValue)) );
+      searchData = searchData.filter( bar => bar.name.match(new RegExp(trim(nextBarsInputValue), "i")) );
       this.props.saveFilteredSearchData(searchData);
     }
   }
