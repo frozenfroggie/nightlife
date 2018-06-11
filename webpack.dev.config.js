@@ -1,8 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const webpack = require('webpack');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const webpack = require('webpack');
 require("babel-polyfill");
 
 module.exports = {
@@ -11,6 +11,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
+    mode: 'development',
     resolve: {
       alias: {
         images: path.resolve('./app/images'),
@@ -45,7 +46,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
         new HtmlWebpackPlugin({template: 'app/index.html'}),
         new HtmlWebpackPlugin({filename: 'error.html', template: 'app/error.html', inject: false}),
         new FaviconsWebpackPlugin('./app/assets/logo.png'),
